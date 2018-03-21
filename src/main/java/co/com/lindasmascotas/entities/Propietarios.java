@@ -46,6 +46,11 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "Propietarios.findByTelefonoMovil", query = "SELECT p FROM Propietarios p WHERE p.telefonoMovil = :telefonoMovil")})
 public class Propietarios implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "estado")
+    private boolean estado;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -256,6 +261,14 @@ public class Propietarios implements Serializable {
     @Override
     public String toString() {
         return "co.com.lindasmascotas.entities.Propietarios[ idPropietario=" + idPropietario + " ]";
+    }
+
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
     
 }
