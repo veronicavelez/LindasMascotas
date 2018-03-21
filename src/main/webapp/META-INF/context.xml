@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/LindasMascotas"/>
+<Context antiJARLocking="true" path="/LindasMascotas">
+  <Resource auth="Container" driverClassName="org.postgresql.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="LindasMascotas" password="12345" type="javax.sql.DataSource" url="jdbc:postgresql://localhost:5432/postgres" username="admin"/>
+</Context>

@@ -1,7 +1,7 @@
 
 package co.com.lindasmascotas.services;
 
-import co.com.lindasmascotas.entities.Servicios;
+import co.com.lindasmascotas.entities.Procedimientos;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -10,29 +10,30 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-
-@Path("servicios")
-public interface ServiciosSvc {
+@Path("procedimientos")
+public interface ProcedimientosSvc {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<Servicios> listarServicios();
-       
+    List<Procedimientos> listarProcedimientos();
+    
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Servicios> crear(Servicios s);
+    List<Procedimientos> crear(Procedimientos pr);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Servicios> editar(Servicios s);
+    List<Procedimientos> editar(Procedimientos pr);
     
-    @DELETE
+    @Path("/estado")
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Servicios> eliminar(Servicios s);
+    List<Procedimientos> estado(Procedimientos pr);
+    
 }
