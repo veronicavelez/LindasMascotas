@@ -15,14 +15,14 @@ public class EmpleadosImpl implements EmpleadosSvc{
 
     @Override
     public List<Empleados> listarEmpleados() {
-                EmpleadosJpaController ctrl = new EmpleadosJpaController(UPfactory.getFACTORY());
+            EmpleadosJpaController ctrl = new EmpleadosJpaController(UPfactory.getFACTORY());
 
-                return ctrl.findEmpleadosEntities();
+            return ctrl.findEmpleadosEntities();
     }
 
     @Override
     public List<Empleados> crear(Empleados e) {
-                EmpleadosJpaController ctrl = new EmpleadosJpaController(UPfactory.getFACTORY());
+           EmpleadosJpaController ctrl = new EmpleadosJpaController(UPfactory.getFACTORY());
                 
         try {
             ctrl.create(e);
@@ -39,8 +39,19 @@ public class EmpleadosImpl implements EmpleadosSvc{
                 Empleados empleadoActual = ctrl.findEmpleados(e.getIdEmpleado());
                 
                 empleadoActual.setNombreEmpleado(e.getNombreEmpleado());
+                empleadoActual.setApellidosEmpleado(e.getApellidosEmpleado());
+                empleadoActual.setFechaNacimiento(e.getFechaNacimiento());
+                empleadoActual.setCorreoElectronico(e.getCorreoElectronico());
+                empleadoActual.setDireccion(e.getDireccion());
+                empleadoActual.setTelefonoFijo(e.getTelefonoFijo());
+                empleadoActual.setTelefonoMovil(e.getTelefonoMovil());
+                empleadoActual.setFechaContratoInicial(e.getFechaContratoInicial());
+                empleadoActual.setFechaContratoFinal(e.getFechaContratoFinal());
+                
+                
+                
         try {
-            ctrl.edit(e);
+            ctrl.edit(empleadoActual);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(EmpleadosImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -53,11 +64,12 @@ public class EmpleadosImpl implements EmpleadosSvc{
     @Override
         public List<Empleados> estado(Empleados e) {
               EmpleadosJpaController ctrl = new EmpleadosJpaController(UPfactory.getFACTORY());
+              
               Empleados empleadoActual = ctrl.findEmpleados(e.getIdEmpleado());
               
               empleadoActual.setEstadoEmpleado(e.getEstadoEmpleado());
         try {
-            ctrl.edit(e);
+            ctrl.edit(empleadoActual);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(EmpleadosImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {

@@ -24,7 +24,11 @@ public class MascotasImpl implements MascotasSvc {
         MascotasJpaController ctrl = new MascotasJpaController(UPfactory.getFACTORY());
 
         try {
-            ctrl.create(m);
+            if (m.getIdPropietario() != null) {
+                
+               ctrl.create(m);   
+            }
+            
         } catch (Exception ex) {
             Logger.getLogger(EspeciesImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

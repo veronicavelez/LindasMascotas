@@ -40,6 +40,9 @@ public class ServiciosImpl implements ServiciosSvc {
         Servicios servicioActual = ctrl.findServicios(s.getIdServicio());
         
         servicioActual.setNombreServicio(s.getNombreServicio());
+        servicioActual.setDescripcionServicio(s.getDescripcionServicio());
+        servicioActual.setPrecioServicio(s.getPrecioServicio());
+       
         
         try {
             ctrl.edit(servicioActual);

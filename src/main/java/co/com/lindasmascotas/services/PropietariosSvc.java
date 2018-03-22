@@ -30,10 +30,11 @@ public interface PropietariosSvc {
     @Produces(MediaType.APPLICATION_JSON)
     List<Propietarios> editar(Propietarios p);
     
-    @DELETE
+    @Path("/estado")
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Propietarios> eliminar(Propietarios p);
+    List<Propietarios> estado(Propietarios p);
     
     
 }
