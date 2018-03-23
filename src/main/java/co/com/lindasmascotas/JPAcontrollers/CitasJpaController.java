@@ -6,7 +6,6 @@
 package co.com.lindasmascotas.JPAcontrollers;
 
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
-import co.com.lindasmascotas.JPAcontrollers.exceptions.PreexistingEntityException;
 import co.com.lindasmascotas.entities.Citas;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -34,7 +33,7 @@ public class CitasJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Citas citas) throws PreexistingEntityException, Exception {
+    public void create(Citas citas) {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -59,11 +58,6 @@ public class CitasJpaController implements Serializable {
                 idTipoServicio = em.merge(idTipoServicio);
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findCitas(citas.getIdCita()) != null) {
-                throw new PreexistingEntityException("Citas " + citas + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();

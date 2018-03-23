@@ -40,7 +40,6 @@ public class CitasImpl implements CitasSvc {
         Citas citaActual = ctrl.findCitas(c.getIdCita());
 
         citaActual.setFechaCita(c.getFechaCita());
-        citaActual.setHoraCita(c.getHoraCita());
 
         try {
             ctrl.edit(citaActual);
@@ -60,7 +59,6 @@ public class CitasImpl implements CitasSvc {
         Citas citaActual = ctrl.findCitas(c.getIdCita());
 
         citaActual.setFechaCita(c.getFechaCita());
-        citaActual.setHoraCita(c.getHoraCita());
 
         try {
             ctrl.edit(citaActual);

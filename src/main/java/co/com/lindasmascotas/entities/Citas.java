@@ -6,10 +6,13 @@
 package co.com.lindasmascotas.entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -34,14 +37,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Citas.findByIdCita", query = "SELECT c FROM Citas c WHERE c.idCita = :idCita")
     , @NamedQuery(name = "Citas.findByNombreMascota", query = "SELECT c FROM Citas c WHERE c.nombreMascota = :nombreMascota")
     , @NamedQuery(name = "Citas.findByTelefonoMovil", query = "SELECT c FROM Citas c WHERE c.telefonoMovil = :telefonoMovil")
-    , @NamedQuery(name = "Citas.findByFechaCita", query = "SELECT c FROM Citas c WHERE c.fechaCita = :fechaCita")
-    , @NamedQuery(name = "Citas.findByHoraCita", query = "SELECT c FROM Citas c WHERE c.horaCita = :horaCita")})
+    , @NamedQuery(name = "Citas.findByFechaCita", query = "SELECT c FROM Citas c WHERE c.fechaCita = :fechaCita")})
 public class Citas implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id_cita")
     private Integer idCita;
     @Basic(optional = false)
@@ -52,17 +54,12 @@ public class Citas implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "telefono_movil")
-    private int telefonoMovil;
+    private BigInteger telefonoMovil;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_cita")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIME)
     private Date fechaCita;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "hora_cita")
-    @Temporal(TemporalType.DATE)
-    private Date horaCita;
     @JoinColumn(name = "id_propietario", referencedColumnName = "id_propietario")
     @ManyToOne(optional = false)
     private Propietarios idPropietario;
@@ -77,12 +74,11 @@ public class Citas implements Serializable {
         this.idCita = idCita;
     }
 
-    public Citas(Integer idCita, String nombreMascota, int telefonoMovil, Date fechaCita, Date horaCita) {
+    public Citas(Integer idCita, String nombreMascota, BigInteger telefonoMovil, Date fechaCita) {
         this.idCita = idCita;
         this.nombreMascota = nombreMascota;
         this.telefonoMovil = telefonoMovil;
         this.fechaCita = fechaCita;
-        this.horaCita = horaCita;
     }
 
     public Integer getIdCita() {
@@ -101,11 +97,11 @@ public class Citas implements Serializable {
         this.nombreMascota = nombreMascota;
     }
 
-    public int getTelefonoMovil() {
+    public BigInteger getTelefonoMovil() {
         return telefonoMovil;
     }
 
-    public void setTelefonoMovil(int telefonoMovil) {
+    public void setTelefonoMovil(BigInteger telefonoMovil) {
         this.telefonoMovil = telefonoMovil;
     }
 
@@ -115,14 +111,6 @@ public class Citas implements Serializable {
 
     public void setFechaCita(Date fechaCita) {
         this.fechaCita = fechaCita;
-    }
-
-    public Date getHoraCita() {
-        return horaCita;
-    }
-
-    public void setHoraCita(Date horaCita) {
-        this.horaCita = horaCita;
     }
 
     public Propietarios getIdPropietario() {

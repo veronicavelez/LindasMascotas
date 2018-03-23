@@ -13,17 +13,26 @@
     <class>co.com.lindasmascotas.entities.Generos</class>
     <class>co.com.lindasmascotas.entities.Cargos</class>
     <class>co.com.lindasmascotas.entities.Especies</class>
-    <class>co.com.lindasmascotas.entities.Barrios</class>
-    <class>co.com.lindasmascotas.entities.TiposContrato</class>
-    <class>co.com.lindasmascotas.entities.Propietarios</class>
-    <class>co.com.lindasmascotas.entities.Productos</class>
-    <class>co.com.lindasmascotas.entities.TiposDocumento</class>
-    <class>co.com.lindasmascotas.entities.Empleados</class>
-    <class>co.com.lindasmascotas.entities.Procedimientos</class>
-    <class>co.com.lindasmascotas.entities.Sexos</class>
-    <class>co.com.lindasmascotas.entities.Razas</class>
-    <class>co.com.lindasmascotas.entities.Mascotas</class>
     <class>co.com.lindasmascotas.entities.TiposSangre</class>
+    <class>co.com.lindasmascotas.entities.Productos</class>
+    <class>co.com.lindasmascotas.entities.Sexos</class>
+    <class>co.com.lindasmascotas.entities.Cargos</class>
+    <class>co.com.lindasmascotas.entities.Propietarios</class>
+    <class>co.com.lindasmascotas.entities.Citas</class>
+    <class>co.com.lindasmascotas.entities.TiposDocumento</class>
+    <class>co.com.lindasmascotas.entities.Paises</class>
+    <class>co.com.lindasmascotas.entities.Departamentos</class>
+    <class>co.com.lindasmascotas.entities.Procedimientos</class>
+    <class>co.com.lindasmascotas.entities.Razas</class>
+    <class>co.com.lindasmascotas.entities.Servicios</class>
+    <class>co.com.lindasmascotas.entities.Vacunas</class>
+    <class>co.com.lindasmascotas.entities.Mascotas</class>
+    <class>co.com.lindasmascotas.entities.Generos</class>
+    <class>co.com.lindasmascotas.entities.Empleados</class>
+    <class>co.com.lindasmascotas.entities.Perfiles</class>
+    <class>co.com.lindasmascotas.entities.Ciudades</class>
+    <class>co.com.lindasmascotas.entities.TiposContrato</class>
+    <class>co.com.lindasmascotas.entities.Barrios</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/LindasMascotas"/>

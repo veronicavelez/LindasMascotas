@@ -235,7 +235,8 @@ public class DepartamentosJpaController implements Serializable {
         }
     }
     
-    public List<Departamentos> findDepartamentoByPais(Paises pais){
+    
+public List<Departamentos> findDepartamentoByPais(Paises pais){
         EntityManager em = getEntityManager();
         
         try {

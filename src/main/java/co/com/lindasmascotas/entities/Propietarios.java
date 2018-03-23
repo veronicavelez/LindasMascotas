@@ -43,13 +43,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "Propietarios.findByCorreoElectronico", query = "SELECT p FROM Propietarios p WHERE p.correoElectronico = :correoElectronico")
     , @NamedQuery(name = "Propietarios.findByDireccion", query = "SELECT p FROM Propietarios p WHERE p.direccion = :direccion")
     , @NamedQuery(name = "Propietarios.findByTelefonoFijo", query = "SELECT p FROM Propietarios p WHERE p.telefonoFijo = :telefonoFijo")
-    , @NamedQuery(name = "Propietarios.findByTelefonoMovil", query = "SELECT p FROM Propietarios p WHERE p.telefonoMovil = :telefonoMovil")})
+    , @NamedQuery(name = "Propietarios.findByTelefonoMovil", query = "SELECT p FROM Propietarios p WHERE p.telefonoMovil = :telefonoMovil")
+    , @NamedQuery(name = "Propietarios.findByEstado", query = "SELECT p FROM Propietarios p WHERE p.estado = :estado")})
 public class Propietarios implements Serializable {
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "estado")
-    private boolean estado;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -88,6 +84,10 @@ public class Propietarios implements Serializable {
     @NotNull
     @Column(name = "telefono_movil")
     private long telefonoMovil;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "estado")
+    private boolean estado;
     @JoinColumn(name = "id_barrio", referencedColumnName = "id_barrio")
     @ManyToOne(optional = false)
     private Barrios idBarrio;
@@ -112,7 +112,7 @@ public class Propietarios implements Serializable {
         this.idPropietario = idPropietario;
     }
 
-    public Propietarios(Integer idPropietario, String nombrePropietario, String apellidosPropietario, Date fechaNacimiento, String correoElectronico, String direccion, long telefonoMovil) {
+    public Propietarios(Integer idPropietario, String nombrePropietario, String apellidosPropietario, Date fechaNacimiento, String correoElectronico, String direccion, long telefonoMovil, boolean estado) {
         this.idPropietario = idPropietario;
         this.nombrePropietario = nombrePropietario;
         this.apellidosPropietario = apellidosPropietario;
@@ -120,6 +120,7 @@ public class Propietarios implements Serializable {
         this.correoElectronico = correoElectronico;
         this.direccion = direccion;
         this.telefonoMovil = telefonoMovil;
+        this.estado = estado;
     }
 
     public Integer getIdPropietario() {
@@ -184,6 +185,14 @@ public class Propietarios implements Serializable {
 
     public void setTelefonoMovil(long telefonoMovil) {
         this.telefonoMovil = telefonoMovil;
+    }
+
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public Barrios getIdBarrio() {
@@ -261,14 +270,6 @@ public class Propietarios implements Serializable {
     @Override
     public String toString() {
         return "co.com.lindasmascotas.entities.Propietarios[ idPropietario=" + idPropietario + " ]";
-    }
-
-    public boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(boolean estado) {
-        this.estado = estado;
     }
     
 }
