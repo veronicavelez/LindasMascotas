@@ -305,6 +305,5 @@ public class CiudadesJpaController implements Serializable {
         
         return null;
     }
-
     
 }

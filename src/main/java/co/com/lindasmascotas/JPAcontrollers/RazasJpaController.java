@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package co.com.lindasmascotas.JPAcontrollers;
 
 import co.com.lindasmascotas.JPAcontrollers.exceptions.IllegalOrphanException;
@@ -200,5 +199,5 @@ public class RazasJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

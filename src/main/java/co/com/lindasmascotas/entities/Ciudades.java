@@ -35,8 +35,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Ciudades.findAll", query = "SELECT c FROM Ciudades c")
     , @NamedQuery(name = "Ciudades.findByIdCiudad", query = "SELECT c FROM Ciudades c WHERE c.idCiudad = :idCiudad")
     , @NamedQuery(name = "Ciudades.findByNombreCiudad", query = "SELECT c FROM Ciudades c WHERE c.nombreCiudad = :nombreCiudad")
-    , @NamedQuery(name = "Ciudades.findCiudadByDepartamento", query = "SELECT c FROM Ciudades c WHERE c.idDpto = :idDepartamento ORDER BY c.nombreCiudad")})
-
+    , @NamedQuery(name = "Ciudades.findCiudadByDepartamento", query = "SELECT c FROM Ciudades c WHERE c.idDpto = :idDepartamento ORDER BY c.nombreCiudad")})  
 
 public class Ciudades implements Serializable {
 
