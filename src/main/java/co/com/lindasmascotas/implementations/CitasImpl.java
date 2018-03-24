@@ -6,9 +6,11 @@ import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityExceptio
 import co.com.lindasmascotas.entities.Citas;
 import co.com.lindasmascotas.services.CitasSvc;
 import co.com.lindasmascotas.util.UPfactory;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.eclipse.persistence.internal.helper.Helper;
 
 
 public class CitasImpl implements CitasSvc {
@@ -55,12 +57,14 @@ public class CitasImpl implements CitasSvc {
     @Override
     public List<Citas> Cancelar(Citas c) {
         CitasJpaController ctrl = new CitasJpaController(UPfactory.getFACTORY());
-
+        
         Citas citaActual = ctrl.findCitas(c.getIdCita());
-
-        citaActual.setFechaCita(c.getFechaCita());
-
+        Calendar fechaCita = Calendar.getInstance();
+        fechaCita.setTime(citaActual.getFechaCita());
+        boolean res = validarHoraCita(fechaCita);
+        
         try {
+            
             ctrl.edit(citaActual);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(CitasImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -69,6 +73,23 @@ public class CitasImpl implements CitasSvc {
         }
 
         return listarCitas();
+    }
+
+    private boolean validarHoraCita(Calendar fechaCita) {        
+        Calendar fechaActual = Calendar.getInstance();
+        
+        if (fechaActual.equals(fechaCita)){
+            
+            if ((fechaCita.get(Calendar.HOUR) - fechaActual.get(Calendar.HOUR)) > 4) {
+                return true;
+            }else{
+                return false;
+            }
+        
+        } else {
+            return true;
+        
+        }
     }
     
 }
