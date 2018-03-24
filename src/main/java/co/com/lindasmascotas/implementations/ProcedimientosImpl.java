@@ -53,22 +53,7 @@ public class ProcedimientosImpl implements ProcedimientosSvc {
         return listarProcedimientos();
     }
 
-    @Override
-    public List<Procedimientos> estado(Procedimientos pr) {
-        ProcedimientosJpaController ctrl = new ProcedimientosJpaController(UPfactory.getFACTORY());
-        
-        Procedimientos procedActual = ctrl.findProcedimientos(pr.getIdProcedimiento());
-              
-              procedActual.setNombreProcedimiento(pr.getNombreProcedimiento());
-        try {
-            ctrl.edit(pr);
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(ProcedimientosImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ProcedimientosImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-              return listarProcedimientos();
-    }
+   
 }
     
     

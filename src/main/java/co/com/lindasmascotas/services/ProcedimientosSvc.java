@@ -30,10 +30,7 @@ public interface ProcedimientosSvc {
     @Produces(MediaType.APPLICATION_JSON)
     List<Procedimientos> editar(Procedimientos pr);
     
-    @Path("/estado")
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    List<Procedimientos> estado(Procedimientos pr);
+    
+    
     
 }
