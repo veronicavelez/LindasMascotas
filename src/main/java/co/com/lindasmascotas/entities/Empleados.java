@@ -40,7 +40,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "Empleados.findByNombreEmpleado", query = "SELECT e FROM Empleados e WHERE e.nombreEmpleado = :nombreEmpleado")
     , @NamedQuery(name = "Empleados.findByApellidosEmpleado", query = "SELECT e FROM Empleados e WHERE e.apellidosEmpleado = :apellidosEmpleado")
     , @NamedQuery(name = "Empleados.findByFechaNacimiento", query = "SELECT e FROM Empleados e WHERE e.fechaNacimiento = :fechaNacimiento")
-    , @NamedQuery(name = "Empleados.findByIdTipoRh", query = "SELECT e FROM Empleados e WHERE e.idTipoRh = :idTipoRh")
+    , @NamedQuery(name = "Empleados.findByIdTipoRh", query = "SELECT e FROM Empleados e WHERE e.tipoRh = :tipoRh")
     , @NamedQuery(name = "Empleados.findByCorreoElectronico", query = "SELECT e FROM Empleados e WHERE e.correoElectronico = :correoElectronico")
     , @NamedQuery(name = "Empleados.findByDireccion", query = "SELECT e FROM Empleados e WHERE e.direccion = :direccion")
     , @NamedQuery(name = "Empleados.findByTelefonoFijo", query = "SELECT e FROM Empleados e WHERE e.telefonoFijo = :telefonoFijo")
@@ -71,10 +71,11 @@ public class Empleados implements Serializable {
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
-    @Basic(optional = false)
+     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_tipo_rh")
-    private int idTipoRh;
+    @Size(min = 1, max = 1)
+    @Column(name = "tipo_rh")
+    private String tipoRh;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
@@ -139,12 +140,12 @@ public class Empleados implements Serializable {
         this.idEmpleado = idEmpleado;
     }
 
-    public Empleados(Integer idEmpleado, String nombreEmpleado, String apellidosEmpleado, Date fechaNacimiento, int idTipoRh, String correoElectronico, String direccion, long telefonoMovil, boolean estadoEmpleado, Date fechaContratoInicial, Date fechaContratoFinal) {
+    public Empleados(Integer idEmpleado, String nombreEmpleado, String apellidosEmpleado, Date fechaNacimiento, String tipoRh, String correoElectronico, String direccion, long telefonoMovil, boolean estadoEmpleado, Date fechaContratoInicial, Date fechaContratoFinal) {
         this.idEmpleado = idEmpleado;
         this.nombreEmpleado = nombreEmpleado;
         this.apellidosEmpleado = apellidosEmpleado;
         this.fechaNacimiento = fechaNacimiento;
-        this.idTipoRh = idTipoRh;
+        this.tipoRh = tipoRh;
         this.correoElectronico = correoElectronico;
         this.direccion = direccion;
         this.telefonoMovil = telefonoMovil;
@@ -185,12 +186,12 @@ public class Empleados implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public int getIdTipoRh() {
-        return idTipoRh;
+    public String getIdTipoRh() {
+        return tipoRh;
     }
 
-    public void setIdTipoRh(int idTipoRh) {
-        this.idTipoRh = idTipoRh;
+    public void setIdTipoRh(String tipoRh) {
+        this.tipoRh = tipoRh;
     }
 
     public String getCorreoElectronico() {
@@ -346,6 +347,14 @@ public class Empleados implements Serializable {
     @Override
     public String toString() {
         return "co.com.lindasmascotas.entities.Empleados[ idEmpleado=" + idEmpleado + " ]";
+    }
+
+    public String getTipoRh() {
+        return tipoRh;
+    }
+
+    public void setTipoRh(String tipoRh) {
+        this.tipoRh = tipoRh;
     }
     
 }
