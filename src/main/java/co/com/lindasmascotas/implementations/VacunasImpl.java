@@ -40,6 +40,7 @@ public class VacunasImpl implements VacunasSvc {
         Vacunas vacunaActual = ctrl.findVacunas(v.getIdVacuna());
 
         vacunaActual.setNombreVacuna(v.getNombreVacuna());
+        vacunaActual.setDescripcionVacuna(v.getDescripcionVacuna());
 
         try {
             ctrl.edit(vacunaActual);

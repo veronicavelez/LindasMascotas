@@ -41,6 +41,7 @@ public class ProcedimientosImpl implements ProcedimientosSvc {
         Procedimientos procedActual = ctrl.findProcedimientos(pr.getIdProcedimiento());
         
         procedActual.setNombreProcedimiento(pr.getNombreProcedimiento());
+        procedActual.setPeso(pr.getPeso());
         
         try {
             ctrl.edit(procedActual);
