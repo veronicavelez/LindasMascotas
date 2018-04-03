@@ -41,7 +41,10 @@ public class MascotasImpl implements MascotasSvc {
         Mascotas mascotaActual = ctrl.findMascotas(m.getIdMascota());
 
         mascotaActual.setNombreMascota(m.getNombreMascota());
-
+        mascotaActual.setFechaNacimiento(m.getFechaNacimiento());
+        mascotaActual.setPeso(m.getPeso());
+        mascotaActual.setVive(m.getVive());
+     
         try {
             ctrl.edit(mascotaActual);
         } catch (NonexistentEntityException ex) {
