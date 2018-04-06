@@ -16,6 +16,7 @@ import javax.persistence.criteria.Root;
 import co.com.lindasmascotas.entities.Mascotas;
 import java.util.ArrayList;
 import java.util.List;
+import co.com.lindasmascotas.entities.Razas;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -38,6 +39,9 @@ public class EspeciesJpaController implements Serializable {
         if (especies.getMascotasList() == null) {
             especies.setMascotasList(new ArrayList<Mascotas>());
         }
+        if (especies.getRazasList() == null) {
+            especies.setRazasList(new ArrayList<Razas>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -48,6 +52,12 @@ public class EspeciesJpaController implements Serializable {
                 attachedMascotasList.add(mascotasListMascotasToAttach);
             }
             especies.setMascotasList(attachedMascotasList);
+            List<Razas> attachedRazasList = new ArrayList<Razas>();
+            for (Razas razasListRazasToAttach : especies.getRazasList()) {
+                razasListRazasToAttach = em.getReference(razasListRazasToAttach.getClass(), razasListRazasToAttach.getIdRaza());
+                attachedRazasList.add(razasListRazasToAttach);
+            }
+            especies.setRazasList(attachedRazasList);
             em.persist(especies);
             for (Mascotas mascotasListMascotas : especies.getMascotasList()) {
                 Especies oldIdEspecieOfMascotasListMascotas = mascotasListMascotas.getIdEspecie();
@@ -56,6 +66,15 @@ public class EspeciesJpaController implements Serializable {
                 if (oldIdEspecieOfMascotasListMascotas != null) {
                     oldIdEspecieOfMascotasListMascotas.getMascotasList().remove(mascotasListMascotas);
                     oldIdEspecieOfMascotasListMascotas = em.merge(oldIdEspecieOfMascotasListMascotas);
+                }
+            }
+            for (Razas razasListRazas : especies.getRazasList()) {
+                Especies oldIdEspecieOfRazasListRazas = razasListRazas.getIdEspecie();
+                razasListRazas.setIdEspecie(especies);
+                razasListRazas = em.merge(razasListRazas);
+                if (oldIdEspecieOfRazasListRazas != null) {
+                    oldIdEspecieOfRazasListRazas.getRazasList().remove(razasListRazas);
+                    oldIdEspecieOfRazasListRazas = em.merge(oldIdEspecieOfRazasListRazas);
                 }
             }
             em.getTransaction().commit();
@@ -74,6 +93,8 @@ public class EspeciesJpaController implements Serializable {
             Especies persistentEspecies = em.find(Especies.class, especies.getIdEspecie());
             List<Mascotas> mascotasListOld = persistentEspecies.getMascotasList();
             List<Mascotas> mascotasListNew = especies.getMascotasList();
+            List<Razas> razasListOld = persistentEspecies.getRazasList();
+            List<Razas> razasListNew = especies.getRazasList();
             List<String> illegalOrphanMessages = null;
             for (Mascotas mascotasListOldMascotas : mascotasListOld) {
                 if (!mascotasListNew.contains(mascotasListOldMascotas)) {
@@ -81,6 +102,14 @@ public class EspeciesJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Mascotas " + mascotasListOldMascotas + " since its idEspecie field is not nullable.");
+                }
+            }
+            for (Razas razasListOldRazas : razasListOld) {
+                if (!razasListNew.contains(razasListOldRazas)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Razas " + razasListOldRazas + " since its idEspecie field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -93,6 +122,13 @@ public class EspeciesJpaController implements Serializable {
             }
             mascotasListNew = attachedMascotasListNew;
             especies.setMascotasList(mascotasListNew);
+            List<Razas> attachedRazasListNew = new ArrayList<Razas>();
+            for (Razas razasListNewRazasToAttach : razasListNew) {
+                razasListNewRazasToAttach = em.getReference(razasListNewRazasToAttach.getClass(), razasListNewRazasToAttach.getIdRaza());
+                attachedRazasListNew.add(razasListNewRazasToAttach);
+            }
+            razasListNew = attachedRazasListNew;
+            especies.setRazasList(razasListNew);
             especies = em.merge(especies);
             for (Mascotas mascotasListNewMascotas : mascotasListNew) {
                 if (!mascotasListOld.contains(mascotasListNewMascotas)) {
@@ -102,6 +138,17 @@ public class EspeciesJpaController implements Serializable {
                     if (oldIdEspecieOfMascotasListNewMascotas != null && !oldIdEspecieOfMascotasListNewMascotas.equals(especies)) {
                         oldIdEspecieOfMascotasListNewMascotas.getMascotasList().remove(mascotasListNewMascotas);
                         oldIdEspecieOfMascotasListNewMascotas = em.merge(oldIdEspecieOfMascotasListNewMascotas);
+                    }
+                }
+            }
+            for (Razas razasListNewRazas : razasListNew) {
+                if (!razasListOld.contains(razasListNewRazas)) {
+                    Especies oldIdEspecieOfRazasListNewRazas = razasListNewRazas.getIdEspecie();
+                    razasListNewRazas.setIdEspecie(especies);
+                    razasListNewRazas = em.merge(razasListNewRazas);
+                    if (oldIdEspecieOfRazasListNewRazas != null && !oldIdEspecieOfRazasListNewRazas.equals(especies)) {
+                        oldIdEspecieOfRazasListNewRazas.getRazasList().remove(razasListNewRazas);
+                        oldIdEspecieOfRazasListNewRazas = em.merge(oldIdEspecieOfRazasListNewRazas);
                     }
                 }
             }
@@ -141,6 +188,13 @@ public class EspeciesJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("This Especies (" + especies + ") cannot be destroyed since the Mascotas " + mascotasListOrphanCheckMascotas + " in its mascotasList field has a non-nullable idEspecie field.");
+            }
+            List<Razas> razasListOrphanCheck = especies.getRazasList();
+            for (Razas razasListOrphanCheckRazas : razasListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Especies (" + especies + ") cannot be destroyed since the Razas " + razasListOrphanCheckRazas + " in its razasList field has a non-nullable idEspecie field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
