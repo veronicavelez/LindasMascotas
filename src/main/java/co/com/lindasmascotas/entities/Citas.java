@@ -55,6 +55,7 @@ public class Citas implements Serializable {
     private Integer idCita;
     @Basic(optional = false)
     @NotNull
+    
     @Size(min = 1, max = 2147483647)
     @Column(name = "nombre_mascota")
     private String nombreMascota;

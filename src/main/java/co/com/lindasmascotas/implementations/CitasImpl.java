@@ -25,6 +25,7 @@ public class CitasImpl implements CitasSvc {
     @Override
     public List<Citas> crear(Citas c) {
         CitasJpaController ctrl = new CitasJpaController(UPfactory.getFACTORY());
+        
 
         try {
             ctrl.create(c);
