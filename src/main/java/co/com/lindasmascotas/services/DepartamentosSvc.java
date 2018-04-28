@@ -39,5 +39,5 @@ public interface DepartamentosSvc {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Departamentos> eliminar(Departamentos d);    
+    List<Departamentos> eliminar(@QueryParam("id") String id);    
 }

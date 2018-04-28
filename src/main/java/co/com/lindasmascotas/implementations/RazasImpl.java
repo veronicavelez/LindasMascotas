@@ -54,11 +54,11 @@ public class RazasImpl implements RazasSvc {
     }
     
     @Override
-    public List<Razas> eliminar(Razas r) {
+    public List<Razas> eliminar(Integer id) {
         RazasJpaController ctrl = new RazasJpaController(UPfactory.getFACTORY());
 
         try {
-            ctrl.destroy(r.getIdRaza());
+            ctrl.destroy(id);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(RazasImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalOrphanException ex) {

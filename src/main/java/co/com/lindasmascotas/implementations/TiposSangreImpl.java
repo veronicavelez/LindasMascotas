@@ -55,11 +55,11 @@ public class TiposSangreImpl implements TiposSangreSvc {
     }
 
     @Override
-    public List<TiposSangre> eliminar(TiposSangre ts) {
+    public List<TiposSangre> eliminar(Integer id) {
         TiposSangreJpaController ctrl = new TiposSangreJpaController(UPfactory.getFACTORY());
 
         try {
-            ctrl.destroy(ts.getIdTipoSangre());
+            ctrl.destroy(id);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(TiposSangreImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalOrphanException ex) {

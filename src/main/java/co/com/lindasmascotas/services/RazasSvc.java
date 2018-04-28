@@ -33,5 +33,5 @@ public interface RazasSvc {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Razas> eliminar(Razas r);  
+    List<Razas> eliminar(@QueryParam("id") Integer id);  
 }

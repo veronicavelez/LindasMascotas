@@ -32,5 +32,5 @@ public interface BarriosSvc {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Barrios> eliminar(Barrios b);  
+    List<Barrios> eliminar(@QueryParam("id") Integer id);  
 }

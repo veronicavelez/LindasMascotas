@@ -32,5 +32,5 @@ public interface PerfilesSvc {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Perfiles> eliminar(Perfiles p);  
+    List<Perfiles> eliminar(@QueryParam("id") Integer id);  
 }

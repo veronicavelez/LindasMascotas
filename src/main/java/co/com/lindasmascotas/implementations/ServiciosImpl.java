@@ -56,11 +56,11 @@ public class ServiciosImpl implements ServiciosSvc {
     }
 
     @Override
-    public List<Servicios> eliminar(Servicios s) {
+    public List<Servicios> eliminar(Integer id) {
         ServiciosJpaController ctrl = new ServiciosJpaController(UPfactory.getFACTORY());
         
         try {
-            ctrl.destroy(s.getIdServicio());
+            ctrl.destroy(id);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(ServiciosImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {

@@ -56,11 +56,11 @@ public class ProductosImpl implements ProductosSvc {
     }
 
     @Override
-    public List<Productos> eliminar(Productos p) {
+    public List<Productos> eliminar(Integer id) {
         ProductosJpaController ctrl = new ProductosJpaController(UPfactory.getFACTORY());
 
         try {
-            ctrl.destroy(p.getIdProducto());
+            ctrl.destroy(id);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(ProductosImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

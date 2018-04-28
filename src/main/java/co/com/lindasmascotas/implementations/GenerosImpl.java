@@ -55,11 +55,11 @@ public class GenerosImpl implements GenerosSvc {
 
 
     @Override
-    public List<Generos> eliminar(Generos g) {
+    public List<Generos> eliminar(Integer id) {
         GenerosJpaController ctrl = new GenerosJpaController(UPfactory.getFACTORY());
 
         try {
-            ctrl.destroy(g.getIdGenero());
+            ctrl.destroy(id);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(GenerosImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalOrphanException ex) {

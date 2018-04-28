@@ -52,11 +52,11 @@ public class SexosImpl implements SexosSvc{
     }
 
     @Override
-    public List<Sexos> eliminar(Sexos s) {
+    public List<Sexos> eliminar(Integer id) {
          SexosJpaController ctrl = new SexosJpaController(UPfactory.getFACTORY());
 
         try {
-            ctrl.destroy(s.getIdSexo());
+            ctrl.destroy(id);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(SexosImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {

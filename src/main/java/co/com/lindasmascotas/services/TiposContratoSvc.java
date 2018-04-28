@@ -34,7 +34,7 @@ public interface TiposContratoSvc {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<TiposContrato> eliminar(TiposContrato tc);  
+    List<TiposContrato> eliminar(@QueryParam("id") Integer id);  
     
     
 }

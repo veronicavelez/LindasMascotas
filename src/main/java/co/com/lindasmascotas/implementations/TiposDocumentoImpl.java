@@ -51,11 +51,11 @@ public class TiposDocumentoImpl implements TiposDocumentoSvc {
     }
 
     @Override
-    public List<TiposDocumento> eliminar(TiposDocumento td) {
+    public List<TiposDocumento> eliminar(Integer id) {
         TiposDocumentoJpaController ctrl = new TiposDocumentoJpaController(UPfactory.getFACTORY());
 
         try {
-            ctrl.destroy(td.getIdTipoDoc());
+            ctrl.destroy(id);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(TiposDocumentoImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {

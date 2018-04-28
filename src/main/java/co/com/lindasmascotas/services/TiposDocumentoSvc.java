@@ -33,5 +33,5 @@ public interface TiposDocumentoSvc {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<TiposDocumento> eliminar(TiposDocumento td);
+    List<TiposDocumento> eliminar(@QueryParam("id") Integer id);
 }

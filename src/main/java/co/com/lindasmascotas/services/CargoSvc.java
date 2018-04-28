@@ -34,6 +34,6 @@ public interface CargoSvc {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Cargos> eliminar(Cargos c);  
+    List<Cargos> eliminar(@QueryParam("id") Integer id);  
     
 }

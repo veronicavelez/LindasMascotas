@@ -52,11 +52,11 @@ public class CargosImpl implements CargoSvc {
     }
 
     @Override
-    public List<Cargos> eliminar(Cargos c) {
+    public List<Cargos> eliminar(Integer id) {
          CargosJpaController ctrl = new CargosJpaController(UPfactory.getFACTORY());
 
         try {
-            ctrl.destroy(c.getIdCargo());
+            ctrl.destroy(id);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(CargosImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {

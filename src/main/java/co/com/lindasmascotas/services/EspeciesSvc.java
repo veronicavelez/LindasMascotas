@@ -33,6 +33,6 @@ public interface EspeciesSvc {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Especies> eliminar(Especies e);  
+    List<Especies> eliminar(@QueryParam("id") Integer id);  
     
 }

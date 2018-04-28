@@ -51,11 +51,11 @@ public class PerfilesImpl implements PerfilesSvc {
     }
 
     @Override
-    public List<Perfiles> eliminar(Perfiles p) {
+    public List<Perfiles> eliminar(Integer id) {
         PerfilesJpaController ctrl = new PerfilesJpaController(UPfactory.getFACTORY());
 
         try {
-            ctrl.destroy(p.getIdPerfil());
+            ctrl.destroy(id);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(PerfilesImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {

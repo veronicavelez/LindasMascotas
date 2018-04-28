@@ -33,5 +33,5 @@ public interface ProductosSvc {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Productos> eliminar(Productos p);
+    List<Productos> eliminar(@QueryParam("id") Integer id);
 }

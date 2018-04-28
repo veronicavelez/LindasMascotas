@@ -51,11 +51,11 @@ public class EspeciesImpl implements EspeciesSvc{
     }
 
     @Override
-    public List<Especies> eliminar(Especies e) {
+    public List<Especies> eliminar(Integer id) {
         EspeciesJpaController ctrl = new EspeciesJpaController(UPfactory.getFACTORY());
 
         try {
-            ctrl.destroy(e.getIdEspecie());
+            ctrl.destroy(id);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(EspeciesImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {

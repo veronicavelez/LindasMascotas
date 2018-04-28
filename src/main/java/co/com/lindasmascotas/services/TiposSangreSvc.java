@@ -36,7 +36,7 @@ public interface TiposSangreSvc {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<TiposSangre> eliminar(TiposSangre ts);  
+    List<TiposSangre> eliminar(@QueryParam("id") Integer id);  
     
     
 }
