@@ -53,11 +53,11 @@ public class PaisesImpl implements PaisesSvc {
     }
 
     @Override
-    public List<Paises> eliminar(Paises p) {
+    public List<Paises> eliminar(String id) {
         PaisesJpaController ctrl = new PaisesJpaController(UPfactory.getFACTORY());
 
         try {
-            ctrl.destroy(p.getIdPais());
+            ctrl.destroy(id);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(PaisesImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {
