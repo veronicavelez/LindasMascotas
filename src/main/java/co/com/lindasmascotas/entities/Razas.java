@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -36,6 +38,10 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "Razas.findByIdRaza", query = "SELECT r FROM Razas r WHERE r.idRaza = :idRaza")
     , @NamedQuery(name = "Razas.findByNombreRaza", query = "SELECT r FROM Razas r WHERE r.nombreRaza = :nombreRaza")})
 public class Razas implements Serializable {
+
+    @JoinColumn(name = "id_especie", referencedColumnName = "id_especie")
+    @ManyToOne(optional = false)
+    private Especies idEspecie;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -112,6 +118,14 @@ public class Razas implements Serializable {
     @Override
     public String toString() {
         return "co.com.lindasmascotas.entities.Razas[ idRaza=" + idRaza + " ]";
+    }
+
+    public Especies getIdEspecie() {
+        return idEspecie;
+    }
+
+    public void setIdEspecie(Especies idEspecie) {
+        this.idEspecie = idEspecie;
     }
     
 }
