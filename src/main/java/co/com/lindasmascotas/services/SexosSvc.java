@@ -33,6 +33,6 @@ public interface SexosSvc {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Sexos> eliminar(Sexos s);  
+    List<Sexos> eliminar(@QueryParam("id") Integer id);  
     
 }

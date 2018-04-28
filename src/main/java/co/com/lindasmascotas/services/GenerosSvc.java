@@ -33,5 +33,5 @@ public interface GenerosSvc {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Generos> eliminar(Generos g);
+    List<Generos> eliminar(@QueryParam("id") Integer id);
 }

@@ -57,11 +57,11 @@ public class CiudadesImpl implements CiudadesSvc {
     }
 
     @Override
-    public List<Ciudades> eliminar(Ciudades c) {
+    public List<Ciudades> eliminar(String id) {
         CiudadesJpaController ctrl = new CiudadesJpaController(UPfactory.getFACTORY());
 
         try {
-            ctrl.destroy(c.getIdCiudad());
+            ctrl.destroy(id);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(CiudadesImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalOrphanException ex) {

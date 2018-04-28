@@ -39,6 +39,6 @@ public interface CiudadesSvc {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Ciudades> eliminar(Ciudades c);  
+    List<Ciudades> eliminar(@QueryParam("id") String id);  
     
 }

@@ -56,11 +56,11 @@ public class BarriosImpl implements BarriosSvc {
     }
     
     @Override
-    public List<Barrios> eliminar(Barrios b) {
+    public List<Barrios> eliminar(Integer id) {
         BarriosJpaController ctrl = new BarriosJpaController(UPfactory.getFACTORY());
 
         try {
-            ctrl.destroy(b.getIdBarrio());
+            ctrl.destroy(id);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(BarriosImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalOrphanException ex) {

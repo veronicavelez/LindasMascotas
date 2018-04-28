@@ -53,11 +53,11 @@ public class TiposContratoImpl implements TiposContratoSvc {
     }
 
     @Override
-    public List<TiposContrato> eliminar(TiposContrato tc) {
+    public List<TiposContrato> eliminar(Integer id) {
           TiposContratoJpaController ctrl = new TiposContratoJpaController(UPfactory.getFACTORY());
 
         try {
-            ctrl.destroy(tc.getIdTipoContrato());
+            ctrl.destroy(id);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(TiposContratoImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalOrphanException ex) {

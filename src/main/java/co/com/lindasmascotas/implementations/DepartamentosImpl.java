@@ -56,11 +56,11 @@ public class DepartamentosImpl implements DepartamentosSvc {
     }
 
     @Override
-    public List<Departamentos> eliminar(Departamentos d) {
+    public List<Departamentos> eliminar(String id) {
         DepartamentosJpaController ctrl = new DepartamentosJpaController(UPfactory.getFACTORY());
         
         try {
-            ctrl.destroy(d.getIdDepartamento());
+            ctrl.destroy(id);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(DepartamentosImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {
