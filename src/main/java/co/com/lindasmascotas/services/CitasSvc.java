@@ -1,5 +1,6 @@
 
 package co.com.lindasmascotas.services;
+import co.com.lindasmascotas.dtos.CitasDTO;
 import co.com.lindasmascotas.entities.Citas;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -22,17 +23,17 @@ public interface CitasSvc {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Citas> crear(Citas c);
+    List<Citas> crear(CitasDTO c);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Citas> editar(Citas c);
+    List<Citas> editar(CitasDTO c);
     
     @Path("/cancelar")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Citas> Cancelar(Citas c);  
+    List<Citas> Cancelar(CitasDTO c);  
     
 }
