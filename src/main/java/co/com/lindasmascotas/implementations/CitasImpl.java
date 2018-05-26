@@ -6,6 +6,7 @@ import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityExceptio
 import co.com.lindasmascotas.dtos.CitasDTO;
 import co.com.lindasmascotas.entities.Citas;
 import co.com.lindasmascotas.services.CitasSvc;
+import co.com.lindasmascotas.util.Mail;
 import co.com.lindasmascotas.util.UPfactory;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.persistence.internal.helper.Helper;
+
 
 
 public class CitasImpl implements CitasSvc {
@@ -44,6 +46,8 @@ public class CitasImpl implements CitasSvc {
             }
             
             ctrl.create(crearcita);
+            Mail.EnviarMail("Recordatorio Cita", crearcita.getIdPropietario().getCorreoElectronico(), "Le recordamos su cita el dia ");
+            
         } catch (Exception ex) {
             Logger.getLogger(CitasImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -110,5 +114,6 @@ public class CitasImpl implements CitasSvc {
         
         }
     }
+    
     
 }
