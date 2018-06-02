@@ -34,4 +34,10 @@ public interface RazasSvc {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     List<Razas> eliminar(@QueryParam("id") Integer id);  
+    
+    @Path("/razasporespecie")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    List<Razas> razasPorEspecie(@QueryParam("id") Integer id); 
+    
 }

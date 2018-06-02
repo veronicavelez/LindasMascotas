@@ -1,8 +1,10 @@
 
 package co.com.lindasmascotas.implementations;
+import co.com.lindasmascotas.JPAcontrollers.EspeciesJpaController;
 import co.com.lindasmascotas.JPAcontrollers.RazasJpaController;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.IllegalOrphanException;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
+import co.com.lindasmascotas.entities.Especies;
 import co.com.lindasmascotas.entities.Razas;
 import co.com.lindasmascotas.services.RazasSvc;
 import co.com.lindasmascotas.util.UPfactory;
@@ -69,6 +71,17 @@ public class RazasImpl implements RazasSvc {
         
         
     }    
+
+    @Override
+    public List<Razas> razasPorEspecie(Integer id) {
+        EspeciesJpaController ctrlEspecie = new EspeciesJpaController(UPfactory.getFACTORY());
+        RazasJpaController ctrl = new RazasJpaController(UPfactory.getFACTORY());
+        
+        Especies e = ctrlEspecie.findEspecies(id);
+        List<Razas> lista = ctrl.findRazasByEspecies(e);
+        
+        return lista;
+    }
     
     
 }

@@ -35,7 +35,6 @@ public class CitasImpl implements CitasSvc {
         crearcita.setNombreMascota(c.getNombreMascota());
         crearcita.setTelefonoMovil(c.getTelefonoMovil());
         crearcita.setFechaCita(c.getFechaCita());
-        crearcita.setHoraCita(c.getHoraCita());
         crearcita.setIdPropietario(c.getIdPropietario());
         crearcita.setIdTipoServicio(c.getIdTipoServicio());
         
@@ -64,7 +63,6 @@ public class CitasImpl implements CitasSvc {
         citaActual.setNombreMascota(c.getNombreMascota());
         citaActual.setTelefonoMovil(c.getTelefonoMovil());
         citaActual.setFechaCita(c.getFechaCita());
-        citaActual.setHoraCita(c.getHoraCita());
        
         try {
             ctrl.edit(citaActual);

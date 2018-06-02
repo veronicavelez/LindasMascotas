@@ -78,9 +78,7 @@ public class CiudadesImpl implements CiudadesSvc {
         CiudadesJpaController ctrl = new CiudadesJpaController(UPfactory.getFACTORY());
 
         Departamentos d = ctrlDpto.findDepartamentos(id);
-        List<Ciudades> lista = new ArrayList<Ciudades>();
-
-        lista = ctrl.findCiudadByDepartamento(d);
+        List<Ciudades> lista = ctrl.findCiudadByDepartamento(d);
 
         return lista;
     }

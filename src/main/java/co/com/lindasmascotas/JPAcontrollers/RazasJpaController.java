@@ -228,5 +228,21 @@ public class RazasJpaController implements Serializable {
             em.close();
         }
     }
+
+    public List<Razas> findRazasByEspecies(Especies e) {
+        EntityManager em = getEntityManager();
+        List<Razas> lista = new ArrayList();
+        
+        try {
+            Query q = em.createNamedQuery("Razas.findRazasByEspecies");
+            q.setParameter("idEspecie", e);
+            
+            lista = (List<Razas>)q.getResultList();
+        } finally{
+            em.close();
+        }
+        
+        return lista;
+    }
     
 }
