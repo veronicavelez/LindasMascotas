@@ -47,6 +47,8 @@ public class EmpleadosImpl implements EmpleadosSvc{
                 empleadoActual.setTelefonoMovil(e.getTelefonoMovil());
                 empleadoActual.setFechaContratoInicial(e.getFechaContratoInicial());
                 empleadoActual.setFechaContratoFinal(e.getFechaContratoFinal());
+                empleadoActual.setEstadoEmpleado(e.getEstadoEmpleado());
+                
                 
                 
                 

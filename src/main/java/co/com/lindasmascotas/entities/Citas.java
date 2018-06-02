@@ -36,13 +36,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Citas.findByFechaCita", query = "SELECT c FROM Citas c WHERE c.fechaCita = :fechaCita")})
 public class Citas implements Serializable {
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "hora_cita")
-    @Temporal(TemporalType.TIME)
-    private Date horaCita;
-  
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,7 +55,7 @@ public class Citas implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_cita")
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCita;
     @JoinColumn(name = "id_propietario", referencedColumnName = "id_propietario")
     @ManyToOne(optional = false)
@@ -157,15 +150,4 @@ public class Citas implements Serializable {
     public String toString() {
         return "co.com.lindasmascotas.entities.Citas[ idCita=" + idCita + " ]";
     }
-
-    public Date getHoraCita() {
-        return horaCita;
-    }
-
-    public void setHoraCita(Date horaCita) {
-        this.horaCita = horaCita;
-    }
-
-  
-
 }

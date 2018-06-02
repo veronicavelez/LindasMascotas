@@ -44,6 +44,8 @@ public class MascotasImpl implements MascotasSvc {
         mascotaActual.setFechaNacimiento(m.getFechaNacimiento());
         mascotaActual.setPeso(m.getPeso());
         mascotaActual.setVive(m.getVive());
+        mascotaActual.setEstado(m.getEstado());
+        mascotaActual.setIdPropietario(m.getIdPropietario());
      
         try {
             ctrl.edit(mascotaActual);

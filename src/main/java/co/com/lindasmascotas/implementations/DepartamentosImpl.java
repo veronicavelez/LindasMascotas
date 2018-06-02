@@ -76,9 +76,7 @@ public class DepartamentosImpl implements DepartamentosSvc {
         DepartamentosJpaController ctrl = new DepartamentosJpaController(UPfactory.getFACTORY());
         
         Paises p = ctrlPais.findPaises(id);
-        List<Departamentos> lista = new ArrayList<Departamentos>();
-        
-        lista = ctrl.findDepartamentoByPais(p);
+        List<Departamentos> lista = ctrl.findDepartamentoByPais(p);
         
         return lista;
     }
