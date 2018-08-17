@@ -2,6 +2,7 @@
 package co.com.lindasmascotas.services;
 
 import co.com.lindasmascotas.entities.Ciudades;
+import co.com.lindasmascotas.util.Response;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -18,27 +19,27 @@ public interface CiudadesSvc {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<Ciudades> listarCiudades();
+    Response listarCiudades();
     
     @Path("/ciudadespordpto")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<Ciudades> ciudadesPorDpto(@QueryParam("id")String id);
+    Response ciudadesPorDpto(@QueryParam("id")String id);
     
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Ciudades> crear(Ciudades c);
+    Response crear(Ciudades c);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Ciudades> editar(Ciudades c);
+    Response editar(Ciudades c);
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Ciudades> eliminar(@QueryParam("id") String id);  
+    Response eliminar(@QueryParam("id") String id);  
     
 }
