@@ -45,8 +45,9 @@ public class CitasImpl implements CitasSvc {
             }
             
             ctrl.create(crearcita);
-            Mail.EnviarMail("Recordatorio Cita", crearcita.getIdPropietario().getCorreoElectronico(), "Le recordamos su cita el dia ");
-            
+            /*
+            Mail.EnviarMail("Recordatorio Cita", "medisabel97@gmail.com", "Le recordamos su cita el dia ");
+            */
         } catch (Exception ex) {
             Logger.getLogger(CitasImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
