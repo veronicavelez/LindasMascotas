@@ -2,6 +2,7 @@
 package co.com.lindasmascotas.services;
 
 import co.com.lindasmascotas.entities.Paises;
+import co.com.lindasmascotas.util.Response;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -18,22 +19,22 @@ import javax.ws.rs.core.MediaType;
 public interface PaisesSvc {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<Paises> listarPaises();
+    Response listarPaises();
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Paises> crear(Paises p);
+    Response crear(Paises p);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Paises> editar(Paises p);
+    Response editar(Paises p);
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Paises> eliminar(@QueryParam("id") String id);
+    Response eliminar(@QueryParam("id") String id);
     
     
 }

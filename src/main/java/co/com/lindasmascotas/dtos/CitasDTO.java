@@ -13,7 +13,6 @@ import java.util.Date;
  * @author ISABEL MEDINA
  */
 public class CitasDTO {
-    private Date horaCita;
     private Integer idCita;
     private String nombreMascota;
     private BigInteger telefonoMovil;
@@ -21,14 +20,7 @@ public class CitasDTO {
     private Propietarios idPropietario;
     private Servicios idTipoServicio;
 
-    public Date getHoraCita() {
-        return horaCita;
-    }
-
-    public void setHoraCita(Date horaCita) {
-        this.horaCita = horaCita;
-    }
-
+   
     public Integer getIdCita() {
         return idCita;
     }

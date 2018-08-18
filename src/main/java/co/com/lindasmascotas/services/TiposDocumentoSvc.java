@@ -2,6 +2,7 @@
 package co.com.lindasmascotas.services;
 
 import co.com.lindasmascotas.entities.TiposDocumento;
+import co.com.lindasmascotas.util.Response;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -18,20 +19,20 @@ public interface TiposDocumentoSvc {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<TiposDocumento> listarTiposDocumento();
+    Response listarTiposDocumento();
        
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<TiposDocumento> crear(TiposDocumento td);
+    Response crear(TiposDocumento td);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<TiposDocumento> editar(TiposDocumento td);
+    Response editar(TiposDocumento td);
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<TiposDocumento> eliminar(@QueryParam("id") Integer id);
+    Response eliminar(@QueryParam("id") Integer id);
 }

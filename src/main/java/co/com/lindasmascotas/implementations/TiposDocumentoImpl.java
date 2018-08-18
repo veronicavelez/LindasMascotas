@@ -6,6 +6,8 @@ import co.com.lindasmascotas.JPAcontrollers.exceptions.IllegalOrphanException;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
 import co.com.lindasmascotas.entities.TiposDocumento;
 import co.com.lindasmascotas.services.TiposDocumentoSvc;
+import co.com.lindasmascotas.util.MessageExceptions;
+import co.com.lindasmascotas.util.Response;
 import co.com.lindasmascotas.util.UPfactory;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,26 +17,45 @@ import java.util.logging.Logger;
 public class TiposDocumentoImpl implements TiposDocumentoSvc {
 
     @Override
-    public List<TiposDocumento> listarTiposDocumento() {
+    public Response listarTiposDocumento() {
+         Response res = new Response();
          TiposDocumentoJpaController ctrl = new TiposDocumentoJpaController(UPfactory.getFACTORY());
-
-        return ctrl.findTiposDocumentoEntities();
+        
+         try {
+             List<TiposDocumento> list = ctrl.findTiposDocumentoEntities();
+             
+             res.setStatus(true);
+             res.setData(list);
+        } catch (Exception e) {
+            res.setStatus(false);
+            res.setMessage("Ha ocurrido un error, intente más tarde.");
+        }
+         
+         return res;
     }
 
     @Override
-    public List<TiposDocumento> crear(TiposDocumento td) {
+    public Response crear(TiposDocumento td) {
+        Response res = new Response();
         TiposDocumentoJpaController ctrl = new TiposDocumentoJpaController(UPfactory.getFACTORY());
 
         try {
             ctrl.create(td);
+            
+            res = listarTiposDocumento();
         } catch (Exception ex) {
             Logger.getLogger(TiposDocumentoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findTiposDocumentoEntities());
         }
-        return listarTiposDocumento();
+        return res;
     }
 
     @Override
-    public List<TiposDocumento> editar(TiposDocumento td) {
+    public Response editar(TiposDocumento td) {
+        Response res = new Response();
         TiposDocumentoJpaController ctrl = new TiposDocumentoJpaController(UPfactory.getFACTORY());
         TiposDocumento tipoDocActual = ctrl.findTiposDocumento(td.getIdTipoDoc());
 
@@ -42,27 +63,48 @@ public class TiposDocumentoImpl implements TiposDocumentoSvc {
 
         try {
             ctrl.edit(tipoDocActual);
+          
+            res = listarTiposDocumento();
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(TiposDocumentoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findTiposDocumentoEntities());
         } catch (Exception ex) {
             Logger.getLogger(TiposDocumentoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findTiposDocumentoEntities());
         }
-        return listarTiposDocumento();
+        return res;
     }
 
     @Override
-    public List<TiposDocumento> eliminar(Integer id) {
+    public Response eliminar(Integer id) {
+        Response res = new Response();
         TiposDocumentoJpaController ctrl = new TiposDocumentoJpaController(UPfactory.getFACTORY());
 
         try {
             ctrl.destroy(id);
+            
+            res = listarTiposDocumento();
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(TiposDocumentoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findTiposDocumentoEntities());
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(TiposDocumentoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findTiposDocumentoEntities());
         }
 
-        return listarTiposDocumento();
+        return res;
     }
     
 }
