@@ -2,6 +2,7 @@
 package co.com.lindasmascotas.services;
 
 import co.com.lindasmascotas.entities.Procedimientos;
+import co.com.lindasmascotas.util.Response;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -17,18 +18,18 @@ public interface ProcedimientosSvc {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<Procedimientos> listarProcedimientos();
+    Response listarProcedimientos();
     
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Procedimientos> crear(Procedimientos pr);
+    Response crear(Procedimientos pr);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Procedimientos> editar(Procedimientos pr);
+    Response editar(Procedimientos pr);
     
     
     

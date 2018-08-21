@@ -1,6 +1,7 @@
 
 package co.com.lindasmascotas.services;
 import co.com.lindasmascotas.entities.Mascotas;
+import co.com.lindasmascotas.util.Response;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -16,22 +17,22 @@ public interface MascotasSvc {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<Mascotas> listarMascotas();
+    Response listarMascotas();
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Mascotas> crear(Mascotas m);
+    Response crear(Mascotas m);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Mascotas> editar(Mascotas m);
+    Response editar(Mascotas m);
     
     @Path("/estado")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Mascotas> estado(Mascotas m);    
+    Response estado(Mascotas m);    
     
 }

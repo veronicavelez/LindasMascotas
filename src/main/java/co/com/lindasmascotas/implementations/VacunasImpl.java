@@ -6,6 +6,8 @@ import co.com.lindasmascotas.JPAcontrollers.exceptions.IllegalOrphanException;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
 import co.com.lindasmascotas.entities.Vacunas;
 import co.com.lindasmascotas.services.VacunasSvc;
+import co.com.lindasmascotas.util.MessageExceptions;
+import co.com.lindasmascotas.util.Response;
 import co.com.lindasmascotas.util.UPfactory;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,26 +17,45 @@ import java.util.logging.Logger;
 public class VacunasImpl implements VacunasSvc {
 
     @Override
-    public List<Vacunas> listarVacunas() {
+    public Response listarVacunas() {
         VacunasJpaController ctrl = new VacunasJpaController(UPfactory.getFACTORY());
-
-        return ctrl.findVacunasEntities();
+        Response res = new Response();
+        
+        try {
+            List<Vacunas> list = ctrl.findVacunasEntities();
+            
+            res.setStatus(true);
+            res.setData(list);
+        } catch (Exception e){
+            
+            res.setStatus(false);
+            res.setMessage("Ha ocurrido un error, intente más tarde.");
+        }
+        return res;
     }
 
     @Override
-    public List<Vacunas> crear(Vacunas v) {
+    public Response crear(Vacunas v) {
+        Response res = new Response();
         VacunasJpaController ctrl = new VacunasJpaController(UPfactory.getFACTORY());
         
         try {
             ctrl.create(v);
+            
+            res = listarVacunas();
         } catch (Exception ex) {
             Logger.getLogger(VacunasImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findVacunasEntities());
         }
-        return listarVacunas();
+        return res;
     }
 
     @Override
-    public List<Vacunas> editar(Vacunas v) {
+    public Response editar(Vacunas v) {
+        Response res = new Response();
         VacunasJpaController ctrl = new VacunasJpaController(UPfactory.getFACTORY());
         
         Vacunas vacunaActual = ctrl.findVacunas(v.getIdVacuna());
@@ -44,25 +65,40 @@ public class VacunasImpl implements VacunasSvc {
 
         try {
             ctrl.edit(vacunaActual);
+            
+            res = listarVacunas();
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(VacunasImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findVacunasEntities());
         } catch (Exception ex) {
             Logger.getLogger(VacunasImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findVacunasEntities());
         }
-        return listarVacunas();
+        return res;
     }
 
     @Override
-    public List<Vacunas> eliminar(Vacunas v) {
+    public Response eliminar(Vacunas v) {
+        Response res = new Response();
          VacunasJpaController ctrl = new VacunasJpaController(UPfactory.getFACTORY());
-
+         
         try {
-            ctrl.destroy(v.getIdVacuna());
-        } catch (NonexistentEntityException ex) {
+            ctrl.destroy(v.getIdVacuna()); 
+            
+            res = listarVacunas();
+        } catch (NonexistentEntityException ex){
             Logger.getLogger(VacunasImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findVacunasEntities());
         }
-
-        return listarVacunas();
-    }
-    
+        return res;
+    } 
 }

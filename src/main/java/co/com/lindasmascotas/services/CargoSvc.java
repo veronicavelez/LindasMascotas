@@ -2,6 +2,7 @@
 package co.com.lindasmascotas.services;
 
 import co.com.lindasmascotas.entities.Cargos;
+import co.com.lindasmascotas.util.Response;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -19,21 +20,21 @@ public interface CargoSvc {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<Cargos> listarCargos();
-       
-    @POST
+    Response listarCargos();
+        
+   @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Cargos> crear(Cargos c);
+   Response crear(Cargos c);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Cargos> editar(Cargos c);
+   Response editar(Cargos c);
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Cargos> eliminar(@QueryParam("id") Integer id);  
+   Response eliminar(@QueryParam("id") Integer id);  
     
 }
