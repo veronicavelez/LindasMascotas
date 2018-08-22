@@ -2,6 +2,7 @@
 package co.com.lindasmascotas.services;
 
 import co.com.lindasmascotas.entities.TiposContrato;
+import co.com.lindasmascotas.util.Response;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -19,22 +20,22 @@ public interface TiposContratoSvc {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<TiposContrato> listarTiposContrato();
+    Response listarTiposContrato();
        
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<TiposContrato> crear(TiposContrato tc);
+    Response crear(TiposContrato tc);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<TiposContrato> editar(TiposContrato tc);
+    Response editar(TiposContrato tc);
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<TiposContrato> eliminar(@QueryParam("id") Integer id);  
+    Response eliminar(@QueryParam("id") Integer id);  
     
     
 }

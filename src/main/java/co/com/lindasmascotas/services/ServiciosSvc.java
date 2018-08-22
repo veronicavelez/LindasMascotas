@@ -2,6 +2,7 @@
 package co.com.lindasmascotas.services;
 
 import co.com.lindasmascotas.entities.Servicios;
+import co.com.lindasmascotas.util.Response;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -19,20 +20,20 @@ public interface ServiciosSvc {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<Servicios> listarServicios();
+    Response listarServicios();
        
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Servicios> crear(Servicios s);
+    Response crear(Servicios s);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Servicios> editar(Servicios s);
+    Response editar(Servicios s);
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Servicios> eliminar(@QueryParam("id") Integer id);
+    Response eliminar(@QueryParam("id") Integer id);
 }

@@ -2,6 +2,7 @@
 package co.com.lindasmascotas.services;
 
 import co.com.lindasmascotas.entities.Perfiles;
+import co.com.lindasmascotas.util.Response;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -17,20 +18,20 @@ import javax.ws.rs.core.MediaType;
 public interface PerfilesSvc {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<Perfiles> listarPerfiles();
+    Response listarPerfiles();
        
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Perfiles> crear(Perfiles p);
+    Response crear(Perfiles p);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Perfiles> editar(Perfiles p);
+    Response editar(Perfiles p);
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Perfiles> eliminar(@QueryParam("id") Integer id);  
+    Response eliminar(@QueryParam("id") Integer id);  
 }

@@ -2,6 +2,7 @@
 package co.com.lindasmascotas.services;
 
 import co.com.lindasmascotas.entities.TiposSangre;
+import co.com.lindasmascotas.util.Response;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -21,22 +22,22 @@ public interface TiposSangreSvc {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<TiposSangre> listarTiposSangre();
+    Response listarTiposSangre();
        
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<TiposSangre> crear(TiposSangre ts);
+    Response crear(TiposSangre ts);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<TiposSangre> editar(TiposSangre ts);
+    Response editar(TiposSangre ts);
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<TiposSangre> eliminar(@QueryParam("id") Integer id);  
+    Response eliminar(@QueryParam("id") Integer id);  
     
     
 }

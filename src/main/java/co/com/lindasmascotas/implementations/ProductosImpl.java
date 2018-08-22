@@ -6,6 +6,8 @@ import co.com.lindasmascotas.JPAcontrollers.exceptions.IllegalOrphanException;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
 import co.com.lindasmascotas.entities.Productos;
 import co.com.lindasmascotas.services.ProductosSvc;
+import co.com.lindasmascotas.util.MessageExceptions;
+import co.com.lindasmascotas.util.Response;
 import co.com.lindasmascotas.util.UPfactory;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,26 +17,46 @@ import java.util.logging.Logger;
 public class ProductosImpl implements ProductosSvc {
 
     @Override
-    public List<Productos> listarProductos() {
+    public Response listarProductos() {
+        Response res = new Response();
         ProductosJpaController ctrl = new ProductosJpaController(UPfactory.getFACTORY());
+        
+        try {
+            
+            List<Productos> list = ctrl.findProductosEntities();
+            
+            res.setStatus(true);
+            res.setData(list);
+        } catch (Exception e){
+            res.setStatus(false);
+            res.setMessage("Ha ocurrido un error, intente más tarde.");
+        }
 
-            return ctrl.findProductosEntities();
+            return res;
     }
 
     @Override
-    public List<Productos> crear(Productos p) {
+    public Response crear(Productos p) {
+        Response res = new Response();
         ProductosJpaController ctrl = new ProductosJpaController(UPfactory.getFACTORY());
                 
         try {
             ctrl.create(p);
+            
+            res = listarProductos();
         } catch (Exception ex) {
             Logger.getLogger(ProductosImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findProductosEntities());
         }
-        return listarProductos();
+        return res;
     }
 
     @Override
-    public List<Productos> editar(Productos p) {
+    public Response editar(Productos p) {
+        Response res = new Response();
         ProductosJpaController ctrl = new ProductosJpaController(UPfactory.getFACTORY());
         
         Productos productoActual = ctrl.findProductos(p.getIdProducto());
@@ -46,26 +68,43 @@ public class ProductosImpl implements ProductosSvc {
         
         try {
             ctrl.edit(productoActual);
+            
+            res = listarProductos();
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(ProductosImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findProductosEntities());
         } catch (Exception ex) {
             Logger.getLogger(ProductosImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findProductosEntities());
         }
-        return listarProductos();
+        return res;
 
     }
 
     @Override
-    public List<Productos> eliminar(Integer id) {
+    public Response eliminar(Integer id) {
+        Response res = new Response();
         ProductosJpaController ctrl = new ProductosJpaController(UPfactory.getFACTORY());
 
         try {
             ctrl.destroy(id);
+            
+            res = listarProductos();
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(ProductosImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findProductosEntities());
         }
 
-        return listarProductos();
+        return res;
     }
      
     

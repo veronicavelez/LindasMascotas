@@ -5,6 +5,8 @@ import co.com.lindasmascotas.JPAcontrollers.exceptions.IllegalOrphanException;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
 import co.com.lindasmascotas.entities.TiposSangre;
 import co.com.lindasmascotas.services.TiposSangreSvc;
+import co.com.lindasmascotas.util.MessageExceptions;
+import co.com.lindasmascotas.util.Response;
 import co.com.lindasmascotas.util.UPfactory;
 import java.util.List;
 import java.util.logging.Level;
@@ -14,29 +16,48 @@ import java.util.logging.Logger;
 public class TiposSangreImpl implements TiposSangreSvc {
 
     @Override
-    public List<TiposSangre> listarTiposSangre() {
+    public Response listarTiposSangre() {
            TiposSangreJpaController ctrl = new TiposSangreJpaController(UPfactory.getFACTORY());
+           Response res = new Response();
+           
+           try {
+               List<TiposSangre> list = ctrl.findTiposSangreEntities();
+               
+               res.setStatus(true);
+               res.setData(list);
+           } catch (Exception e){
+               res.setStatus(false);
+               res.setMessage("Ha ocurrido un error, intente más tarde.");
+           }
 
-        return ctrl.findTiposSangreEntities();
+        return res;
     }
     
     
     @Override
-    public List<TiposSangre> crear(TiposSangre ts) {
+    public Response crear(TiposSangre ts) {
+        Response res = new Response();
           TiposSangreJpaController ctrl = new TiposSangreJpaController(UPfactory.getFACTORY());
 
         try {
             ctrl.create(ts);
+            
+            res = listarTiposSangre();
         } catch (Exception ex) {
             Logger.getLogger(TiposSangreImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findTiposSangreEntities());
         }
 
-        return listarTiposSangre();
+        return res;
     }
     
 
     @Override
-    public List<TiposSangre> editar(TiposSangre ts) {
+    public Response editar(TiposSangre ts){
+        Response res = new Response();
          TiposSangreJpaController ctrl = new TiposSangreJpaController(UPfactory.getFACTORY());
 
           TiposSangre tiposangreActual = ctrl.findTiposSangre(ts.getIdTipoSangre());
@@ -45,28 +66,49 @@ public class TiposSangreImpl implements TiposSangreSvc {
 
         try {
             ctrl.edit(tiposangreActual);
+            
+            res = listarTiposSangre();
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(TiposSangreImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findTiposSangreEntities());
         } catch (Exception ex) {
             Logger.getLogger(TiposSangreImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findTiposSangreEntities());
         }
 
-        return listarTiposSangre();
+        return res;
     }
 
     @Override
-    public List<TiposSangre> eliminar(Integer id) {
+    public Response eliminar(Integer id) {
+        Response res = new Response();
         TiposSangreJpaController ctrl = new TiposSangreJpaController(UPfactory.getFACTORY());
 
         try {
             ctrl.destroy(id);
+            
+            res = listarTiposSangre();
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(TiposSangreImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findTiposSangreEntities());
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(TiposSangreImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findTiposSangreEntities());
         }
 
-        return listarTiposSangre();
+        return res;
         
     }
     

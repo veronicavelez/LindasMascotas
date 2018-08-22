@@ -2,6 +2,7 @@
 package co.com.lindasmascotas.services;
 
 import co.com.lindasmascotas.entities.Generos;
+import co.com.lindasmascotas.util.Response;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -18,20 +19,20 @@ import javax.ws.rs.core.MediaType;
 public interface GenerosSvc {
      @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<Generos> listarGeneros();
+    Response listarGeneros();
        
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Generos> crear(Generos g);
+    Response crear(Generos g);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Generos> editar(Generos g);
+    Response editar(Generos g);
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Generos> eliminar(@QueryParam("id") Integer id);
+    Response eliminar(@QueryParam("id") Integer id);
 }
