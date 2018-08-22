@@ -22,19 +22,19 @@ public interface CargoSvc {
     @Produces(MediaType.APPLICATION_JSON)
     Response listarCargos();
         
-   @POST
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-   Response crear(Cargos c);
+    Response crear(Cargos c);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-   Response editar(Cargos c);
+    Response editar(Cargos c);
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-   Response eliminar(@QueryParam("id") Integer id);  
+    Response eliminar(@QueryParam("id") Integer id);  
     
 }
