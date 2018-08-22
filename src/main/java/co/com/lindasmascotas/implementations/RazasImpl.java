@@ -7,6 +7,8 @@ import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityExceptio
 import co.com.lindasmascotas.entities.Especies;
 import co.com.lindasmascotas.entities.Razas;
 import co.com.lindasmascotas.services.RazasSvc;
+import co.com.lindasmascotas.util.MessageExceptions;
+import co.com.lindasmascotas.util.Response;
 import co.com.lindasmascotas.util.UPfactory;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,72 +17,122 @@ import java.util.logging.Logger;
 public class RazasImpl implements RazasSvc {
     
      @Override
-    public List<Razas> listarRazas() {
+    public Response listarRazas() {
          RazasJpaController ctrl = new RazasJpaController(UPfactory.getFACTORY());
+         Response res = new Response();
 
-        return ctrl.findRazasEntities();
+         
+         try {
+            List<Razas> list = ctrl.findRazasEntities();
+            
+            res.setStatus(true);
+            res.setData(list);
+            
+        } catch (Exception e) {
+            res.setStatus(false);
+            res.setMessage("Ha ocurrido un error, intente más tarde.");
+        } 
+        return res;
     }
     
     @Override
-     public List<Razas> crear(Razas r) {
+     public Response crear(Razas r) {
+        Response res = new Response();
         RazasJpaController ctrl = new RazasJpaController(UPfactory.getFACTORY());
 
         try {
             ctrl.create(r);
+            
+            res = listarRazas();
         } catch (Exception ex) {
             Logger.getLogger(RazasImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findRazasEntities());
         }
 
-        return listarRazas();
+        return res;
     }
      
      
       @Override
-      public List<Razas> editar(Razas r) {
+      public Response editar(Razas r) {
+        Response res = new Response();
         RazasJpaController ctrl = new RazasJpaController(UPfactory.getFACTORY());
 
-          Razas razaActual = ctrl.findRazas(r.getIdRaza());
+        Razas razaActual = ctrl.findRazas(r.getIdRaza());
 
         razaActual.setNombreRaza(r.getNombreRaza());
-
+        
         try {
             ctrl.edit(razaActual);
+            
+            res = listarRazas();
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(RazasImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findRazasEntities());
         } catch (Exception ex) {
             Logger.getLogger(RazasImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findRazasEntities());
         }
 
-        return listarRazas();
+        return res;
 
     }
     
     @Override
-    public List<Razas> eliminar(Integer id) {
+    public Response eliminar(Integer id) {
+        Response res = new Response();
         RazasJpaController ctrl = new RazasJpaController(UPfactory.getFACTORY());
 
         try {
             ctrl.destroy(id);
+            
+            res = listarRazas();
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(RazasImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findRazasEntities());
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(RazasImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findRazasEntities());
         }
 
-        return listarRazas();
+        return res;
         
         
     }    
 
     @Override
-    public List<Razas> razasPorEspecie(Integer id) {
+    public Response razasPorEspecie(Integer id) {
+        Response res = new Response();
         EspeciesJpaController ctrlEspecie = new EspeciesJpaController(UPfactory.getFACTORY());
         RazasJpaController ctrl = new RazasJpaController(UPfactory.getFACTORY());
         
-        Especies e = ctrlEspecie.findEspecies(id);
-        List<Razas> lista = ctrl.findRazasByEspecies(e);
-        
-        return lista;
+        try {
+            Especies e = ctrlEspecie.findEspecies(id);
+            List<Razas> lista = ctrl.findRazasByEspecies(e);
+            
+            res.setStatus(true);
+            res.setData(lista);
+        } catch (Exception e) {
+            res.setStatus(false);
+            res.setMessage("Ha ocurrido un error, intente más tarde.");
+        }
+       
+        return res;
     }
     
     

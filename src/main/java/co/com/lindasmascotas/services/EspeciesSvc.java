@@ -2,6 +2,7 @@
 package co.com.lindasmascotas.services;
 
 import co.com.lindasmascotas.entities.Especies;
+import co.com.lindasmascotas.util.Response;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -18,21 +19,21 @@ public interface EspeciesSvc {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<Especies> listarEspecies();
+    Response listarEspecies();
        
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Especies> crear(Especies e);
+    Response crear(Especies e);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Especies> editar(Especies e);
+    Response editar(Especies e);
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Especies> eliminar(@QueryParam("id") Integer id);  
+    Response eliminar(@QueryParam("id") Integer id);  
     
 }
