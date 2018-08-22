@@ -2,6 +2,7 @@
 package co.com.lindasmascotas.services;
 
 import co.com.lindasmascotas.entities.Vacunas;
+import co.com.lindasmascotas.util.Response;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -19,21 +20,21 @@ public interface VacunasSvc {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<Vacunas> listarVacunas();
+    Response listarVacunas();
        
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Vacunas> crear(Vacunas v);
+    Response crear(Vacunas v);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Vacunas> editar(Vacunas v);
+    Response editar(Vacunas v);
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Vacunas> eliminar(Vacunas v);  
+    Response eliminar(Vacunas v);  
     
 }

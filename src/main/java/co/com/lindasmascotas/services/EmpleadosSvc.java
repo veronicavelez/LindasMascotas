@@ -1,6 +1,7 @@
 
 package co.com.lindasmascotas.services;
 import co.com.lindasmascotas.entities.Empleados;
+import co.com.lindasmascotas.util.Response;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -16,23 +17,23 @@ public interface EmpleadosSvc {
     
  @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<Empleados> listarEmpleados();
+    Response listarEmpleados();
    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Empleados> crear(Empleados e);
+    Response crear(Empleados e);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Empleados> editar(Empleados e);
+    Response editar(Empleados e);
     
     @Path("/estado")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Empleados> estado(Empleados e);    
+    Response estado(Empleados e);    
 }
    
     

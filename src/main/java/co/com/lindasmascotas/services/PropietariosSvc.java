@@ -2,6 +2,7 @@
 package co.com.lindasmascotas.services;
 
 import co.com.lindasmascotas.entities.Propietarios;
+import co.com.lindasmascotas.util.Response;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -17,24 +18,24 @@ public interface PropietariosSvc {
   
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<Propietarios> listarPropietarios();
+    Response listarPropietarios();
     
    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Propietarios> crear(Propietarios p);
+    Response crear(Propietarios p);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Propietarios> editar(Propietarios p);
+    Response editar(Propietarios p);
     
     @Path("/estado")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    List<Propietarios> estado(Propietarios p);
+    Response estado(Propietarios p);
     
     
 }

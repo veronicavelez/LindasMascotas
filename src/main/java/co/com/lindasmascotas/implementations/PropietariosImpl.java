@@ -7,6 +7,8 @@ import co.com.lindasmascotas.JPAcontrollers.exceptions.IllegalOrphanException;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
 import co.com.lindasmascotas.entities.Propietarios;
 import co.com.lindasmascotas.services.PropietariosSvc;
+import co.com.lindasmascotas.util.MessageExceptions;
+import co.com.lindasmascotas.util.Response;
 import co.com.lindasmascotas.util.UPfactory;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,16 +19,26 @@ import java.util.logging.Logger;
 public class PropietariosImpl implements PropietariosSvc{
 
     @Override
-    public List<Propietarios> listarPropietarios() {
-    PropietariosJpaController ctrl = new PropietariosJpaController(UPfactory.getFACTORY());
-
-     return ctrl.findPropietariosEntities();
+    public Response listarPropietarios() {
+        PropietariosJpaController ctrl = new PropietariosJpaController(UPfactory.getFACTORY());
+        Response res = new Response();
+    
+        try {
+            List<Propietarios> lis = ctrl.findPropietariosEntities();
+        
+            res.setStatus(true);
+            res.setData(lis);
+        } catch (Exception e){
+            res.setStatus(false);
+            res.setMessage("Ha ocurrido un error, intente más tarde.");
+        }
+        return res;
     }
 
     @Override
-    public List<Propietarios> crear(Propietarios p) {
-
-    PropietariosJpaController ctrl = new PropietariosJpaController(UPfactory.getFACTORY());
+    public Response crear(Propietarios p) {
+        Response res = new Response();
+        PropietariosJpaController ctrl = new PropietariosJpaController(UPfactory.getFACTORY());
  
         try {
             Calendar fechaNac = Calendar.getInstance();
@@ -34,15 +46,21 @@ public class PropietariosImpl implements PropietariosSvc{
             int edad = calculaEdad(fechaNac);
             if(edad >= 18 ){
                 ctrl.create(p);
-            }   
+            }
+            res = listarPropietarios();
         } catch (Exception ex) {
             Logger.getLogger(PropietariosImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findPropietariosEntities());
         }
-        return listarPropietarios();
+        return res;
     }
 
     @Override
-    public List<Propietarios> editar(Propietarios p) {
+    public Response editar(Propietarios p) {
+        Response res = new Response();
         PropietariosJpaController ctrl = new PropietariosJpaController(UPfactory.getFACTORY()); 
         Propietarios propietarioActual = ctrl.findPropietarios(p.getIdPropietario());
         
@@ -54,23 +72,32 @@ public class PropietariosImpl implements PropietariosSvc{
         propietarioActual.setTelefonoFijo(p.getTelefonoFijo());
         propietarioActual.setTelefonoMovil(p.getTelefonoMovil());
         
-        
-        
         try {
             ctrl.edit(propietarioActual);
+            
+            res = listarPropietarios();
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(PropietariosImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findPropietariosEntities());
         } catch (Exception ex) {
             Logger.getLogger(PropietariosImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findPropietariosEntities());
         }
         
-        return listarPropietarios();
+        return res;
     }
 
     /*Pendiente validar */
 
     @Override
-    public List<Propietarios> estado(Propietarios p) {
+    public Response estado(Propietarios p) {
+        Response res = new Response();
         PropietariosJpaController ctrl = new PropietariosJpaController(UPfactory.getFACTORY()); 
         Propietarios propietarioActual = ctrl.findPropietarios(p.getIdPropietario());
         
@@ -78,13 +105,23 @@ public class PropietariosImpl implements PropietariosSvc{
         
         try {
             ctrl.edit(propietarioActual);
+            
+            res = listarPropietarios();
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(PropietariosImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findPropietariosEntities());
         } catch (Exception ex) {
             Logger.getLogger(PropietariosImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+            res.setMessage(MessageExceptions.messageException(ex.getMessage()));
+            res.setData(ctrl.findPropietariosEntities());
         }
         
-        return listarPropietarios();
+        return res;
     
     }
   
