@@ -46,8 +46,11 @@ public class EmpleadosImpl implements EmpleadosSvc{
             if(edadEmpl >= 18){
                ctrl.create(e);
                 
-                 res = listarEmpleados();
+           } else{
+                res.setStatus(false);
+                res.setMessage("No fue posible realizar el registro, el empleado debe de ser mayor a 18 años");
             } 
+             res = listarEmpleados();    
         } catch (Exception ex) {
             Logger.getLogger(EmpleadosImpl.class.getName()).log(Level.SEVERE, null, ex);
             
@@ -77,9 +80,6 @@ public class EmpleadosImpl implements EmpleadosSvc{
                 empleadoActual.setFechaContratoInicial(e.getFechaContratoInicial());
                 empleadoActual.setFechaContratoFinal(e.getFechaContratoFinal());
                 empleadoActual.setEstadoEmpleado(e.getEstadoEmpleado());
-                
-                
-                
                 
         try {
             ctrl.edit(empleadoActual);

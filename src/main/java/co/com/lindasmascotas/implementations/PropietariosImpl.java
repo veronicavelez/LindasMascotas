@@ -46,6 +46,10 @@ public class PropietariosImpl implements PropietariosSvc{
             int edad = calculaEdad(fechaNac);
             if(edad >= 18 ){
                 ctrl.create(p);
+                
+            }else{
+                res.setStatus(false);
+                res.setMessage("No fue posible realizar el registro, el empleado debe de ser mayor a 18 años");
             }
             res = listarPropietarios();
         } catch (Exception ex) {
