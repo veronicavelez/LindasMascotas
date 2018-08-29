@@ -43,6 +43,7 @@ public class TiposContratoImpl implements TiposContratoSvc {
 
         try {
             ctrl.create(tc);
+            res = listarTiposContrato();
         } catch (Exception ex) {
             Logger.getLogger(TiposContratoImpl.class.getName()).log(Level.SEVERE, null, ex);
             
