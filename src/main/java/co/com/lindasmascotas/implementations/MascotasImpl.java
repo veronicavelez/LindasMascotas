@@ -40,9 +40,10 @@ public class MascotasImpl implements MascotasSvc {
         try {
             if (m.getIdPropietario() != null) {
                 
-               ctrl.create(m);   
+               ctrl.create(m); 
+             
             }
-            res = listarMascotas();
+               res = listarMascotas();
         } catch (Exception ex) {
             Logger.getLogger(EspeciesImpl.class.getName()).log(Level.SEVERE, null, ex);
             
