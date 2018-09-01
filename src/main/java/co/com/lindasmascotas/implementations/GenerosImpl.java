@@ -38,6 +38,8 @@ public class GenerosImpl implements GenerosSvc {
        GenerosJpaController ctrl = new GenerosJpaController(UPfactory.getFACTORY());
 
         try {
+            
+            g.setNombreGenero(g.getNombreGenero().toUpperCase());
             ctrl.create(g);
             
             res = listarGeneros();

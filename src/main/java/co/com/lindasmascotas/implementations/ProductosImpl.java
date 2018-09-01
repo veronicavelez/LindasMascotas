@@ -41,6 +41,11 @@ public class ProductosImpl implements ProductosSvc {
         ProductosJpaController ctrl = new ProductosJpaController(UPfactory.getFACTORY());
                 
         try {
+            
+            p.setNombreProducto(p.getNombreProducto().toUpperCase());
+            p.setDescripcionProducto(p.getDescripcionProducto().toUpperCase());
+            p.setMarca(p.getMarca().toUpperCase());
+            
             ctrl.create(p);
             
             res = listarProductos();

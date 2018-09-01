@@ -41,6 +41,11 @@ public class PropietariosImpl implements PropietariosSvc{
         PropietariosJpaController ctrl = new PropietariosJpaController(UPfactory.getFACTORY());
  
         try {
+            p.setNombrePropietario(p.getNombrePropietario().toUpperCase());
+            p.setApellidosPropietario(p.getApellidosPropietario().toUpperCase());
+            p.setCorreoElectronico(p.getCorreoElectronico().toUpperCase());
+            p.setDireccion(p.getDireccion().toUpperCase());
+            
             Calendar fechaNac = Calendar.getInstance();
             fechaNac.setTime(p.getFechaNacimiento());
             int edad = calculaEdad(fechaNac);

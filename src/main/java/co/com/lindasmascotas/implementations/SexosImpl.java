@@ -42,6 +42,9 @@ public class SexosImpl implements SexosSvc{
          SexosJpaController ctrl = new SexosJpaController(UPfactory.getFACTORY());
 
         try {
+            
+            s.setNombreSexo(s.getNombreSexo().toUpperCase());
+            
             ctrl.create(s);
             
             res = listarSexos();

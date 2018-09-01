@@ -42,6 +42,7 @@ public class TiposContratoImpl implements TiposContratoSvc {
           TiposContratoJpaController ctrl = new TiposContratoJpaController(UPfactory.getFACTORY());
 
         try {
+            tc.setNombreContrato(tc.getNombreContrato().toUpperCase());
             ctrl.create(tc);
         } catch (Exception ex) {
             Logger.getLogger(TiposContratoImpl.class.getName()).log(Level.SEVERE, null, ex);

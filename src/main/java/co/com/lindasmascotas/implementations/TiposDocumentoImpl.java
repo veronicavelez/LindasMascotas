@@ -40,6 +40,8 @@ public class TiposDocumentoImpl implements TiposDocumentoSvc {
         TiposDocumentoJpaController ctrl = new TiposDocumentoJpaController(UPfactory.getFACTORY());
 
         try {
+            
+            td.setNombreTipo(td.getNombreTipo().toUpperCase());
             ctrl.create(td);
             
             res = listarTiposDocumento();

@@ -38,6 +38,9 @@ public class ProcedimientosImpl implements ProcedimientosSvc {
         ProcedimientosJpaController ctrl = new ProcedimientosJpaController(UPfactory.getFACTORY());
 
         try {
+            pr.setNombreProcedimiento(pr.getNombreProcedimiento().toUpperCase());
+            pr.setDescripcion(pr.getDescripcion().toUpperCase());
+            
             ctrl.create(pr);
             
             res = listarProcedimientos();

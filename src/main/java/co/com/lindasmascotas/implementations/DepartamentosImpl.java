@@ -41,6 +41,8 @@ public class DepartamentosImpl implements DepartamentosSvc {
         DepartamentosJpaController ctrl = new DepartamentosJpaController(UPfactory.getFACTORY());
 
         try {
+            
+            d.setNombreDepartamento(d.getNombreDepartamento().toUpperCase());
             ctrl.create(d);
             
             res = listarDepartamentos();

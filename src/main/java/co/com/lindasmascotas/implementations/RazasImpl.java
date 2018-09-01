@@ -41,6 +41,7 @@ public class RazasImpl implements RazasSvc {
         RazasJpaController ctrl = new RazasJpaController(UPfactory.getFACTORY());
 
         try {
+            r.setNombreRaza(r.getNombreRaza().toUpperCase());
             ctrl.create(r);
             
             res = listarRazas();
