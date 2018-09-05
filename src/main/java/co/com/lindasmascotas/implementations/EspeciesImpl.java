@@ -65,6 +65,7 @@ public class EspeciesImpl implements EspeciesSvc{
         especieActual.setNombreEspecie(e.getNombreEspecie());
 
         try {
+            e.setNombreEspecie(e.getNombreEspecie().toUpperCase());
             ctrl.edit(especieActual);
             
             res = listarEspecies();

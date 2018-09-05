@@ -67,6 +67,7 @@ public class RazasImpl implements RazasSvc {
         razaActual.setNombreRaza(r.getNombreRaza());
         
         try {
+            r.setNombreRaza(r.getNombreRaza().toUpperCase());
             ctrl.edit(razaActual);
             
             res = listarRazas();

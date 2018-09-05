@@ -68,6 +68,9 @@ public class VacunasImpl implements VacunasSvc {
         vacunaActual.setDescripcionVacuna(v.getDescripcionVacuna());
 
         try {
+            
+            v.setNombreVacuna(v.getNombreVacuna().toUpperCase());
+            v.setDescripcionVacuna(v.getDescripcionVacuna().toUpperCase());
             ctrl.edit(vacunaActual);
             
             res = listarVacunas();

@@ -64,6 +64,7 @@ public class TiposDocumentoImpl implements TiposDocumentoSvc {
         tipoDocActual.setNombreTipo(td.getNombreTipo());
 
         try {
+            td.setNombreTipo(td.getNombreTipo().toUpperCase());
             ctrl.edit(tipoDocActual);
           
             res = listarTiposDocumento();

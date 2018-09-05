@@ -65,6 +65,7 @@ public class TiposContratoImpl implements TiposContratoSvc {
         tiposcontratoActual.setNombreContrato(tc.getNombreContrato());
 
         try {
+            tc.setNombreContrato(tc.getNombreContrato().toUpperCase());
             ctrl.edit(tiposcontratoActual);
             
             res = listarTiposContrato();

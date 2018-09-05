@@ -65,6 +65,8 @@ public class ProcedimientosImpl implements ProcedimientosSvc {
         procedActual.setPeso(pr.getPeso());
         
         try {
+            pr.setNombreProcedimiento(pr.getNombreProcedimiento().toUpperCase());
+            pr.setDescripcion(pr.getDescripcion().toUpperCase());
             ctrl.edit(procedActual);
             
             res = listarProcedimientos();

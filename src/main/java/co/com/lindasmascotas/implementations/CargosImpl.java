@@ -65,6 +65,7 @@ public class CargosImpl implements CargoSvc {
         cargoActual.setNombreCargo(c.getNombreCargo());
 
         try {
+            c.setNombreCargo(c.getNombreCargo().toUpperCase());
             ctrl.edit(cargoActual);
             
             res = listarCargos();

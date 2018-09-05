@@ -68,6 +68,7 @@ public class CiudadesImpl implements CiudadesSvc {
         ciudadActual.setIdDpto(c.getIdDpto());
         
         try {
+            c.setNombreCiudad(c.getNombreCiudad().toUpperCase());
             ctrl.edit(ciudadActual);
             
             res = listarCiudades();

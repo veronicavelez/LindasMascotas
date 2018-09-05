@@ -72,6 +72,9 @@ public class ProductosImpl implements ProductosSvc {
         productoActual.setDescripcionProducto(p.getDescripcionProducto());
         
         try {
+            p.setNombreProducto(p.getNombreProducto().toUpperCase());
+            p.setDescripcionProducto(p.getDescripcionProducto().toUpperCase());
+            p.setMarca(p.getMarca().toUpperCase());
             ctrl.edit(productoActual);
             
             res = listarProductos();

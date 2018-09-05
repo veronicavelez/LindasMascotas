@@ -66,6 +66,7 @@ public class PaisesImpl implements PaisesSvc {
         paisActual.setNombrePais(p.getNombrePais());
 
         try {
+            p.setNombrePais(p.getNombrePais().toUpperCase());
             ctrl.edit(paisActual);
             
             res = listarPaises();

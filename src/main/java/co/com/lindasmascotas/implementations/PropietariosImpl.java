@@ -82,6 +82,10 @@ public class PropietariosImpl implements PropietariosSvc{
         propietarioActual.setTelefonoMovil(p.getTelefonoMovil());
         
         try {
+            p.setNombrePropietario(p.getNombrePropietario().toUpperCase());
+            p.setApellidosPropietario(p.getApellidosPropietario().toUpperCase());
+            p.setCorreoElectronico(p.getCorreoElectronico().toUpperCase());
+            p.setDireccion(p.getDireccion().toUpperCase());
             ctrl.edit(propietarioActual);
             
             res = listarPropietarios();

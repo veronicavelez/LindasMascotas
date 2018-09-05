@@ -66,6 +66,7 @@ public class DepartamentosImpl implements DepartamentosSvc {
         dptoActual.setIdPais(d.getIdPais());
         
         try {
+            d.setNombreDepartamento(d.getNombreDepartamento().toUpperCase());
             ctrl.edit(dptoActual);
             
             res = listarDepartamentos();

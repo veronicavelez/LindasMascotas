@@ -65,6 +65,7 @@ public class PerfilesImpl implements PerfilesSvc {
         perfilActual.setNombrePerfil(p.getNombrePerfil());
 
         try {
+            p.setNombrePerfil(p.getNombrePerfil().toUpperCase());
             ctrl.edit(perfilActual);
             
             res = listarPerfiles();

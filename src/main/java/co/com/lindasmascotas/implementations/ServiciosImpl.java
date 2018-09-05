@@ -71,6 +71,10 @@ public class ServiciosImpl implements ServiciosSvc {
        
         
         try {
+            
+            s.setNombreServicio(s.getNombreServicio().toUpperCase());
+            s.setDescripcionServicio(s.getDescripcionServicio().toUpperCase());
+            
             ctrl.edit(servicioActual);
             
             res = listarServicios();

@@ -89,6 +89,11 @@ public class EmpleadosImpl implements EmpleadosSvc{
                 empleadoActual.setEstadoEmpleado(e.getEstadoEmpleado());
                 
         try {
+            e.setNombreEmpleado(e.getNombreEmpleado().toUpperCase());
+            e.setApellidosEmpleado(e.getApellidosEmpleado().toUpperCase());
+            e.setCorreoElectronico(e.getCorreoElectronico().toUpperCase());
+            e.setDireccion(e.getDireccion().toUpperCase());
+            
             ctrl.edit(empleadoActual);
             
             res = listarEmpleados();

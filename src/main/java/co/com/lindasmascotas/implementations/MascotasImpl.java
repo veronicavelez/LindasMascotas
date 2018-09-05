@@ -71,6 +71,7 @@ public class MascotasImpl implements MascotasSvc {
         mascotaActual.setIdPropietario(m.getIdPropietario());
      
         try {
+            m.setNombreMascota(m.getNombreMascota().toUpperCase());
             ctrl.edit(mascotaActual);
             
             res = listarMascotas();

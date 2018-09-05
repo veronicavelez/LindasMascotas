@@ -67,6 +67,9 @@ public class SexosImpl implements SexosSvc{
         sexoActual.setNombreSexo(s.getNombreSexo());
 
         try {
+            
+            s.setNombreSexo(s.getNombreSexo().toUpperCase());
+            
             ctrl.edit(sexoActual);
             
             res = listarSexos();
