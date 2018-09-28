@@ -84,12 +84,12 @@ public class VacunasImpl implements VacunasSvc {
     }
 
     @Override
-    public Response eliminar(Vacunas v) {
+    public Response eliminar(Integer id) {
         Response res = new Response();
          VacunasJpaController ctrl = new VacunasJpaController(UPfactory.getFACTORY());
          
         try {
-            ctrl.destroy(v.getIdVacuna()); 
+            ctrl.destroy(id); 
             
             res = listarVacunas();
         } catch (NonexistentEntityException ex){

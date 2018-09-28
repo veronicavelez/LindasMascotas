@@ -35,6 +35,6 @@ public interface VacunasSvc {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Response eliminar(Vacunas v);  
+    Response eliminar(@QueryParam("id") Integer id);  
     
 }
