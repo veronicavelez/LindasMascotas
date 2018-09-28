@@ -38,6 +38,8 @@ public class GenerosImpl implements GenerosSvc {
        GenerosJpaController ctrl = new GenerosJpaController(UPfactory.getFACTORY());
 
         try {
+            
+            g.setNombreGenero(g.getNombreGenero().toUpperCase());
             ctrl.create(g);
             
             res = listarGeneros();
@@ -63,6 +65,7 @@ public class GenerosImpl implements GenerosSvc {
         generoActual.setNombreGenero(g.getNombreGenero());
 
         try {
+            g.setNombreGenero(g.getNombreGenero().toUpperCase());
             ctrl.edit(generoActual);
             
             res = listarGeneros();

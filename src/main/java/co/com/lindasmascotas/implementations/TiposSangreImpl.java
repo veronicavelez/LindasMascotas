@@ -40,6 +40,9 @@ public class TiposSangreImpl implements TiposSangreSvc {
           TiposSangreJpaController ctrl = new TiposSangreJpaController(UPfactory.getFACTORY());
 
         try {
+            
+            ts.setNombreTipoSangre(ts.getNombreTipoSangre().toUpperCase());
+            
             ctrl.create(ts);
             
             res = listarTiposSangre();
@@ -60,11 +63,13 @@ public class TiposSangreImpl implements TiposSangreSvc {
         Response res = new Response();
          TiposSangreJpaController ctrl = new TiposSangreJpaController(UPfactory.getFACTORY());
 
-          TiposSangre tiposangreActual = ctrl.findTiposSangre(ts.getIdTipoSangre());
+         TiposSangre tiposangreActual = ctrl.findTiposSangre(ts.getIdTipoSangre());
 
-        tiposangreActual.setNombreTipoSangre(ts.getNombreTipoSangre());
+         tiposangreActual.setNombreTipoSangre(ts.getNombreTipoSangre());
 
         try {
+            ts.setNombreTipoSangre(ts.getNombreTipoSangre().toUpperCase());
+            
             ctrl.edit(tiposangreActual);
             
             res = listarTiposSangre();

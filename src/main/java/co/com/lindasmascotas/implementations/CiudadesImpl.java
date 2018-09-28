@@ -43,6 +43,8 @@ public class CiudadesImpl implements CiudadesSvc {
         CiudadesJpaController ctrl = new CiudadesJpaController(UPfactory.getFACTORY());
 
         try {
+            
+            d.setNombreCiudad(d.getNombreCiudad().toUpperCase());
             ctrl.create(d);
             
             res = listarCiudades();
@@ -66,6 +68,7 @@ public class CiudadesImpl implements CiudadesSvc {
         ciudadActual.setIdDpto(c.getIdDpto());
         
         try {
+            c.setNombreCiudad(c.getNombreCiudad().toUpperCase());
             ctrl.edit(ciudadActual);
             
             res = listarCiudades();

@@ -1,98 +1,71 @@
 package co.com.lindasmascotas.util;
 
+import co.com.lindasmascotas.dtos.CitasDTO;
 import java.util.Properties;
-
-
 import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.swing.JOptionPane;
 
 
-/**
- *
- * @author ISABEL MEDINA
- */
 public class Mail {
     
-    String usuarioCorreo;
-    String password;
+    private static final Properties PROPS = new Properties();
+    private static final String CUENTA = "lindasmascotasmed@gmail.com";
+    private static final String PASSWORD = "lindasMascotas01";
+    private static final String USUARIO = "Lindas Mascotas";
+    private static Session session;
     
-    String destinatario;
-    String asunto;
-    String mensaje;
-    
-    
-    public Mail(String usuarioCorreo, String password, String destinatario, String asunto, String mensaje) {
-       this.usuarioCorreo = usuarioCorreo;
-       this.password = password;
-       this.destinatario = destinatario;
-       this.asunto = asunto;
-       this.mensaje = mensaje;
-    }
-    
-  
-    public Mail(String usuarioCorre, String password, String destinatario, String mensaje){
-        this(usuarioCorre, password, destinatario,"",mensaje);
+    private static void init(){
+        PROPS.put("mail.smtp.host", "smtp.gmail.com");
+        PROPS.put("mail.smtp.starttls.enable", "true");
+        PROPS.put("mail.smtp.port", "587");
+        PROPS.put("mail.smtp.auth", "true");
         
-     } 
-       
-    public Boolean EnviarMail() {
-        try {
-            Properties props = new Properties();
-            props.put("mail.smtp.host", "smtp.gmail.com");
-            props.setProperty("mail.smtp.starttls.enable", "true");
-            props.setProperty("mail.smtp.port", "587");
-            props.setProperty("mail.smtp.user", usuarioCorreo);
-            props.setProperty("mail.smtp.auth", "true");
-            
-            
-            Session session = Session.getDefaultInstance(props, null);
-            BodyPart texto = new MimeBodyPart();
-            texto.setText(mensaje);
-            
-           
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(usuarioCorreo));
-            message.addRecipient( 
-                    Message.RecipientType.TO,
-                    new InternetAddress(destinatario));
-                    message.setSubject(asunto);
-            
-            Transport t = session.getTransport("smtp");
-            t.connect(usuarioCorreo, password);
-            t.sendMessage(message, message.getAllRecipients());
-            t.close();
-            return true;
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            return false;
-        }
+        session = Session.getDefaultInstance(PROPS, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication(){
+                return new PasswordAuthentication(CUENTA, PASSWORD);                
+            }
+        });
     }
     
-    public static void main(String[] args){
-      String clave= "lindasMascotas01";
-      Mail m = new Mail("lindasmascotasmed@gmail.com", clave,"medisabel97@gmail.com", "Recordar Cita");
-        if(m.EnviarMail()){
-            JOptionPane.showMessageDialog(null, "El Correo se mando correctamente");
-            }else{
-            JOptionPane.showMessageDialog(null, "El correo no se mando correctamente");
-        }
+    public static void enviarNotificacionCita(CitasDTO c){
+       try{
+           InternetAddress[] to = new InternetAddress[1];
+           //to[0] = new InternetAddress(c.getIdPropietario().getCorreoElectronico());
+           to[0] = new InternetAddress("medisabel97@gmail.com");
+           
+           String asunto = "Recordar Cita Lindas Mascotas";
+           
+           MimeMultipart multipart = new MimeMultipart("related");
+           BodyPart mensaje = new MimeBodyPart();
+           String body = "Mensaje de prueba";
+           mensaje.setContent(body,"text/html");
+           multipart.addBodyPart(mensaje);
+           
+           enviarCorreo(to, asunto, multipart);           
+           
+       }catch(Exception ex){
+           throw new RuntimeException(ex);
+       }
+        
+    }
+    
+    private static void enviarCorreo(InternetAddress[]to, String asunto, MimeMultipart multipart) throws MessagingException{
+        init();
+        
+        MimeMessage mensaje = new MimeMessage(session);
+        mensaje.setFrom(new InternetAddress(CUENTA));
+        mensaje.setRecipients(Message.RecipientType.TO, to);
+        mensaje.setSubject(asunto);
+        mensaje.setContent(multipart);
+        
+        Transport.send(mensaje);
     }
 }
-    
-
-            
-
- 
-                    
-        
-
-

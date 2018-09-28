@@ -42,6 +42,8 @@ public class PaisesImpl implements PaisesSvc {
         PaisesJpaController ctrl = new PaisesJpaController(UPfactory.getFACTORY());
 
         try {
+            p.setNombrePais(p.getNombrePais().toUpperCase());
+            
             ctrl.create(p);
             
             res = listarPaises();
@@ -64,6 +66,7 @@ public class PaisesImpl implements PaisesSvc {
         paisActual.setNombrePais(p.getNombrePais());
 
         try {
+            p.setNombrePais(p.getNombrePais().toUpperCase());
             ctrl.edit(paisActual);
             
             res = listarPaises();

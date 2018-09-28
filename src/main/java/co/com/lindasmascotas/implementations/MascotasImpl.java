@@ -38,6 +38,9 @@ public class MascotasImpl implements MascotasSvc {
         MascotasJpaController ctrl = new MascotasJpaController(UPfactory.getFACTORY());
 
         try {
+            
+            m.setNombreMascota(m.getNombreMascota().toUpperCase());
+            
             if (m.getIdPropietario() != null) {
                 
                ctrl.create(m); 
@@ -68,6 +71,7 @@ public class MascotasImpl implements MascotasSvc {
         mascotaActual.setIdPropietario(m.getIdPropietario());
      
         try {
+            m.setNombreMascota(m.getNombreMascota().toUpperCase());
             ctrl.edit(mascotaActual);
             
             res = listarMascotas();

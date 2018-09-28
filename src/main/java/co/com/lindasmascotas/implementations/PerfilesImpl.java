@@ -40,6 +40,9 @@ public class PerfilesImpl implements PerfilesSvc {
         PerfilesJpaController ctrl = new PerfilesJpaController(UPfactory.getFACTORY());
 
         try {
+            
+            p.setNombrePerfil(p.getNombrePerfil().toUpperCase());
+            
             ctrl.create(p);
             
             res = listarPerfiles();
@@ -62,6 +65,7 @@ public class PerfilesImpl implements PerfilesSvc {
         perfilActual.setNombrePerfil(p.getNombrePerfil());
 
         try {
+            p.setNombrePerfil(p.getNombrePerfil().toUpperCase());
             ctrl.edit(perfilActual);
             
             res = listarPerfiles();

@@ -38,6 +38,9 @@ public class ProcedimientosImpl implements ProcedimientosSvc {
         ProcedimientosJpaController ctrl = new ProcedimientosJpaController(UPfactory.getFACTORY());
 
         try {
+            pr.setNombreProcedimiento(pr.getNombreProcedimiento().toUpperCase());
+            pr.setDescripcion(pr.getDescripcion().toUpperCase());
+            
             ctrl.create(pr);
             
             res = listarProcedimientos();
@@ -62,6 +65,8 @@ public class ProcedimientosImpl implements ProcedimientosSvc {
         procedActual.setPeso(pr.getPeso());
         
         try {
+            pr.setNombreProcedimiento(pr.getNombreProcedimiento().toUpperCase());
+            pr.setDescripcion(pr.getDescripcion().toUpperCase());
             ctrl.edit(procedActual);
             
             res = listarProcedimientos();

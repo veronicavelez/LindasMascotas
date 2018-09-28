@@ -40,6 +40,9 @@ public class EspeciesImpl implements EspeciesSvc{
         EspeciesJpaController ctrl = new EspeciesJpaController(UPfactory.getFACTORY());
 
         try {
+            
+            e.setNombreEspecie(e.getNombreEspecie().toUpperCase());
+            
             ctrl.create(e);
             
             res = listarEspecies();
@@ -62,6 +65,7 @@ public class EspeciesImpl implements EspeciesSvc{
         especieActual.setNombreEspecie(e.getNombreEspecie());
 
         try {
+            e.setNombreEspecie(e.getNombreEspecie().toUpperCase());
             ctrl.edit(especieActual);
             
             res = listarEspecies();

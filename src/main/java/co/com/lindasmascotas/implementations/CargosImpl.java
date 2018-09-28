@@ -41,6 +41,8 @@ public class CargosImpl implements CargoSvc {
         CargosJpaController ctrl = new CargosJpaController(UPfactory.getFACTORY());
 
         try {
+            c.setNombreCargo(c.getNombreCargo().toUpperCase());
+            
             ctrl.create(c);
             
             res = listarCargos();
@@ -63,6 +65,7 @@ public class CargosImpl implements CargoSvc {
         cargoActual.setNombreCargo(c.getNombreCargo());
 
         try {
+            c.setNombreCargo(c.getNombreCargo().toUpperCase());
             ctrl.edit(cargoActual);
             
             res = listarCargos();

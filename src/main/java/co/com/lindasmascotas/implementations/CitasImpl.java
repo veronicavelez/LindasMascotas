@@ -54,17 +54,18 @@ public class CitasImpl implements CitasSvc {
         crearcita.setIdTipoServicio(c.getIdTipoServicio());
         
 
-        try {
+        try { 
+            c.setNombreMascota(c.getNombreMascota().toUpperCase());
+            /*
             if (c != null) {
                 System.out.println("co.com.lindasmascotas.implementations.CitasImpl.crear()");
             }
-            
+            */
             ctrl.create(crearcita);
             
+            Mail.enviarNotificacionCita(c);
+            
             res = listarCitas();
-            /*
-            Mail.EnviarMail("Recordatorio Cita", "medisabel97@gmail.com", "Le recordamos su cita el dia ");
-            */
         } catch (Exception ex) {
             Logger.getLogger(CitasImpl.class.getName()).log(Level.SEVERE, null, ex);
             
@@ -88,6 +89,9 @@ public class CitasImpl implements CitasSvc {
         citaActual.setFechaCita(c.getFechaCita());
        
         try {
+            
+            c.setNombreMascota(c.getNombreMascota().toUpperCase());
+            
             ctrl.edit(citaActual);
             
             res = listarCitas();
@@ -146,7 +150,7 @@ public class CitasImpl implements CitasSvc {
         
         if (fechaActual.equals(fechaCita)){
             
-            if ((fechaCita.get(Calendar.HOUR) - fechaActual.get(Calendar.HOUR)) > 4) {
+            if((fechaCita.get(Calendar.HOUR) - fechaActual.get(Calendar.HOUR)) > 4) {
                 return true;
             }else{
                 return false;

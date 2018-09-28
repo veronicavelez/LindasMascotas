@@ -40,6 +40,9 @@ public class BarriosImpl implements BarriosSvc {
         BarriosJpaController ctrl = new BarriosJpaController(UPfactory.getFACTORY());
 
         try {
+            
+            b.setNombreBarrio(b.getNombreBarrio().toUpperCase());
+            
             ctrl.create(b);
             
             res = listarBarrios();
@@ -64,6 +67,7 @@ public class BarriosImpl implements BarriosSvc {
         barrioActual.setNombreBarrio(b.getNombreBarrio());
 
         try {
+            b.setNombreBarrio(b.getNombreBarrio().toUpperCase());
             ctrl.edit(barrioActual);
             
             res = listarBarrios();
