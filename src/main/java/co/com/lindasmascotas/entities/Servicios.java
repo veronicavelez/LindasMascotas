@@ -25,7 +25,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 @Entity
 @Table(name = "servicios")
@@ -56,7 +56,7 @@ public class Servicios implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "descripcion_servicio")
     private String descripcionServicio;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoServicio")
+    @OneToMany(mappedBy = "idTipoServicio")
     private List<Citas> citasList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoServicio")
     private List<Procedimientos> procedimientosList;

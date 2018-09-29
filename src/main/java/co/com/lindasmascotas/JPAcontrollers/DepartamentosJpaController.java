@@ -23,7 +23,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 public class DepartamentosJpaController implements Serializable {
 
@@ -248,7 +248,7 @@ public List<Departamentos> findDepartamentoByPais(Paises pais){
         } catch (Exception e) {
         }finally{
             em.close();
-        }
+}
         
         return null;
     }

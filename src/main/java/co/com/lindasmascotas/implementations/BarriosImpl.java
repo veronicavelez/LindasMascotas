@@ -36,7 +36,7 @@ public class BarriosImpl implements BarriosSvc {
     
     @Override
      public Response crear(Barrios b) {
-         Response res = new Response();
+        Response res = new Response();
         BarriosJpaController ctrl = new BarriosJpaController(UPfactory.getFACTORY());
 
         try {

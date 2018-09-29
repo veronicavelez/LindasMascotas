@@ -29,81 +29,81 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @author ISABEL MEDINA
  */
 @Entity
-@Table(name = "cargos")
+@Table(name = "turnos")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Cargos.findAll", query = "SELECT c FROM Cargos c")
-    , @NamedQuery(name = "Cargos.findByIdCargo", query = "SELECT c FROM Cargos c WHERE c.idCargo = :idCargo")
-    , @NamedQuery(name = "Cargos.findByNombreCargo", query = "SELECT c FROM Cargos c WHERE c.nombreCargo = :nombreCargo")})
-public class Cargos implements Serializable {
+    @NamedQuery(name = "Turnos.findAll", query = "SELECT t FROM Turnos t")
+    , @NamedQuery(name = "Turnos.findByIdTurno", query = "SELECT t FROM Turnos t WHERE t.idTurno = :idTurno")
+    , @NamedQuery(name = "Turnos.findByNombreTurno", query = "SELECT t FROM Turnos t WHERE t.nombreTurno = :nombreTurno")})
+public class Turnos implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_cargo")
-    private Integer idCargo;
+    @Column(name = "id_turno")
+    private Integer idTurno;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
-    @Column(name = "nombre_cargo")
-    private String nombreCargo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCargo")
-    private List<Empleados> empleadosList;
+    @Column(name = "nombre_turno")
+    private String nombreTurno;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTurno")
+    private List<DetalleTurnos> detalleTurnosList;
 
-    public Cargos() {
+    public Turnos() {
     }
 
-    public Cargos(Integer idCargo) {
-        this.idCargo = idCargo;
+    public Turnos(Integer idTurno) {
+        this.idTurno = idTurno;
     }
 
-    public Cargos(Integer idCargo, String nombreCargo) {
-        this.idCargo = idCargo;
-        this.nombreCargo = nombreCargo;
+    public Turnos(Integer idTurno, String nombreTurno) {
+        this.idTurno = idTurno;
+        this.nombreTurno = nombreTurno;
     }
 
-    public Integer getIdCargo() {
-        return idCargo;
+    public Integer getIdTurno() {
+        return idTurno;
     }
 
-    public void setIdCargo(Integer idCargo) {
-        this.idCargo = idCargo;
+    public void setIdTurno(Integer idTurno) {
+        this.idTurno = idTurno;
     }
 
-    public String getNombreCargo() {
-        return nombreCargo;
+    public String getNombreTurno() {
+        return nombreTurno;
     }
 
-    public void setNombreCargo(String nombreCargo) {
-        this.nombreCargo = nombreCargo;
+    public void setNombreTurno(String nombreTurno) {
+        this.nombreTurno = nombreTurno;
     }
 
     @XmlTransient
     @JsonIgnore
-    public List<Empleados> getEmpleadosList() {
-        return empleadosList;
+    public List<DetalleTurnos> getDetalleTurnosList() {
+        return detalleTurnosList;
     }
 
-    public void setEmpleadosList(List<Empleados> empleadosList) {
-        this.empleadosList = empleadosList;
+    public void setDetalleTurnosList(List<DetalleTurnos> detalleTurnosList) {
+        this.detalleTurnosList = detalleTurnosList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idCargo != null ? idCargo.hashCode() : 0);
+        hash += (idTurno != null ? idTurno.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cargos)) {
+        if (!(object instanceof Turnos)) {
             return false;
         }
-        Cargos other = (Cargos) object;
-        if ((this.idCargo == null && other.idCargo != null) || (this.idCargo != null && !this.idCargo.equals(other.idCargo))) {
+        Turnos other = (Turnos) object;
+        if ((this.idTurno == null && other.idTurno != null) || (this.idTurno != null && !this.idTurno.equals(other.idTurno))) {
             return false;
         }
         return true;
@@ -111,7 +111,7 @@ public class Cargos implements Serializable {
 
     @Override
     public String toString() {
-        return "co.com.lindasmascotas.entities.Cargos[ idCargo=" + idCargo + " ]";
+        return "co.com.lindasmascotas.entities.Turnos[ idTurno=" + idTurno + " ]";
     }
     
 }

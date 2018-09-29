@@ -1,4 +1,8 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package co.com.lindasmascotas.entities;
 
 import java.io.Serializable;
@@ -23,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 @Entity
 @Table(name = "citas")
@@ -44,7 +48,6 @@ public class Citas implements Serializable {
     private Integer idCita;
     @Basic(optional = false)
     @NotNull
-    
     @Size(min = 1, max = 2147483647)
     @Column(name = "nombre_mascota")
     private String nombreMascota;
@@ -58,10 +61,10 @@ public class Citas implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCita;
     @JoinColumn(name = "id_propietario", referencedColumnName = "id_propietario")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Propietarios idPropietario;
     @JoinColumn(name = "id_tipo_servicio", referencedColumnName = "id_servicio")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Servicios idTipoServicio;
 
     public Citas() {
@@ -150,4 +153,5 @@ public class Citas implements Serializable {
     public String toString() {
         return "co.com.lindasmascotas.entities.Citas[ idCita=" + idCita + " ]";
     }
+    
 }

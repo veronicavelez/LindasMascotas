@@ -24,7 +24,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 public class CiudadesJpaController implements Serializable {
 
@@ -301,7 +301,7 @@ public class CiudadesJpaController implements Serializable {
         } catch (Exception e) {
         }finally{
             em.close();
-        }
+}
         
         return null;
     }

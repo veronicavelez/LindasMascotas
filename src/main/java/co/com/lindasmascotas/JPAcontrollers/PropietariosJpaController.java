@@ -27,7 +27,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 public class PropietariosJpaController implements Serializable {
 
@@ -150,14 +150,6 @@ public class PropietariosJpaController implements Serializable {
             List<Mascotas> mascotasListOld = persistentPropietarios.getMascotasList();
             List<Mascotas> mascotasListNew = propietarios.getMascotasList();
             List<String> illegalOrphanMessages = null;
-            for (Citas citasListOldCitas : citasListOld) {
-                if (!citasListNew.contains(citasListOldCitas)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Citas " + citasListOldCitas + " since its idPropietario field is not nullable.");
-                }
-            }
             for (Mascotas mascotasListOldMascotas : mascotasListOld) {
                 if (!mascotasListNew.contains(mascotasListOldMascotas)) {
                     if (illegalOrphanMessages == null) {
@@ -232,6 +224,12 @@ public class PropietariosJpaController implements Serializable {
                 idTipoDocumentoNew.getPropietariosList().add(propietarios);
                 idTipoDocumentoNew = em.merge(idTipoDocumentoNew);
             }
+            for (Citas citasListOldCitas : citasListOld) {
+                if (!citasListNew.contains(citasListOldCitas)) {
+                    citasListOldCitas.setIdPropietario(null);
+                    citasListOldCitas = em.merge(citasListOldCitas);
+                }
+            }
             for (Citas citasListNewCitas : citasListNew) {
                 if (!citasListOld.contains(citasListNewCitas)) {
                     Propietarios oldIdPropietarioOfCitasListNewCitas = citasListNewCitas.getIdPropietario();
@@ -284,13 +282,6 @@ public class PropietariosJpaController implements Serializable {
                 throw new NonexistentEntityException("The propietarios with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            List<Citas> citasListOrphanCheck = propietarios.getCitasList();
-            for (Citas citasListOrphanCheckCitas : citasListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Propietarios (" + propietarios + ") cannot be destroyed since the Citas " + citasListOrphanCheckCitas + " in its citasList field has a non-nullable idPropietario field.");
-            }
             List<Mascotas> mascotasListOrphanCheck = propietarios.getMascotasList();
             for (Mascotas mascotasListOrphanCheckMascotas : mascotasListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
@@ -320,6 +311,11 @@ public class PropietariosJpaController implements Serializable {
             if (idTipoDocumento != null) {
                 idTipoDocumento.getPropietariosList().remove(propietarios);
                 idTipoDocumento = em.merge(idTipoDocumento);
+            }
+            List<Citas> citasList = propietarios.getCitasList();
+            for (Citas citasListCitas : citasList) {
+                citasListCitas.setIdPropietario(null);
+                citasListCitas = em.merge(citasListCitas);
             }
             em.remove(propietarios);
             em.getTransaction().commit();

@@ -23,7 +23,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 public class ServiciosJpaController implements Serializable {
 
@@ -102,14 +102,6 @@ public class ServiciosJpaController implements Serializable {
             List<Procedimientos> procedimientosListOld = persistentServicios.getProcedimientosList();
             List<Procedimientos> procedimientosListNew = servicios.getProcedimientosList();
             List<String> illegalOrphanMessages = null;
-            for (Citas citasListOldCitas : citasListOld) {
-                if (!citasListNew.contains(citasListOldCitas)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Citas " + citasListOldCitas + " since its idTipoServicio field is not nullable.");
-                }
-            }
             for (Procedimientos procedimientosListOldProcedimientos : procedimientosListOld) {
                 if (!procedimientosListNew.contains(procedimientosListOldProcedimientos)) {
                     if (illegalOrphanMessages == null) {
@@ -136,6 +128,12 @@ public class ServiciosJpaController implements Serializable {
             procedimientosListNew = attachedProcedimientosListNew;
             servicios.setProcedimientosList(procedimientosListNew);
             servicios = em.merge(servicios);
+            for (Citas citasListOldCitas : citasListOld) {
+                if (!citasListNew.contains(citasListOldCitas)) {
+                    citasListOldCitas.setIdTipoServicio(null);
+                    citasListOldCitas = em.merge(citasListOldCitas);
+                }
+            }
             for (Citas citasListNewCitas : citasListNew) {
                 if (!citasListOld.contains(citasListNewCitas)) {
                     Servicios oldIdTipoServicioOfCitasListNewCitas = citasListNewCitas.getIdTipoServicio();
@@ -188,13 +186,6 @@ public class ServiciosJpaController implements Serializable {
                 throw new NonexistentEntityException("The servicios with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            List<Citas> citasListOrphanCheck = servicios.getCitasList();
-            for (Citas citasListOrphanCheckCitas : citasListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Servicios (" + servicios + ") cannot be destroyed since the Citas " + citasListOrphanCheckCitas + " in its citasList field has a non-nullable idTipoServicio field.");
-            }
             List<Procedimientos> procedimientosListOrphanCheck = servicios.getProcedimientosList();
             for (Procedimientos procedimientosListOrphanCheckProcedimientos : procedimientosListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
@@ -204,6 +195,11 @@ public class ServiciosJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<Citas> citasList = servicios.getCitasList();
+            for (Citas citasListCitas : citasList) {
+                citasListCitas.setIdTipoServicio(null);
+                citasListCitas = em.merge(citasListCitas);
             }
             em.remove(servicios);
             em.getTransaction().commit();

@@ -7,12 +7,12 @@ package co.com.lindasmascotas.JPAcontrollers;
 
 import co.com.lindasmascotas.JPAcontrollers.exceptions.IllegalOrphanException;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
+import co.com.lindasmascotas.entities.Especies;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import co.com.lindasmascotas.entities.Especies;
 import co.com.lindasmascotas.entities.Mascotas;
 import co.com.lindasmascotas.entities.Razas;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 public class RazasJpaController implements Serializable {
 
@@ -43,11 +43,6 @@ public class RazasJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Especies idEspecie = razas.getIdEspecie();
-            if (idEspecie != null) {
-                idEspecie = em.getReference(idEspecie.getClass(), idEspecie.getIdEspecie());
-                razas.setIdEspecie(idEspecie);
-            }
             List<Mascotas> attachedMascotasList = new ArrayList<Mascotas>();
             for (Mascotas mascotasListMascotasToAttach : razas.getMascotasList()) {
                 mascotasListMascotasToAttach = em.getReference(mascotasListMascotasToAttach.getClass(), mascotasListMascotasToAttach.getIdMascota());
@@ -55,10 +50,6 @@ public class RazasJpaController implements Serializable {
             }
             razas.setMascotasList(attachedMascotasList);
             em.persist(razas);
-            if (idEspecie != null) {
-                idEspecie.getRazasList().add(razas);
-                idEspecie = em.merge(idEspecie);
-            }
             for (Mascotas mascotasListMascotas : razas.getMascotasList()) {
                 Razas oldIdRazaOfMascotasListMascotas = mascotasListMascotas.getIdRaza();
                 mascotasListMascotas.setIdRaza(razas);
@@ -82,8 +73,6 @@ public class RazasJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Razas persistentRazas = em.find(Razas.class, razas.getIdRaza());
-            Especies idEspecieOld = persistentRazas.getIdEspecie();
-            Especies idEspecieNew = razas.getIdEspecie();
             List<Mascotas> mascotasListOld = persistentRazas.getMascotasList();
             List<Mascotas> mascotasListNew = razas.getMascotasList();
             List<String> illegalOrphanMessages = null;
@@ -98,10 +87,6 @@ public class RazasJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (idEspecieNew != null) {
-                idEspecieNew = em.getReference(idEspecieNew.getClass(), idEspecieNew.getIdEspecie());
-                razas.setIdEspecie(idEspecieNew);
-            }
             List<Mascotas> attachedMascotasListNew = new ArrayList<Mascotas>();
             for (Mascotas mascotasListNewMascotasToAttach : mascotasListNew) {
                 mascotasListNewMascotasToAttach = em.getReference(mascotasListNewMascotasToAttach.getClass(), mascotasListNewMascotasToAttach.getIdMascota());
@@ -110,14 +95,6 @@ public class RazasJpaController implements Serializable {
             mascotasListNew = attachedMascotasListNew;
             razas.setMascotasList(mascotasListNew);
             razas = em.merge(razas);
-            if (idEspecieOld != null && !idEspecieOld.equals(idEspecieNew)) {
-                idEspecieOld.getRazasList().remove(razas);
-                idEspecieOld = em.merge(idEspecieOld);
-            }
-            if (idEspecieNew != null && !idEspecieNew.equals(idEspecieOld)) {
-                idEspecieNew.getRazasList().add(razas);
-                idEspecieNew = em.merge(idEspecieNew);
-            }
             for (Mascotas mascotasListNewMascotas : mascotasListNew) {
                 if (!mascotasListOld.contains(mascotasListNewMascotas)) {
                     Razas oldIdRazaOfMascotasListNewMascotas = mascotasListNewMascotas.getIdRaza();
@@ -168,11 +145,6 @@ public class RazasJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Especies idEspecie = razas.getIdEspecie();
-            if (idEspecie != null) {
-                idEspecie.getRazasList().remove(razas);
-                idEspecie = em.merge(idEspecie);
             }
             em.remove(razas);
             em.getTransaction().commit();
@@ -228,7 +200,7 @@ public class RazasJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public List<Razas> findRazasByEspecies(Especies e) {
         EntityManager em = getEntityManager();
         List<Razas> lista = new ArrayList();
@@ -240,7 +212,7 @@ public class RazasJpaController implements Serializable {
             lista = (List<Razas>)q.getResultList();
         } finally{
             em.close();
-        }
+}
         
         return lista;
     }
