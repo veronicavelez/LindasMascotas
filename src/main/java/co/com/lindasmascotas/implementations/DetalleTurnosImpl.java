@@ -103,13 +103,13 @@ public class DetalleTurnosImpl implements DetalleTurnosSvc {
             ctrl.destroy(id);
             
             res = listarDetalleTurnos();
-        } catch (IllegalOrphanException ex) {
+        } catch (NonexistentEntityException ex) {
             Logger.getLogger(DetalleTurnosImpl.class.getName()).log(Level.SEVERE, null, ex);
             
             res.setStatus(false);
             res.setMessage(MessageExceptions.messageException(ex.getMessage()));
             res.setData(ctrl.findDetalleTurnosEntities());
-        } catch (NonexistentEntityException ex) {
+        } catch (IllegalOrphanException ex) {
             Logger.getLogger(DetalleTurnosImpl.class.getName()).log(Level.SEVERE, null, ex);
             
             res.setStatus(false);

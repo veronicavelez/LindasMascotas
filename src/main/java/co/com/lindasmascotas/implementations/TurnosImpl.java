@@ -103,13 +103,14 @@ public class TurnosImpl implements TurnosSvc{
             ctrl.destroy(id);
             
             res = listarTurnos();
-        } catch (IllegalOrphanException ex) {
+            
+        } catch (NonexistentEntityException ex) {
             Logger.getLogger(TurnosImpl.class.getName()).log(Level.SEVERE, null, ex);
             
             res.setStatus(false);
             res.setMessage(MessageExceptions.messageException(ex.getMessage()));
             res.setData(ctrl.findTurnosEntities());
-        } catch (NonexistentEntityException ex) {
+        } catch (IllegalOrphanException ex) {
             Logger.getLogger(TurnosImpl.class.getName()).log(Level.SEVERE, null, ex);
             
             res.setStatus(false);

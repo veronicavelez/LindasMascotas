@@ -24,6 +24,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -39,6 +40,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Citas.findByTelefonoMovil", query = "SELECT c FROM Citas c WHERE c.telefonoMovil = :telefonoMovil")
     , @NamedQuery(name = "Citas.findByFechaCita", query = "SELECT c FROM Citas c WHERE c.fechaCita = :fechaCita")})
 public class Citas implements Serializable {
+
+    @JoinColumn(name = "id_empleado", referencedColumnName = "id_empleado")
+    @ManyToOne(optional = false)
+    private Empleados idEmpleado;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -152,6 +157,15 @@ public class Citas implements Serializable {
     @Override
     public String toString() {
         return "co.com.lindasmascotas.entities.Citas[ idCita=" + idCita + " ]";
+    }
+    
+    @JsonIgnore
+    public Empleados getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(Empleados idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
     
 }

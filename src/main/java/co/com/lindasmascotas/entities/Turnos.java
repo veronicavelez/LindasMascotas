@@ -79,8 +79,8 @@ public class Turnos implements Serializable {
         this.nombreTurno = nombreTurno;
     }
 
-    @XmlTransient
-    @JsonIgnore
+//    @XmlTransient
+//    @JsonIgnore
     public List<DetalleTurnos> getDetalleTurnosList() {
         return detalleTurnosList;
     }

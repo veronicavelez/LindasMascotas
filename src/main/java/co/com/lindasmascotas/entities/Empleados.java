@@ -50,6 +50,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "Empleados.findByTipoRh", query = "SELECT e FROM Empleados e WHERE e.tipoRh = :tipoRh")})
 public class Empleados implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpleado")
+    private List<Citas> citasList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -359,6 +362,16 @@ public class Empleados implements Serializable {
     @Override
     public String toString() {
         return "co.com.lindasmascotas.entities.Empleados[ idEmpleado=" + idEmpleado + " ]";
+    }
+
+//    @XmlTransient
+//    @JsonIgnore
+    public List<Citas> getCitasList() {
+        return citasList;
+    }
+
+    public void setCitasList(List<Citas> citasList) {
+        this.citasList = citasList;
     }
     
 }

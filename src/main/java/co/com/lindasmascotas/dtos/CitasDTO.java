@@ -1,6 +1,7 @@
 
 package co.com.lindasmascotas.dtos;
 
+import co.com.lindasmascotas.entities.Empleados;
 import co.com.lindasmascotas.entities.Propietarios;
 import co.com.lindasmascotas.entities.Servicios;
 import java.math.BigInteger;
@@ -19,6 +20,7 @@ public class CitasDTO {
     private Date fechaCita;
     private Propietarios idPropietario;
     private Servicios idTipoServicio;
+    private Empleados idEmpleado;
 
    
     public Integer getIdCita() {
@@ -69,4 +71,12 @@ public class CitasDTO {
         this.idTipoServicio = idTipoServicio;
     }
 
+    public Empleados getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(Empleados idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+    
 }

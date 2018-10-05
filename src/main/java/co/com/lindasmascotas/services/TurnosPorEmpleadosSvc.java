@@ -39,7 +39,6 @@ public interface TurnosPorEmpleadosSvc {
    Response editar(TurnosPorEmpleados templ);
    
    @DELETE
-   @Consumes(MediaType.APPLICATION_JSON)
    @Produces(MediaType.APPLICATION_JSON)
    Response eliminar (@QueryParam("id") Integer Id);
     

@@ -31,7 +31,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @author ISABEL MEDINA
  */
 @Entity
-@Table(name = "detalle_turnos")
+@Table(name = "detalleturnos")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "DetalleTurnos.findAll", query = "SELECT d FROM DetalleTurnos d")
@@ -123,7 +123,9 @@ public class DetalleTurnos implements Serializable {
     public void setTurnosPorEmpleadosList(List<TurnosPorEmpleados> turnosPorEmpleadosList) {
         this.turnosPorEmpleadosList = turnosPorEmpleadosList;
     }
-
+    
+    @XmlTransient
+    @JsonIgnore
     public Turnos getIdTurno() {
         return idTurno;
     }

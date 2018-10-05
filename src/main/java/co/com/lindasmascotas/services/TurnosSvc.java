@@ -26,8 +26,7 @@ public interface TurnosSvc {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     Response listarTurnos();
-    
-  
+      
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -37,10 +36,8 @@ public interface TurnosSvc {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     Response editar(Turnos t);
-    
-  
+      
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     Response eliminar(@QueryParam("id") Integer id); 
-    }
+}

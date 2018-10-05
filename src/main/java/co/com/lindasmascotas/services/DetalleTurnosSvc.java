@@ -22,7 +22,7 @@ import javax.ws.rs.core.MediaType;
  * @author ISABEL MEDINA
  */
 
-@Path ("turnos")
+@Path ("detalleturnos")
 public interface DetalleTurnosSvc {
     
     @GET
@@ -34,14 +34,12 @@ public interface DetalleTurnosSvc {
     @Produces(MediaType.APPLICATION_JSON)
     Response crear(DetalleTurnos d);
     
-   
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     Response editar(DetalleTurnos d);
     
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     Response eliminar(@QueryParam("id") Integer id); 
     
