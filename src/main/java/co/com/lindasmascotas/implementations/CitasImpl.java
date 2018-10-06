@@ -2,15 +2,18 @@ package co.com.lindasmascotas.implementations;
 
 import co.com.lindasmascotas.JPAcontrollers.CitasJpaController;
 import co.com.lindasmascotas.JPAcontrollers.EmpleadosJpaController;
+import co.com.lindasmascotas.JPAcontrollers.ServiciosJpaController;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
 import co.com.lindasmascotas.dtos.CitasDTO;
 import co.com.lindasmascotas.entities.Citas;
 import co.com.lindasmascotas.entities.Empleados;
+import co.com.lindasmascotas.entities.Servicios;
 import co.com.lindasmascotas.services.CitasSvc;
 import co.com.lindasmascotas.util.Mail;
 import co.com.lindasmascotas.util.MessageExceptions;
 import co.com.lindasmascotas.util.Response;
 import co.com.lindasmascotas.util.UPfactory;
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -59,7 +62,9 @@ public class CitasImpl implements CitasSvc {
             }
              */
             if(!validarDisponibilidad(crearcita)){
-//               ctrl.create(crearcita);
+                              
+                
+               ctrl.create(crearcita);
                //Mail.enviarNotificacionCita(c);
                res.setStatus(true);
                
@@ -169,16 +174,16 @@ public class CitasImpl implements CitasSvc {
         EmpleadosJpaController ctrl = new EmpleadosJpaController(UPfactory.getFACTORY());
 
         Empleados emple = ctrl.findEmpleados(c.getIdEmpleado().getIdEmpleado());
-        Date fechaC = separarFechaHora(c.getFechaCita(), "fecha");
-        Date horaC = separarFechaHora(c.getFechaCita(), "hora");
+        String fechaC = separarFechaHora(c.getFechaCita(), "fecha");
+        String horaC = separarFechaHora(c.getFechaCita(), "hora");
 
         if (emple.getCitasList().isEmpty()) {
             return false;
         } else {
             for (Citas ce : emple.getCitasList()) {
-                Date fechaCE = separarFechaHora(ce.getFechaCita(), "fecha");                
+                String fechaCE = separarFechaHora(ce.getFechaCita(), "fecha");                
                 if (fechaCE.equals(fechaC)) {
-                    Date horaCE = separarFechaHora(ce.getFechaCita(), "hora");
+                    String horaCE = separarFechaHora(ce.getFechaCita(), "hora");
                     
                     if(horaCE.equals(horaC)){
                         return true;
@@ -189,23 +194,21 @@ public class CitasImpl implements CitasSvc {
         return false;
     }
 
-    private Date separarFechaHora(Date fechaCita, String tipo) {
-        Calendar fecha = Calendar.getInstance();
-        fecha.setTime(fechaCita);
+    private String separarFechaHora(Date fechaCita, String tipo) {
+        String dateFrmt = null;
 
         if (tipo.equals("fecha")) {
-            Calendar res = Calendar.getInstance();
-            res.set(fecha.get(Calendar.YEAR), fecha.get(Calendar.MONTH), fecha.get(Calendar.DATE),0,0,0);
-
-            return new Date(res.getTimeInMillis());
+            dateFrmt = DateFormat.getDateInstance(DateFormat.SHORT).format(fechaCita);
+            return dateFrmt;
 
         } else if (tipo.equals("hora")) {
-            Calendar res = Calendar.getInstance();
-            res.set(0, 0, 0, fecha.get(Calendar.HOUR_OF_DAY), fecha.get(Calendar.MINUTE), fecha.get(Calendar.SECOND));
-
-            return new Date(res.getTimeInMillis());
+            dateFrmt = DateFormat.getTimeInstance(DateFormat.SHORT).format(fechaCita);
+            return dateFrmt;
         }
 
-        return null;
+        return dateFrmt;
     }
+    
+    
+    
 }
