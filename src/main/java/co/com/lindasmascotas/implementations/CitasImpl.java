@@ -62,7 +62,7 @@ public class CitasImpl implements CitasSvc {
             }
              */
             if(!validarDisponibilidad(crearcita)){
-                              
+                                             
                 
                ctrl.create(crearcita);
                //Mail.enviarNotificacionCita(c);
@@ -208,7 +208,6 @@ public class CitasImpl implements CitasSvc {
 
         return dateFrmt;
     }
-    
     
     
 }

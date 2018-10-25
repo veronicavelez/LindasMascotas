@@ -5,10 +5,10 @@
  */
 package co.com.lindasmascotas.implementations;
 
-import co.com.lindasmascotas.JPAcontrollers.DetalleTurnosJpaController;
+import co.com.lindasmascotas.JPAcontrollers.DetalleturnosJpaController;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.IllegalOrphanException;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
-import co.com.lindasmascotas.entities.DetalleTurnos;
+import co.com.lindasmascotas.entities.Detalleturnos;
 import co.com.lindasmascotas.services.DetalleTurnosSvc;
 import co.com.lindasmascotas.util.MessageExceptions;
 import co.com.lindasmascotas.util.Response;
@@ -25,11 +25,11 @@ public class DetalleTurnosImpl implements DetalleTurnosSvc {
 
     @Override
     public Response listarDetalleTurnos() {
-        DetalleTurnosJpaController ctrl = new DetalleTurnosJpaController(UPfactory.getFACTORY());
+        DetalleturnosJpaController ctrl = new DetalleturnosJpaController(UPfactory.getFACTORY());
         Response res = new Response();
         
         try{
-            List<DetalleTurnos> list = ctrl.findDetalleTurnosEntities();
+            List<Detalleturnos> list = ctrl.findDetalleturnosEntities();
             
             res.setStatus(true);
             res.setData(list);
@@ -42,9 +42,9 @@ public class DetalleTurnosImpl implements DetalleTurnosSvc {
     }
 
     @Override
-    public Response crear(DetalleTurnos d) {
+    public Response crear(Detalleturnos d) {
         Response res = new Response();
-        DetalleTurnosJpaController ctrl = new DetalleTurnosJpaController(UPfactory.getFACTORY());
+        DetalleturnosJpaController ctrl = new DetalleturnosJpaController(UPfactory.getFACTORY());
         
         try{
             
@@ -56,17 +56,17 @@ public class DetalleTurnosImpl implements DetalleTurnosSvc {
             
             res.setStatus(false);
             res.setMessage(MessageExceptions.messageException(ex.getMessage()));
-            res.setData(ctrl.findDetalleTurnosEntities());
+            res.setData(ctrl.findDetalleturnosEntities());
         }
         
         return res;
     }
 
     @Override
-    public Response editar(DetalleTurnos d) {
+    public Response editar(Detalleturnos d) {
         Response res = new Response();
-        DetalleTurnosJpaController ctrl = new DetalleTurnosJpaController(UPfactory.getFACTORY());
-        DetalleTurnos detalleturnoActual  = ctrl.findDetalleTurnos(d.getIdDetalleTurno());
+        DetalleturnosJpaController ctrl = new DetalleturnosJpaController(UPfactory.getFACTORY());
+        Detalleturnos detalleturnoActual  = ctrl.findDetalleturnos(d.getIdDetalleTurno());
         
         detalleturnoActual.setDias(d.getDias());
         detalleturnoActual.setHoraInicial(d.getHoraInicial());
@@ -81,13 +81,13 @@ public class DetalleTurnosImpl implements DetalleTurnosSvc {
             
             res.setStatus(false);
             res.setMessage(MessageExceptions.messageException(ex.getMessage()));
-            res.setData(ctrl.findDetalleTurnosEntities());
+            res.setData(ctrl.findDetalleturnosEntities());
         } catch (Exception ex) {
             Logger.getLogger(DetalleTurnosImpl.class.getName()).log(Level.SEVERE, null, ex);
             
             res.setStatus(false);
             res.setMessage(MessageExceptions.messageException(ex.getMessage()));
-            res.setData(ctrl.findDetalleTurnosEntities());
+            res.setData(ctrl.findDetalleturnosEntities());
         }
         
         return res;
@@ -97,7 +97,7 @@ public class DetalleTurnosImpl implements DetalleTurnosSvc {
     @Override
     public Response eliminar(Integer id) {
         Response res = new Response();
-        DetalleTurnosJpaController ctrl = new DetalleTurnosJpaController(UPfactory.getFACTORY());
+        DetalleturnosJpaController ctrl = new DetalleturnosJpaController(UPfactory.getFACTORY());
         
         try{
             ctrl.destroy(id);
@@ -108,13 +108,13 @@ public class DetalleTurnosImpl implements DetalleTurnosSvc {
             
             res.setStatus(false);
             res.setMessage(MessageExceptions.messageException(ex.getMessage()));
-            res.setData(ctrl.findDetalleTurnosEntities());
+            res.setData(ctrl.findDetalleturnosEntities());
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(DetalleTurnosImpl.class.getName()).log(Level.SEVERE, null, ex);
             
             res.setStatus(false);
             res.setMessage(MessageExceptions.messageException(ex.getMessage()));
-            res.setData(ctrl.findDetalleTurnosEntities());
+            res.setData(ctrl.findDetalleturnosEntities());
         }
         
         return res;

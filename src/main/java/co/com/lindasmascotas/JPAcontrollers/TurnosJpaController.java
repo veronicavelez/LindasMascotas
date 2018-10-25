@@ -12,7 +12,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import co.com.lindasmascotas.entities.DetalleTurnos;
+import co.com.lindasmascotas.entities.Detalleturnos;
 import co.com.lindasmascotas.entities.Turnos;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,27 +35,27 @@ public class TurnosJpaController implements Serializable {
     }
 
     public void create(Turnos turnos) {
-        if (turnos.getDetalleTurnosList() == null) {
-            turnos.setDetalleTurnosList(new ArrayList<DetalleTurnos>());
+        if (turnos.getDetalleturnosList() == null) {
+            turnos.setDetalleturnosList(new ArrayList<Detalleturnos>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<DetalleTurnos> attachedDetalleTurnosList = new ArrayList<DetalleTurnos>();
-            for (DetalleTurnos detalleTurnosListDetalleTurnosToAttach : turnos.getDetalleTurnosList()) {
-                detalleTurnosListDetalleTurnosToAttach = em.getReference(detalleTurnosListDetalleTurnosToAttach.getClass(), detalleTurnosListDetalleTurnosToAttach.getIdDetalleTurno());
-                attachedDetalleTurnosList.add(detalleTurnosListDetalleTurnosToAttach);
+            List<Detalleturnos> attachedDetalleturnosList = new ArrayList<Detalleturnos>();
+            for (Detalleturnos detalleturnosListDetalleturnosToAttach : turnos.getDetalleturnosList()) {
+                detalleturnosListDetalleturnosToAttach = em.getReference(detalleturnosListDetalleturnosToAttach.getClass(), detalleturnosListDetalleturnosToAttach.getIdDetalleTurno());
+                attachedDetalleturnosList.add(detalleturnosListDetalleturnosToAttach);
             }
-            turnos.setDetalleTurnosList(attachedDetalleTurnosList);
+            turnos.setDetalleturnosList(attachedDetalleturnosList);
             em.persist(turnos);
-            for (DetalleTurnos detalleTurnosListDetalleTurnos : turnos.getDetalleTurnosList()) {
-                Turnos oldIdTurnoOfDetalleTurnosListDetalleTurnos = detalleTurnosListDetalleTurnos.getIdTurno();
-                detalleTurnosListDetalleTurnos.setIdTurno(turnos);
-                detalleTurnosListDetalleTurnos = em.merge(detalleTurnosListDetalleTurnos);
-                if (oldIdTurnoOfDetalleTurnosListDetalleTurnos != null) {
-                    oldIdTurnoOfDetalleTurnosListDetalleTurnos.getDetalleTurnosList().remove(detalleTurnosListDetalleTurnos);
-                    oldIdTurnoOfDetalleTurnosListDetalleTurnos = em.merge(oldIdTurnoOfDetalleTurnosListDetalleTurnos);
+            for (Detalleturnos detalleturnosListDetalleturnos : turnos.getDetalleturnosList()) {
+                Turnos oldIdTurnoOfDetalleturnosListDetalleturnos = detalleturnosListDetalleturnos.getIdTurno();
+                detalleturnosListDetalleturnos.setIdTurno(turnos);
+                detalleturnosListDetalleturnos = em.merge(detalleturnosListDetalleturnos);
+                if (oldIdTurnoOfDetalleturnosListDetalleturnos != null) {
+                    oldIdTurnoOfDetalleturnosListDetalleturnos.getDetalleturnosList().remove(detalleturnosListDetalleturnos);
+                    oldIdTurnoOfDetalleturnosListDetalleturnos = em.merge(oldIdTurnoOfDetalleturnosListDetalleturnos);
                 }
             }
             em.getTransaction().commit();
@@ -66,42 +66,36 @@ public class TurnosJpaController implements Serializable {
         }
     }
 
-    public void edit(Turnos turnos) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Turnos turnos) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             Turnos persistentTurnos = em.find(Turnos.class, turnos.getIdTurno());
-            List<DetalleTurnos> detalleTurnosListOld = persistentTurnos.getDetalleTurnosList();
-            List<DetalleTurnos> detalleTurnosListNew = turnos.getDetalleTurnosList();
-            List<String> illegalOrphanMessages = null;
-            for (DetalleTurnos detalleTurnosListOldDetalleTurnos : detalleTurnosListOld) {
-                if (!detalleTurnosListNew.contains(detalleTurnosListOldDetalleTurnos)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain DetalleTurnos " + detalleTurnosListOldDetalleTurnos + " since its idTurno field is not nullable.");
+            List<Detalleturnos> detalleturnosListOld = persistentTurnos.getDetalleturnosList();
+            List<Detalleturnos> detalleturnosListNew = turnos.getDetalleturnosList();
+            List<Detalleturnos> attachedDetalleturnosListNew = new ArrayList<Detalleturnos>();
+            for (Detalleturnos detalleturnosListNewDetalleturnosToAttach : detalleturnosListNew) {
+                detalleturnosListNewDetalleturnosToAttach = em.getReference(detalleturnosListNewDetalleturnosToAttach.getClass(), detalleturnosListNewDetalleturnosToAttach.getIdDetalleTurno());
+                attachedDetalleturnosListNew.add(detalleturnosListNewDetalleturnosToAttach);
+            }
+            detalleturnosListNew = attachedDetalleturnosListNew;
+            turnos.setDetalleturnosList(detalleturnosListNew);
+            turnos = em.merge(turnos);
+            for (Detalleturnos detalleturnosListOldDetalleturnos : detalleturnosListOld) {
+                if (!detalleturnosListNew.contains(detalleturnosListOldDetalleturnos)) {
+                    detalleturnosListOldDetalleturnos.setIdTurno(null);
+                    detalleturnosListOldDetalleturnos = em.merge(detalleturnosListOldDetalleturnos);
                 }
             }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            List<DetalleTurnos> attachedDetalleTurnosListNew = new ArrayList<DetalleTurnos>();
-            for (DetalleTurnos detalleTurnosListNewDetalleTurnosToAttach : detalleTurnosListNew) {
-                detalleTurnosListNewDetalleTurnosToAttach = em.getReference(detalleTurnosListNewDetalleTurnosToAttach.getClass(), detalleTurnosListNewDetalleTurnosToAttach.getIdDetalleTurno());
-                attachedDetalleTurnosListNew.add(detalleTurnosListNewDetalleTurnosToAttach);
-            }
-            detalleTurnosListNew = attachedDetalleTurnosListNew;
-            turnos.setDetalleTurnosList(detalleTurnosListNew);
-            turnos = em.merge(turnos);
-            for (DetalleTurnos detalleTurnosListNewDetalleTurnos : detalleTurnosListNew) {
-                if (!detalleTurnosListOld.contains(detalleTurnosListNewDetalleTurnos)) {
-                    Turnos oldIdTurnoOfDetalleTurnosListNewDetalleTurnos = detalleTurnosListNewDetalleTurnos.getIdTurno();
-                    detalleTurnosListNewDetalleTurnos.setIdTurno(turnos);
-                    detalleTurnosListNewDetalleTurnos = em.merge(detalleTurnosListNewDetalleTurnos);
-                    if (oldIdTurnoOfDetalleTurnosListNewDetalleTurnos != null && !oldIdTurnoOfDetalleTurnosListNewDetalleTurnos.equals(turnos)) {
-                        oldIdTurnoOfDetalleTurnosListNewDetalleTurnos.getDetalleTurnosList().remove(detalleTurnosListNewDetalleTurnos);
-                        oldIdTurnoOfDetalleTurnosListNewDetalleTurnos = em.merge(oldIdTurnoOfDetalleTurnosListNewDetalleTurnos);
+            for (Detalleturnos detalleturnosListNewDetalleturnos : detalleturnosListNew) {
+                if (!detalleturnosListOld.contains(detalleturnosListNewDetalleturnos)) {
+                    Turnos oldIdTurnoOfDetalleturnosListNewDetalleturnos = detalleturnosListNewDetalleturnos.getIdTurno();
+                    detalleturnosListNewDetalleturnos.setIdTurno(turnos);
+                    detalleturnosListNewDetalleturnos = em.merge(detalleturnosListNewDetalleturnos);
+                    if (oldIdTurnoOfDetalleturnosListNewDetalleturnos != null && !oldIdTurnoOfDetalleturnosListNewDetalleturnos.equals(turnos)) {
+                        oldIdTurnoOfDetalleturnosListNewDetalleturnos.getDetalleturnosList().remove(detalleturnosListNewDetalleturnos);
+                        oldIdTurnoOfDetalleturnosListNewDetalleturnos = em.merge(oldIdTurnoOfDetalleturnosListNewDetalleturnos);
                     }
                 }
             }
@@ -122,7 +116,7 @@ public class TurnosJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -134,16 +128,10 @@ public class TurnosJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The turnos with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            List<DetalleTurnos> detalleTurnosListOrphanCheck = turnos.getDetalleTurnosList();
-            for (DetalleTurnos detalleTurnosListOrphanCheckDetalleTurnos : detalleTurnosListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Turnos (" + turnos + ") cannot be destroyed since the DetalleTurnos " + detalleTurnosListOrphanCheckDetalleTurnos + " in its detalleTurnosList field has a non-nullable idTurno field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
+            List<Detalleturnos> detalleturnosList = turnos.getDetalleturnosList();
+            for (Detalleturnos detalleturnosListDetalleturnos : detalleturnosList) {
+                detalleturnosListDetalleturnos.setIdTurno(null);
+                detalleturnosListDetalleturnos = em.merge(detalleturnosListDetalleturnos);
             }
             em.remove(turnos);
             em.getTransaction().commit();

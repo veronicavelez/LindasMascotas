@@ -14,6 +14,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -109,6 +111,11 @@ public class Empleados implements Serializable {
     @Size(min = 1, max = 1)
     @Column(name = "tipo_rh")
     private String tipoRh;
+    @JoinTable(name = "servicio_por_empleado", joinColumns = {
+        @JoinColumn(name = "id_empleado", referencedColumnName = "id_empleado")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_servicio", referencedColumnName = "id_servicio")})
+    @ManyToMany
+    private List<Servicios> serviciosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpleado")
     private List<TurnosPorEmpleados> turnosPorEmpleadosList;
     @JoinColumn(name = "id_barrio", referencedColumnName = "id_barrio")
@@ -257,6 +264,16 @@ public class Empleados implements Serializable {
 
     @XmlTransient
     @JsonIgnore
+    public List<Servicios> getServiciosList() {
+        return serviciosList;
+    }
+
+    public void setServiciosList(List<Servicios> serviciosList) {
+        this.serviciosList = serviciosList;
+    }
+    
+    @XmlTransient
+    @JsonIgnore
     public List<TurnosPorEmpleados> getTurnosPorEmpleadosList() {
         return turnosPorEmpleadosList;
     }
@@ -363,12 +380,12 @@ public class Empleados implements Serializable {
     public String toString() {
         return "co.com.lindasmascotas.entities.Empleados[ idEmpleado=" + idEmpleado + " ]";
     }
-
+    
 //    @XmlTransient
 //    @JsonIgnore
     public List<Citas> getCitasList() {
         return citasList;
-    }
+}
 
     public void setCitasList(List<Citas> citasList) {
         this.citasList = citasList;

@@ -120,10 +120,10 @@ public class Razas implements Serializable {
     public String toString() {
         return "co.com.lindasmascotas.entities.Razas[ idRaza=" + idRaza + " ]";
     }
-
+    
     public Especies getIdEspecie() {
         return idEspecie;
-    }
+}
 
     public void setIdEspecie(Especies idEspecie) {
         this.idEspecie = idEspecie;

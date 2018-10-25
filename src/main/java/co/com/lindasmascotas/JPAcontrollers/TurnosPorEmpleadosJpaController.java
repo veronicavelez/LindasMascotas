@@ -12,7 +12,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import co.com.lindasmascotas.entities.DetalleTurnos;
+import co.com.lindasmascotas.entities.Detalleturnos;
 import co.com.lindasmascotas.entities.Empleados;
 import co.com.lindasmascotas.entities.TurnosPorEmpleados;
 import java.util.List;
@@ -39,7 +39,7 @@ public class TurnosPorEmpleadosJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            DetalleTurnos idDetalleTurnos = turnosPorEmpleados.getIdDetalleTurnos();
+            Detalleturnos idDetalleTurnos = turnosPorEmpleados.getIdDetalleTurnos();
             if (idDetalleTurnos != null) {
                 idDetalleTurnos = em.getReference(idDetalleTurnos.getClass(), idDetalleTurnos.getIdDetalleTurno());
                 turnosPorEmpleados.setIdDetalleTurnos(idDetalleTurnos);
@@ -77,8 +77,8 @@ public class TurnosPorEmpleadosJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             TurnosPorEmpleados persistentTurnosPorEmpleados = em.find(TurnosPorEmpleados.class, turnosPorEmpleados.getIdTurnosPorEmpl());
-            DetalleTurnos idDetalleTurnosOld = persistentTurnosPorEmpleados.getIdDetalleTurnos();
-            DetalleTurnos idDetalleTurnosNew = turnosPorEmpleados.getIdDetalleTurnos();
+            Detalleturnos idDetalleTurnosOld = persistentTurnosPorEmpleados.getIdDetalleTurnos();
+            Detalleturnos idDetalleTurnosNew = turnosPorEmpleados.getIdDetalleTurnos();
             Empleados idEmpleadoOld = persistentTurnosPorEmpleados.getIdEmpleado();
             Empleados idEmpleadoNew = turnosPorEmpleados.getIdEmpleado();
             if (idDetalleTurnosNew != null) {
@@ -135,7 +135,7 @@ public class TurnosPorEmpleadosJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The turnosPorEmpleados with id " + id + " no longer exists.", enfe);
             }
-            DetalleTurnos idDetalleTurnos = turnosPorEmpleados.getIdDetalleTurnos();
+            Detalleturnos idDetalleTurnos = turnosPorEmpleados.getIdDetalleTurnos();
             if (idDetalleTurnos != null) {
                 idDetalleTurnos.getTurnosPorEmpleadosList().remove(turnosPorEmpleados);
                 idDetalleTurnos = em.merge(idDetalleTurnos);

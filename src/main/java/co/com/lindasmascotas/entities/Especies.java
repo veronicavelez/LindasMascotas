@@ -116,12 +116,12 @@ public class Especies implements Serializable {
     public String toString() {
         return "co.com.lindasmascotas.entities.Especies[ idEspecie=" + idEspecie + " ]";
     }
-
+    
     @XmlTransient
     @JsonIgnore
     public List<Razas> getRazasList() {
         return razasList;
-    }
+}
 
     public void setRazasList(List<Razas> razasList) {
         this.razasList = razasList;

@@ -38,7 +38,7 @@ public class TurnosPorEmpleados implements Serializable {
     private Integer idTurnosPorEmpl;
     @JoinColumn(name = "id_detalle_turnos", referencedColumnName = "id_detalle_turno")
     @ManyToOne(optional = false)
-    private DetalleTurnos idDetalleTurnos;
+    private Detalleturnos idDetalleTurnos;
     @JoinColumn(name = "id_empleado", referencedColumnName = "id_empleado")
     @ManyToOne(optional = false)
     private Empleados idEmpleado;
@@ -58,11 +58,11 @@ public class TurnosPorEmpleados implements Serializable {
         this.idTurnosPorEmpl = idTurnosPorEmpl;
     }
 
-    public DetalleTurnos getIdDetalleTurnos() {
+    public Detalleturnos getIdDetalleTurnos() {
         return idDetalleTurnos;
     }
 
-    public void setIdDetalleTurnos(DetalleTurnos idDetalleTurnos) {
+    public void setIdDetalleTurnos(Detalleturnos idDetalleTurnos) {
         this.idDetalleTurnos = idDetalleTurnos;
     }
 

@@ -48,8 +48,8 @@ public class Turnos implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "nombre_turno")
     private String nombreTurno;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTurno")
-    private List<DetalleTurnos> detalleTurnosList;
+    @OneToMany(mappedBy = "idTurno")
+    private List<Detalleturnos> detalleturnosList;
 
     public Turnos() {
     }
@@ -79,14 +79,14 @@ public class Turnos implements Serializable {
         this.nombreTurno = nombreTurno;
     }
 
-//    @XmlTransient
-//    @JsonIgnore
-    public List<DetalleTurnos> getDetalleTurnosList() {
-        return detalleTurnosList;
+    @XmlTransient
+    @JsonIgnore
+    public List<Detalleturnos> getDetalleturnosList() {
+        return detalleturnosList;
     }
 
-    public void setDetalleTurnosList(List<DetalleTurnos> detalleTurnosList) {
-        this.detalleTurnosList = detalleTurnosList;
+    public void setDetalleturnosList(List<Detalleturnos> detalleturnosList) {
+        this.detalleturnosList = detalleturnosList;
     }
 
     @Override

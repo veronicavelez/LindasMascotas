@@ -66,10 +66,10 @@ public class Citas implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCita;
     @JoinColumn(name = "id_propietario", referencedColumnName = "id_propietario")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Propietarios idPropietario;
     @JoinColumn(name = "id_tipo_servicio", referencedColumnName = "id_servicio")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Servicios idTipoServicio;
 
     public Citas() {
@@ -117,7 +117,6 @@ public class Citas implements Serializable {
     public void setFechaCita(Date fechaCita) {
         this.fechaCita = fechaCita;
     }
-
     public Propietarios getIdPropietario() {
         return idPropietario;
     }
@@ -162,7 +161,7 @@ public class Citas implements Serializable {
     @JsonIgnore
     public Empleados getIdEmpleado() {
         return idEmpleado;
-    }
+}
 
     public void setIdEmpleado(Empleados idEmpleado) {
         this.idEmpleado = idEmpleado;

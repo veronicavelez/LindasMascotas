@@ -100,7 +100,7 @@ public class Propietarios implements Serializable {
     @JoinColumn(name = "id_tipo_documento", referencedColumnName = "id_tipo_doc")
     @ManyToOne(optional = false)
     private TiposDocumento idTipoDocumento;
-    @OneToMany(mappedBy = "idPropietario")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPropietario")
     private List<Citas> citasList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPropietario")
     private List<Mascotas> mascotasList;

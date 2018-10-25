@@ -13,9 +13,10 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import co.com.lindasmascotas.entities.Citas;
+import co.com.lindasmascotas.entities.Empleados;
 import java.util.ArrayList;
 import java.util.List;
+import co.com.lindasmascotas.entities.Citas;
 import co.com.lindasmascotas.entities.Procedimientos;
 import co.com.lindasmascotas.entities.Servicios;
 import javax.persistence.EntityManager;
@@ -37,6 +38,9 @@ public class ServiciosJpaController implements Serializable {
     }
 
     public void create(Servicios servicios) throws PreexistingEntityException, Exception {
+        if (servicios.getEmpleadosList() == null) {
+            servicios.setEmpleadosList(new ArrayList<Empleados>());
+        }
         if (servicios.getCitasList() == null) {
             servicios.setCitasList(new ArrayList<Citas>());
         }
@@ -47,6 +51,12 @@ public class ServiciosJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<Empleados> attachedEmpleadosList = new ArrayList<Empleados>();
+            for (Empleados empleadosListEmpleadosToAttach : servicios.getEmpleadosList()) {
+                empleadosListEmpleadosToAttach = em.getReference(empleadosListEmpleadosToAttach.getClass(), empleadosListEmpleadosToAttach.getIdEmpleado());
+                attachedEmpleadosList.add(empleadosListEmpleadosToAttach);
+            }
+            servicios.setEmpleadosList(attachedEmpleadosList);
             List<Citas> attachedCitasList = new ArrayList<Citas>();
             for (Citas citasListCitasToAttach : servicios.getCitasList()) {
                 citasListCitasToAttach = em.getReference(citasListCitasToAttach.getClass(), citasListCitasToAttach.getIdCita());
@@ -60,6 +70,10 @@ public class ServiciosJpaController implements Serializable {
             }
             servicios.setProcedimientosList(attachedProcedimientosList);
             em.persist(servicios);
+            for (Empleados empleadosListEmpleados : servicios.getEmpleadosList()) {
+                empleadosListEmpleados.getServiciosList().add(servicios);
+                empleadosListEmpleados = em.merge(empleadosListEmpleados);
+            }
             for (Citas citasListCitas : servicios.getCitasList()) {
                 Servicios oldIdTipoServicioOfCitasListCitas = citasListCitas.getIdTipoServicio();
                 citasListCitas.setIdTipoServicio(servicios);
@@ -97,11 +111,21 @@ public class ServiciosJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Servicios persistentServicios = em.find(Servicios.class, servicios.getIdServicio());
+            List<Empleados> empleadosListOld = persistentServicios.getEmpleadosList();
+            List<Empleados> empleadosListNew = servicios.getEmpleadosList();
             List<Citas> citasListOld = persistentServicios.getCitasList();
             List<Citas> citasListNew = servicios.getCitasList();
             List<Procedimientos> procedimientosListOld = persistentServicios.getProcedimientosList();
             List<Procedimientos> procedimientosListNew = servicios.getProcedimientosList();
             List<String> illegalOrphanMessages = null;
+            for (Citas citasListOldCitas : citasListOld) {
+                if (!citasListNew.contains(citasListOldCitas)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Citas " + citasListOldCitas + " since its idTipoServicio field is not nullable.");
+                }
+            }
             for (Procedimientos procedimientosListOldProcedimientos : procedimientosListOld) {
                 if (!procedimientosListNew.contains(procedimientosListOldProcedimientos)) {
                     if (illegalOrphanMessages == null) {
@@ -113,6 +137,13 @@ public class ServiciosJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            List<Empleados> attachedEmpleadosListNew = new ArrayList<Empleados>();
+            for (Empleados empleadosListNewEmpleadosToAttach : empleadosListNew) {
+                empleadosListNewEmpleadosToAttach = em.getReference(empleadosListNewEmpleadosToAttach.getClass(), empleadosListNewEmpleadosToAttach.getIdEmpleado());
+                attachedEmpleadosListNew.add(empleadosListNewEmpleadosToAttach);
+            }
+            empleadosListNew = attachedEmpleadosListNew;
+            servicios.setEmpleadosList(empleadosListNew);
             List<Citas> attachedCitasListNew = new ArrayList<Citas>();
             for (Citas citasListNewCitasToAttach : citasListNew) {
                 citasListNewCitasToAttach = em.getReference(citasListNewCitasToAttach.getClass(), citasListNewCitasToAttach.getIdCita());
@@ -128,10 +159,16 @@ public class ServiciosJpaController implements Serializable {
             procedimientosListNew = attachedProcedimientosListNew;
             servicios.setProcedimientosList(procedimientosListNew);
             servicios = em.merge(servicios);
-            for (Citas citasListOldCitas : citasListOld) {
-                if (!citasListNew.contains(citasListOldCitas)) {
-                    citasListOldCitas.setIdTipoServicio(null);
-                    citasListOldCitas = em.merge(citasListOldCitas);
+            for (Empleados empleadosListOldEmpleados : empleadosListOld) {
+                if (!empleadosListNew.contains(empleadosListOldEmpleados)) {
+                    empleadosListOldEmpleados.getServiciosList().remove(servicios);
+                    empleadosListOldEmpleados = em.merge(empleadosListOldEmpleados);
+                }
+            }
+            for (Empleados empleadosListNewEmpleados : empleadosListNew) {
+                if (!empleadosListOld.contains(empleadosListNewEmpleados)) {
+                    empleadosListNewEmpleados.getServiciosList().add(servicios);
+                    empleadosListNewEmpleados = em.merge(empleadosListNewEmpleados);
                 }
             }
             for (Citas citasListNewCitas : citasListNew) {
@@ -186,6 +223,13 @@ public class ServiciosJpaController implements Serializable {
                 throw new NonexistentEntityException("The servicios with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
+            List<Citas> citasListOrphanCheck = servicios.getCitasList();
+            for (Citas citasListOrphanCheckCitas : citasListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Servicios (" + servicios + ") cannot be destroyed since the Citas " + citasListOrphanCheckCitas + " in its citasList field has a non-nullable idTipoServicio field.");
+            }
             List<Procedimientos> procedimientosListOrphanCheck = servicios.getProcedimientosList();
             for (Procedimientos procedimientosListOrphanCheckProcedimientos : procedimientosListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
@@ -196,10 +240,10 @@ public class ServiciosJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            List<Citas> citasList = servicios.getCitasList();
-            for (Citas citasListCitas : citasList) {
-                citasListCitas.setIdTipoServicio(null);
-                citasListCitas = em.merge(citasListCitas);
+            List<Empleados> empleadosList = servicios.getEmpleadosList();
+            for (Empleados empleadosListEmpleados : empleadosList) {
+                empleadosListEmpleados.getServiciosList().remove(servicios);
+                empleadosListEmpleados = em.merge(empleadosListEmpleados);
             }
             em.remove(servicios);
             em.getTransaction().commit();

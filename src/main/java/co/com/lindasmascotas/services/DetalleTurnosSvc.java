@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package co.com.lindasmascotas.services;
-import co.com.lindasmascotas.entities.DetalleTurnos;
+import co.com.lindasmascotas.entities.Detalleturnos;
 import co.com.lindasmascotas.entities.Turnos;
 import co.com.lindasmascotas.util.Response;
 import javax.ws.rs.Consumes;
@@ -32,12 +32,12 @@ public interface DetalleTurnosSvc {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Response crear(DetalleTurnos d);
+    Response crear(Detalleturnos d);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Response editar(DetalleTurnos d);
+    Response editar(Detalleturnos d);
     
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
