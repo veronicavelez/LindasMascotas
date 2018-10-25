@@ -22,7 +22,7 @@ public class MascotasImpl implements MascotasSvc {
         try {
             List<Mascotas> list  = ctrl.findMascotasEntities();
             
-            res.setStatus(false);
+            res.setStatus(true);
             res.setData(list);
         } catch (Exception e){
             res.setStatus(false);
