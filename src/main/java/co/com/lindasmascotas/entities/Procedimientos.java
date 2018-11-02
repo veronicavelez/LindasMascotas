@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 @Entity
 @Table(name = "procedimientos")

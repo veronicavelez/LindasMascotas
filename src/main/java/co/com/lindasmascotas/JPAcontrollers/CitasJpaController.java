@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import co.com.lindasmascotas.entities.Empleados;
 import co.com.lindasmascotas.entities.Propietarios;
 import co.com.lindasmascotas.entities.Servicios;
 import java.util.List;
@@ -20,7 +21,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 public class CitasJpaController implements Serializable {
 
@@ -38,6 +39,11 @@ public class CitasJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Empleados idEmpleado = citas.getIdEmpleado();
+            if (idEmpleado != null) {
+                idEmpleado = em.getReference(idEmpleado.getClass(), idEmpleado.getIdEmpleado());
+                citas.setIdEmpleado(idEmpleado);
+            }
             Propietarios idPropietario = citas.getIdPropietario();
             if (idPropietario != null) {
                 idPropietario = em.getReference(idPropietario.getClass(), idPropietario.getIdPropietario());
@@ -49,6 +55,10 @@ public class CitasJpaController implements Serializable {
                 citas.setIdTipoServicio(idTipoServicio);
             }
             em.persist(citas);
+            if (idEmpleado != null) {
+                idEmpleado.getCitasList().add(citas);
+                idEmpleado = em.merge(idEmpleado);
+            }
             if (idPropietario != null) {
                 idPropietario.getCitasList().add(citas);
                 idPropietario = em.merge(idPropietario);
@@ -71,10 +81,16 @@ public class CitasJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Citas persistentCitas = em.find(Citas.class, citas.getIdCita());
+            Empleados idEmpleadoOld = persistentCitas.getIdEmpleado();
+            Empleados idEmpleadoNew = citas.getIdEmpleado();
             Propietarios idPropietarioOld = persistentCitas.getIdPropietario();
             Propietarios idPropietarioNew = citas.getIdPropietario();
             Servicios idTipoServicioOld = persistentCitas.getIdTipoServicio();
             Servicios idTipoServicioNew = citas.getIdTipoServicio();
+            if (idEmpleadoNew != null) {
+                idEmpleadoNew = em.getReference(idEmpleadoNew.getClass(), idEmpleadoNew.getIdEmpleado());
+                citas.setIdEmpleado(idEmpleadoNew);
+            }
             if (idPropietarioNew != null) {
                 idPropietarioNew = em.getReference(idPropietarioNew.getClass(), idPropietarioNew.getIdPropietario());
                 citas.setIdPropietario(idPropietarioNew);
@@ -84,6 +100,14 @@ public class CitasJpaController implements Serializable {
                 citas.setIdTipoServicio(idTipoServicioNew);
             }
             citas = em.merge(citas);
+            if (idEmpleadoOld != null && !idEmpleadoOld.equals(idEmpleadoNew)) {
+                idEmpleadoOld.getCitasList().remove(citas);
+                idEmpleadoOld = em.merge(idEmpleadoOld);
+            }
+            if (idEmpleadoNew != null && !idEmpleadoNew.equals(idEmpleadoOld)) {
+                idEmpleadoNew.getCitasList().add(citas);
+                idEmpleadoNew = em.merge(idEmpleadoNew);
+            }
             if (idPropietarioOld != null && !idPropietarioOld.equals(idPropietarioNew)) {
                 idPropietarioOld.getCitasList().remove(citas);
                 idPropietarioOld = em.merge(idPropietarioOld);
@@ -128,6 +152,11 @@ public class CitasJpaController implements Serializable {
                 citas.getIdCita();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The citas with id " + id + " no longer exists.", enfe);
+            }
+            Empleados idEmpleado = citas.getIdEmpleado();
+            if (idEmpleado != null) {
+                idEmpleado.getCitasList().remove(citas);
+                idEmpleado = em.merge(idEmpleado);
             }
             Propietarios idPropietario = citas.getIdPropietario();
             if (idPropietario != null) {

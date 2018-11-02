@@ -29,7 +29,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 @Entity
 @Table(name = "propietarios")
@@ -62,7 +62,7 @@ public class Propietarios implements Serializable {
     @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "apellidos_propietario")
-        private String apellidosPropietario;
+    private String apellidosPropietario;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_nacimiento")

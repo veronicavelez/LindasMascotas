@@ -26,7 +26,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 @Entity
 @Table(name = "tipos_contrato")

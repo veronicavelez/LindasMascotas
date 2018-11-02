@@ -16,21 +16,24 @@ import javax.persistence.criteria.Root;
 import co.com.lindasmascotas.entities.Barrios;
 import co.com.lindasmascotas.entities.Cargos;
 import co.com.lindasmascotas.entities.Ciudades;
-import co.com.lindasmascotas.entities.Empleados;
 import co.com.lindasmascotas.entities.Generos;
 import co.com.lindasmascotas.entities.Perfiles;
 import co.com.lindasmascotas.entities.TiposContrato;
 import co.com.lindasmascotas.entities.TiposDocumento;
 import co.com.lindasmascotas.entities.TiposSangre;
-import co.com.lindasmascotas.entities.Procedimientos;
+import co.com.lindasmascotas.entities.Citas;
+import co.com.lindasmascotas.entities.Empleados;
 import java.util.ArrayList;
 import java.util.List;
+import co.com.lindasmascotas.entities.ServicioPorEmpleado;
+import co.com.lindasmascotas.entities.TurnosPorEmpleados;
+import co.com.lindasmascotas.entities.Procedimientos;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 public class EmpleadosJpaController implements Serializable {
 
@@ -44,6 +47,15 @@ public class EmpleadosJpaController implements Serializable {
     }
 
     public void create(Empleados empleados) throws PreexistingEntityException, Exception {
+        if (empleados.getCitasList() == null) {
+            empleados.setCitasList(new ArrayList<Citas>());
+        }
+        if (empleados.getServicioPorEmpleadoList() == null) {
+            empleados.setServicioPorEmpleadoList(new ArrayList<ServicioPorEmpleado>());
+        }
+        if (empleados.getTurnosPorEmpleadosList() == null) {
+            empleados.setTurnosPorEmpleadosList(new ArrayList<TurnosPorEmpleados>());
+        }
         if (empleados.getProcedimientosList() == null) {
             empleados.setProcedimientosList(new ArrayList<Procedimientos>());
         }
@@ -91,6 +103,24 @@ public class EmpleadosJpaController implements Serializable {
                 idTipoSangre = em.getReference(idTipoSangre.getClass(), idTipoSangre.getIdTipoSangre());
                 empleados.setIdTipoSangre(idTipoSangre);
             }
+            List<Citas> attachedCitasList = new ArrayList<Citas>();
+            for (Citas citasListCitasToAttach : empleados.getCitasList()) {
+                citasListCitasToAttach = em.getReference(citasListCitasToAttach.getClass(), citasListCitasToAttach.getIdCita());
+                attachedCitasList.add(citasListCitasToAttach);
+            }
+            empleados.setCitasList(attachedCitasList);
+            List<ServicioPorEmpleado> attachedServicioPorEmpleadoList = new ArrayList<ServicioPorEmpleado>();
+            for (ServicioPorEmpleado servicioPorEmpleadoListServicioPorEmpleadoToAttach : empleados.getServicioPorEmpleadoList()) {
+                servicioPorEmpleadoListServicioPorEmpleadoToAttach = em.getReference(servicioPorEmpleadoListServicioPorEmpleadoToAttach.getClass(), servicioPorEmpleadoListServicioPorEmpleadoToAttach.getIdServEmpl());
+                attachedServicioPorEmpleadoList.add(servicioPorEmpleadoListServicioPorEmpleadoToAttach);
+            }
+            empleados.setServicioPorEmpleadoList(attachedServicioPorEmpleadoList);
+            List<TurnosPorEmpleados> attachedTurnosPorEmpleadosList = new ArrayList<TurnosPorEmpleados>();
+            for (TurnosPorEmpleados turnosPorEmpleadosListTurnosPorEmpleadosToAttach : empleados.getTurnosPorEmpleadosList()) {
+                turnosPorEmpleadosListTurnosPorEmpleadosToAttach = em.getReference(turnosPorEmpleadosListTurnosPorEmpleadosToAttach.getClass(), turnosPorEmpleadosListTurnosPorEmpleadosToAttach.getIdTurnosPorEmpl());
+                attachedTurnosPorEmpleadosList.add(turnosPorEmpleadosListTurnosPorEmpleadosToAttach);
+            }
+            empleados.setTurnosPorEmpleadosList(attachedTurnosPorEmpleadosList);
             List<Procedimientos> attachedProcedimientosList = new ArrayList<Procedimientos>();
             for (Procedimientos procedimientosListProcedimientosToAttach : empleados.getProcedimientosList()) {
                 procedimientosListProcedimientosToAttach = em.getReference(procedimientosListProcedimientosToAttach.getClass(), procedimientosListProcedimientosToAttach.getIdProcedimiento());
@@ -129,6 +159,33 @@ public class EmpleadosJpaController implements Serializable {
             if (idTipoSangre != null) {
                 idTipoSangre.getEmpleadosList().add(empleados);
                 idTipoSangre = em.merge(idTipoSangre);
+            }
+            for (Citas citasListCitas : empleados.getCitasList()) {
+                Empleados oldIdEmpleadoOfCitasListCitas = citasListCitas.getIdEmpleado();
+                citasListCitas.setIdEmpleado(empleados);
+                citasListCitas = em.merge(citasListCitas);
+                if (oldIdEmpleadoOfCitasListCitas != null) {
+                    oldIdEmpleadoOfCitasListCitas.getCitasList().remove(citasListCitas);
+                    oldIdEmpleadoOfCitasListCitas = em.merge(oldIdEmpleadoOfCitasListCitas);
+                }
+            }
+            for (ServicioPorEmpleado servicioPorEmpleadoListServicioPorEmpleado : empleados.getServicioPorEmpleadoList()) {
+                Empleados oldIdEmpleadoOfServicioPorEmpleadoListServicioPorEmpleado = servicioPorEmpleadoListServicioPorEmpleado.getIdEmpleado();
+                servicioPorEmpleadoListServicioPorEmpleado.setIdEmpleado(empleados);
+                servicioPorEmpleadoListServicioPorEmpleado = em.merge(servicioPorEmpleadoListServicioPorEmpleado);
+                if (oldIdEmpleadoOfServicioPorEmpleadoListServicioPorEmpleado != null) {
+                    oldIdEmpleadoOfServicioPorEmpleadoListServicioPorEmpleado.getServicioPorEmpleadoList().remove(servicioPorEmpleadoListServicioPorEmpleado);
+                    oldIdEmpleadoOfServicioPorEmpleadoListServicioPorEmpleado = em.merge(oldIdEmpleadoOfServicioPorEmpleadoListServicioPorEmpleado);
+                }
+            }
+            for (TurnosPorEmpleados turnosPorEmpleadosListTurnosPorEmpleados : empleados.getTurnosPorEmpleadosList()) {
+                Empleados oldIdEmpleadoOfTurnosPorEmpleadosListTurnosPorEmpleados = turnosPorEmpleadosListTurnosPorEmpleados.getIdEmpleado();
+                turnosPorEmpleadosListTurnosPorEmpleados.setIdEmpleado(empleados);
+                turnosPorEmpleadosListTurnosPorEmpleados = em.merge(turnosPorEmpleadosListTurnosPorEmpleados);
+                if (oldIdEmpleadoOfTurnosPorEmpleadosListTurnosPorEmpleados != null) {
+                    oldIdEmpleadoOfTurnosPorEmpleadosListTurnosPorEmpleados.getTurnosPorEmpleadosList().remove(turnosPorEmpleadosListTurnosPorEmpleados);
+                    oldIdEmpleadoOfTurnosPorEmpleadosListTurnosPorEmpleados = em.merge(oldIdEmpleadoOfTurnosPorEmpleadosListTurnosPorEmpleados);
+                }
             }
             for (Procedimientos procedimientosListProcedimientos : empleados.getProcedimientosList()) {
                 Empleados oldIdEmpleadoOfProcedimientosListProcedimientos = procedimientosListProcedimientos.getIdEmpleado();
@@ -174,9 +231,39 @@ public class EmpleadosJpaController implements Serializable {
             TiposDocumento idTipoDocumentoNew = empleados.getIdTipoDocumento();
             TiposSangre idTipoSangreOld = persistentEmpleados.getIdTipoSangre();
             TiposSangre idTipoSangreNew = empleados.getIdTipoSangre();
+            List<Citas> citasListOld = persistentEmpleados.getCitasList();
+            List<Citas> citasListNew = empleados.getCitasList();
+            List<ServicioPorEmpleado> servicioPorEmpleadoListOld = persistentEmpleados.getServicioPorEmpleadoList();
+            List<ServicioPorEmpleado> servicioPorEmpleadoListNew = empleados.getServicioPorEmpleadoList();
+            List<TurnosPorEmpleados> turnosPorEmpleadosListOld = persistentEmpleados.getTurnosPorEmpleadosList();
+            List<TurnosPorEmpleados> turnosPorEmpleadosListNew = empleados.getTurnosPorEmpleadosList();
             List<Procedimientos> procedimientosListOld = persistentEmpleados.getProcedimientosList();
             List<Procedimientos> procedimientosListNew = empleados.getProcedimientosList();
             List<String> illegalOrphanMessages = null;
+            for (Citas citasListOldCitas : citasListOld) {
+                if (!citasListNew.contains(citasListOldCitas)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Citas " + citasListOldCitas + " since its idEmpleado field is not nullable.");
+                }
+            }
+            for (ServicioPorEmpleado servicioPorEmpleadoListOldServicioPorEmpleado : servicioPorEmpleadoListOld) {
+                if (!servicioPorEmpleadoListNew.contains(servicioPorEmpleadoListOldServicioPorEmpleado)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain ServicioPorEmpleado " + servicioPorEmpleadoListOldServicioPorEmpleado + " since its idEmpleado field is not nullable.");
+                }
+            }
+            for (TurnosPorEmpleados turnosPorEmpleadosListOldTurnosPorEmpleados : turnosPorEmpleadosListOld) {
+                if (!turnosPorEmpleadosListNew.contains(turnosPorEmpleadosListOldTurnosPorEmpleados)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain TurnosPorEmpleados " + turnosPorEmpleadosListOldTurnosPorEmpleados + " since its idEmpleado field is not nullable.");
+                }
+            }
             for (Procedimientos procedimientosListOldProcedimientos : procedimientosListOld) {
                 if (!procedimientosListNew.contains(procedimientosListOldProcedimientos)) {
                     if (illegalOrphanMessages == null) {
@@ -220,6 +307,27 @@ public class EmpleadosJpaController implements Serializable {
                 idTipoSangreNew = em.getReference(idTipoSangreNew.getClass(), idTipoSangreNew.getIdTipoSangre());
                 empleados.setIdTipoSangre(idTipoSangreNew);
             }
+            List<Citas> attachedCitasListNew = new ArrayList<Citas>();
+            for (Citas citasListNewCitasToAttach : citasListNew) {
+                citasListNewCitasToAttach = em.getReference(citasListNewCitasToAttach.getClass(), citasListNewCitasToAttach.getIdCita());
+                attachedCitasListNew.add(citasListNewCitasToAttach);
+            }
+            citasListNew = attachedCitasListNew;
+            empleados.setCitasList(citasListNew);
+            List<ServicioPorEmpleado> attachedServicioPorEmpleadoListNew = new ArrayList<ServicioPorEmpleado>();
+            for (ServicioPorEmpleado servicioPorEmpleadoListNewServicioPorEmpleadoToAttach : servicioPorEmpleadoListNew) {
+                servicioPorEmpleadoListNewServicioPorEmpleadoToAttach = em.getReference(servicioPorEmpleadoListNewServicioPorEmpleadoToAttach.getClass(), servicioPorEmpleadoListNewServicioPorEmpleadoToAttach.getIdServEmpl());
+                attachedServicioPorEmpleadoListNew.add(servicioPorEmpleadoListNewServicioPorEmpleadoToAttach);
+            }
+            servicioPorEmpleadoListNew = attachedServicioPorEmpleadoListNew;
+            empleados.setServicioPorEmpleadoList(servicioPorEmpleadoListNew);
+            List<TurnosPorEmpleados> attachedTurnosPorEmpleadosListNew = new ArrayList<TurnosPorEmpleados>();
+            for (TurnosPorEmpleados turnosPorEmpleadosListNewTurnosPorEmpleadosToAttach : turnosPorEmpleadosListNew) {
+                turnosPorEmpleadosListNewTurnosPorEmpleadosToAttach = em.getReference(turnosPorEmpleadosListNewTurnosPorEmpleadosToAttach.getClass(), turnosPorEmpleadosListNewTurnosPorEmpleadosToAttach.getIdTurnosPorEmpl());
+                attachedTurnosPorEmpleadosListNew.add(turnosPorEmpleadosListNewTurnosPorEmpleadosToAttach);
+            }
+            turnosPorEmpleadosListNew = attachedTurnosPorEmpleadosListNew;
+            empleados.setTurnosPorEmpleadosList(turnosPorEmpleadosListNew);
             List<Procedimientos> attachedProcedimientosListNew = new ArrayList<Procedimientos>();
             for (Procedimientos procedimientosListNewProcedimientosToAttach : procedimientosListNew) {
                 procedimientosListNewProcedimientosToAttach = em.getReference(procedimientosListNewProcedimientosToAttach.getClass(), procedimientosListNewProcedimientosToAttach.getIdProcedimiento());
@@ -292,6 +400,39 @@ public class EmpleadosJpaController implements Serializable {
                 idTipoSangreNew.getEmpleadosList().add(empleados);
                 idTipoSangreNew = em.merge(idTipoSangreNew);
             }
+            for (Citas citasListNewCitas : citasListNew) {
+                if (!citasListOld.contains(citasListNewCitas)) {
+                    Empleados oldIdEmpleadoOfCitasListNewCitas = citasListNewCitas.getIdEmpleado();
+                    citasListNewCitas.setIdEmpleado(empleados);
+                    citasListNewCitas = em.merge(citasListNewCitas);
+                    if (oldIdEmpleadoOfCitasListNewCitas != null && !oldIdEmpleadoOfCitasListNewCitas.equals(empleados)) {
+                        oldIdEmpleadoOfCitasListNewCitas.getCitasList().remove(citasListNewCitas);
+                        oldIdEmpleadoOfCitasListNewCitas = em.merge(oldIdEmpleadoOfCitasListNewCitas);
+                    }
+                }
+            }
+            for (ServicioPorEmpleado servicioPorEmpleadoListNewServicioPorEmpleado : servicioPorEmpleadoListNew) {
+                if (!servicioPorEmpleadoListOld.contains(servicioPorEmpleadoListNewServicioPorEmpleado)) {
+                    Empleados oldIdEmpleadoOfServicioPorEmpleadoListNewServicioPorEmpleado = servicioPorEmpleadoListNewServicioPorEmpleado.getIdEmpleado();
+                    servicioPorEmpleadoListNewServicioPorEmpleado.setIdEmpleado(empleados);
+                    servicioPorEmpleadoListNewServicioPorEmpleado = em.merge(servicioPorEmpleadoListNewServicioPorEmpleado);
+                    if (oldIdEmpleadoOfServicioPorEmpleadoListNewServicioPorEmpleado != null && !oldIdEmpleadoOfServicioPorEmpleadoListNewServicioPorEmpleado.equals(empleados)) {
+                        oldIdEmpleadoOfServicioPorEmpleadoListNewServicioPorEmpleado.getServicioPorEmpleadoList().remove(servicioPorEmpleadoListNewServicioPorEmpleado);
+                        oldIdEmpleadoOfServicioPorEmpleadoListNewServicioPorEmpleado = em.merge(oldIdEmpleadoOfServicioPorEmpleadoListNewServicioPorEmpleado);
+                    }
+                }
+            }
+            for (TurnosPorEmpleados turnosPorEmpleadosListNewTurnosPorEmpleados : turnosPorEmpleadosListNew) {
+                if (!turnosPorEmpleadosListOld.contains(turnosPorEmpleadosListNewTurnosPorEmpleados)) {
+                    Empleados oldIdEmpleadoOfTurnosPorEmpleadosListNewTurnosPorEmpleados = turnosPorEmpleadosListNewTurnosPorEmpleados.getIdEmpleado();
+                    turnosPorEmpleadosListNewTurnosPorEmpleados.setIdEmpleado(empleados);
+                    turnosPorEmpleadosListNewTurnosPorEmpleados = em.merge(turnosPorEmpleadosListNewTurnosPorEmpleados);
+                    if (oldIdEmpleadoOfTurnosPorEmpleadosListNewTurnosPorEmpleados != null && !oldIdEmpleadoOfTurnosPorEmpleadosListNewTurnosPorEmpleados.equals(empleados)) {
+                        oldIdEmpleadoOfTurnosPorEmpleadosListNewTurnosPorEmpleados.getTurnosPorEmpleadosList().remove(turnosPorEmpleadosListNewTurnosPorEmpleados);
+                        oldIdEmpleadoOfTurnosPorEmpleadosListNewTurnosPorEmpleados = em.merge(oldIdEmpleadoOfTurnosPorEmpleadosListNewTurnosPorEmpleados);
+                    }
+                }
+            }
             for (Procedimientos procedimientosListNewProcedimientos : procedimientosListNew) {
                 if (!procedimientosListOld.contains(procedimientosListNewProcedimientos)) {
                     Empleados oldIdEmpleadoOfProcedimientosListNewProcedimientos = procedimientosListNewProcedimientos.getIdEmpleado();
@@ -333,6 +474,27 @@ public class EmpleadosJpaController implements Serializable {
                 throw new NonexistentEntityException("The empleados with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
+            List<Citas> citasListOrphanCheck = empleados.getCitasList();
+            for (Citas citasListOrphanCheckCitas : citasListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Empleados (" + empleados + ") cannot be destroyed since the Citas " + citasListOrphanCheckCitas + " in its citasList field has a non-nullable idEmpleado field.");
+            }
+            List<ServicioPorEmpleado> servicioPorEmpleadoListOrphanCheck = empleados.getServicioPorEmpleadoList();
+            for (ServicioPorEmpleado servicioPorEmpleadoListOrphanCheckServicioPorEmpleado : servicioPorEmpleadoListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Empleados (" + empleados + ") cannot be destroyed since the ServicioPorEmpleado " + servicioPorEmpleadoListOrphanCheckServicioPorEmpleado + " in its servicioPorEmpleadoList field has a non-nullable idEmpleado field.");
+            }
+            List<TurnosPorEmpleados> turnosPorEmpleadosListOrphanCheck = empleados.getTurnosPorEmpleadosList();
+            for (TurnosPorEmpleados turnosPorEmpleadosListOrphanCheckTurnosPorEmpleados : turnosPorEmpleadosListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Empleados (" + empleados + ") cannot be destroyed since the TurnosPorEmpleados " + turnosPorEmpleadosListOrphanCheckTurnosPorEmpleados + " in its turnosPorEmpleadosList field has a non-nullable idEmpleado field.");
+            }
             List<Procedimientos> procedimientosListOrphanCheck = empleados.getProcedimientosList();
             for (Procedimientos procedimientosListOrphanCheckProcedimientos : procedimientosListOrphanCheck) {
                 if (illegalOrphanMessages == null) {

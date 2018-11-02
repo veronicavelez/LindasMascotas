@@ -22,7 +22,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 public class RazasJpaController implements Serializable {
 
@@ -228,7 +228,7 @@ public class RazasJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public List<Razas> findRazasByEspecies(Especies e) {
         EntityManager em = getEntityManager();
         List<Razas> lista = new ArrayList();
@@ -240,7 +240,7 @@ public class RazasJpaController implements Serializable {
             lista = (List<Razas>)q.getResultList();
         } finally{
             em.close();
-        }
+}
         
         return lista;
     }

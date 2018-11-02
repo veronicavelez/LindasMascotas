@@ -1,7 +1,11 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package co.com.lindasmascotas.services;
-
-import co.com.lindasmascotas.entities.Barrios;
+import co.com.lindasmascotas.entities.Detalleturnos;
+import co.com.lindasmascotas.entities.Turnos;
 import co.com.lindasmascotas.util.Response;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -13,24 +17,30 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-@Path("barrios")
-public interface BarriosSvc {
+/**
+ *
+ * @author ISABEL MEDINA
+ */
+
+@Path ("detalleturnos")
+public interface DetalleTurnosSvc {
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    Response listarBarrios();
-       
+    Response listarDetalleTurnos();
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Response crear(Barrios b);
+    Response crear(Detalleturnos d);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Response editar(Barrios b);
+    Response editar(Detalleturnos d);
     
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Response eliminar(@QueryParam("id") Integer id);  
+    Response eliminar(@QueryParam("id") Integer id); 
+    
 }

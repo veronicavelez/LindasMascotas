@@ -22,7 +22,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 public class SexosJpaController implements Serializable {
 

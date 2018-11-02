@@ -16,6 +16,7 @@ import javax.persistence.criteria.Root;
 import co.com.lindasmascotas.entities.Citas;
 import java.util.ArrayList;
 import java.util.List;
+import co.com.lindasmascotas.entities.ServicioPorEmpleado;
 import co.com.lindasmascotas.entities.Procedimientos;
 import co.com.lindasmascotas.entities.Servicios;
 import javax.persistence.EntityManager;
@@ -23,7 +24,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 public class ServiciosJpaController implements Serializable {
 
@@ -40,6 +41,9 @@ public class ServiciosJpaController implements Serializable {
         if (servicios.getCitasList() == null) {
             servicios.setCitasList(new ArrayList<Citas>());
         }
+        if (servicios.getServicioPorEmpleadoList() == null) {
+            servicios.setServicioPorEmpleadoList(new ArrayList<ServicioPorEmpleado>());
+        }
         if (servicios.getProcedimientosList() == null) {
             servicios.setProcedimientosList(new ArrayList<Procedimientos>());
         }
@@ -53,6 +57,12 @@ public class ServiciosJpaController implements Serializable {
                 attachedCitasList.add(citasListCitasToAttach);
             }
             servicios.setCitasList(attachedCitasList);
+            List<ServicioPorEmpleado> attachedServicioPorEmpleadoList = new ArrayList<ServicioPorEmpleado>();
+            for (ServicioPorEmpleado servicioPorEmpleadoListServicioPorEmpleadoToAttach : servicios.getServicioPorEmpleadoList()) {
+                servicioPorEmpleadoListServicioPorEmpleadoToAttach = em.getReference(servicioPorEmpleadoListServicioPorEmpleadoToAttach.getClass(), servicioPorEmpleadoListServicioPorEmpleadoToAttach.getIdServEmpl());
+                attachedServicioPorEmpleadoList.add(servicioPorEmpleadoListServicioPorEmpleadoToAttach);
+            }
+            servicios.setServicioPorEmpleadoList(attachedServicioPorEmpleadoList);
             List<Procedimientos> attachedProcedimientosList = new ArrayList<Procedimientos>();
             for (Procedimientos procedimientosListProcedimientosToAttach : servicios.getProcedimientosList()) {
                 procedimientosListProcedimientosToAttach = em.getReference(procedimientosListProcedimientosToAttach.getClass(), procedimientosListProcedimientosToAttach.getIdProcedimiento());
@@ -67,6 +77,15 @@ public class ServiciosJpaController implements Serializable {
                 if (oldIdTipoServicioOfCitasListCitas != null) {
                     oldIdTipoServicioOfCitasListCitas.getCitasList().remove(citasListCitas);
                     oldIdTipoServicioOfCitasListCitas = em.merge(oldIdTipoServicioOfCitasListCitas);
+                }
+            }
+            for (ServicioPorEmpleado servicioPorEmpleadoListServicioPorEmpleado : servicios.getServicioPorEmpleadoList()) {
+                Servicios oldIdServicioOfServicioPorEmpleadoListServicioPorEmpleado = servicioPorEmpleadoListServicioPorEmpleado.getIdServicio();
+                servicioPorEmpleadoListServicioPorEmpleado.setIdServicio(servicios);
+                servicioPorEmpleadoListServicioPorEmpleado = em.merge(servicioPorEmpleadoListServicioPorEmpleado);
+                if (oldIdServicioOfServicioPorEmpleadoListServicioPorEmpleado != null) {
+                    oldIdServicioOfServicioPorEmpleadoListServicioPorEmpleado.getServicioPorEmpleadoList().remove(servicioPorEmpleadoListServicioPorEmpleado);
+                    oldIdServicioOfServicioPorEmpleadoListServicioPorEmpleado = em.merge(oldIdServicioOfServicioPorEmpleadoListServicioPorEmpleado);
                 }
             }
             for (Procedimientos procedimientosListProcedimientos : servicios.getProcedimientosList()) {
@@ -99,6 +118,8 @@ public class ServiciosJpaController implements Serializable {
             Servicios persistentServicios = em.find(Servicios.class, servicios.getIdServicio());
             List<Citas> citasListOld = persistentServicios.getCitasList();
             List<Citas> citasListNew = servicios.getCitasList();
+            List<ServicioPorEmpleado> servicioPorEmpleadoListOld = persistentServicios.getServicioPorEmpleadoList();
+            List<ServicioPorEmpleado> servicioPorEmpleadoListNew = servicios.getServicioPorEmpleadoList();
             List<Procedimientos> procedimientosListOld = persistentServicios.getProcedimientosList();
             List<Procedimientos> procedimientosListNew = servicios.getProcedimientosList();
             List<String> illegalOrphanMessages = null;
@@ -108,6 +129,14 @@ public class ServiciosJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Citas " + citasListOldCitas + " since its idTipoServicio field is not nullable.");
+                }
+            }
+            for (ServicioPorEmpleado servicioPorEmpleadoListOldServicioPorEmpleado : servicioPorEmpleadoListOld) {
+                if (!servicioPorEmpleadoListNew.contains(servicioPorEmpleadoListOldServicioPorEmpleado)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain ServicioPorEmpleado " + servicioPorEmpleadoListOldServicioPorEmpleado + " since its idServicio field is not nullable.");
                 }
             }
             for (Procedimientos procedimientosListOldProcedimientos : procedimientosListOld) {
@@ -128,6 +157,13 @@ public class ServiciosJpaController implements Serializable {
             }
             citasListNew = attachedCitasListNew;
             servicios.setCitasList(citasListNew);
+            List<ServicioPorEmpleado> attachedServicioPorEmpleadoListNew = new ArrayList<ServicioPorEmpleado>();
+            for (ServicioPorEmpleado servicioPorEmpleadoListNewServicioPorEmpleadoToAttach : servicioPorEmpleadoListNew) {
+                servicioPorEmpleadoListNewServicioPorEmpleadoToAttach = em.getReference(servicioPorEmpleadoListNewServicioPorEmpleadoToAttach.getClass(), servicioPorEmpleadoListNewServicioPorEmpleadoToAttach.getIdServEmpl());
+                attachedServicioPorEmpleadoListNew.add(servicioPorEmpleadoListNewServicioPorEmpleadoToAttach);
+            }
+            servicioPorEmpleadoListNew = attachedServicioPorEmpleadoListNew;
+            servicios.setServicioPorEmpleadoList(servicioPorEmpleadoListNew);
             List<Procedimientos> attachedProcedimientosListNew = new ArrayList<Procedimientos>();
             for (Procedimientos procedimientosListNewProcedimientosToAttach : procedimientosListNew) {
                 procedimientosListNewProcedimientosToAttach = em.getReference(procedimientosListNewProcedimientosToAttach.getClass(), procedimientosListNewProcedimientosToAttach.getIdProcedimiento());
@@ -144,6 +180,17 @@ public class ServiciosJpaController implements Serializable {
                     if (oldIdTipoServicioOfCitasListNewCitas != null && !oldIdTipoServicioOfCitasListNewCitas.equals(servicios)) {
                         oldIdTipoServicioOfCitasListNewCitas.getCitasList().remove(citasListNewCitas);
                         oldIdTipoServicioOfCitasListNewCitas = em.merge(oldIdTipoServicioOfCitasListNewCitas);
+                    }
+                }
+            }
+            for (ServicioPorEmpleado servicioPorEmpleadoListNewServicioPorEmpleado : servicioPorEmpleadoListNew) {
+                if (!servicioPorEmpleadoListOld.contains(servicioPorEmpleadoListNewServicioPorEmpleado)) {
+                    Servicios oldIdServicioOfServicioPorEmpleadoListNewServicioPorEmpleado = servicioPorEmpleadoListNewServicioPorEmpleado.getIdServicio();
+                    servicioPorEmpleadoListNewServicioPorEmpleado.setIdServicio(servicios);
+                    servicioPorEmpleadoListNewServicioPorEmpleado = em.merge(servicioPorEmpleadoListNewServicioPorEmpleado);
+                    if (oldIdServicioOfServicioPorEmpleadoListNewServicioPorEmpleado != null && !oldIdServicioOfServicioPorEmpleadoListNewServicioPorEmpleado.equals(servicios)) {
+                        oldIdServicioOfServicioPorEmpleadoListNewServicioPorEmpleado.getServicioPorEmpleadoList().remove(servicioPorEmpleadoListNewServicioPorEmpleado);
+                        oldIdServicioOfServicioPorEmpleadoListNewServicioPorEmpleado = em.merge(oldIdServicioOfServicioPorEmpleadoListNewServicioPorEmpleado);
                     }
                 }
             }
@@ -194,6 +241,13 @@ public class ServiciosJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("This Servicios (" + servicios + ") cannot be destroyed since the Citas " + citasListOrphanCheckCitas + " in its citasList field has a non-nullable idTipoServicio field.");
+            }
+            List<ServicioPorEmpleado> servicioPorEmpleadoListOrphanCheck = servicios.getServicioPorEmpleadoList();
+            for (ServicioPorEmpleado servicioPorEmpleadoListOrphanCheckServicioPorEmpleado : servicioPorEmpleadoListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Servicios (" + servicios + ") cannot be destroyed since the ServicioPorEmpleado " + servicioPorEmpleadoListOrphanCheckServicioPorEmpleado + " in its servicioPorEmpleadoList field has a non-nullable idServicio field.");
             }
             List<Procedimientos> procedimientosListOrphanCheck = servicios.getProcedimientosList();
             for (Procedimientos procedimientosListOrphanCheckProcedimientos : procedimientosListOrphanCheck) {

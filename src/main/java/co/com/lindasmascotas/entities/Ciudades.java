@@ -26,7 +26,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 @Entity
 @Table(name = "ciudades")
@@ -34,9 +34,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "Ciudades.findAll", query = "SELECT c FROM Ciudades c")
     , @NamedQuery(name = "Ciudades.findByIdCiudad", query = "SELECT c FROM Ciudades c WHERE c.idCiudad = :idCiudad")
-    , @NamedQuery(name = "Ciudades.findByNombreCiudad", query = "SELECT c FROM Ciudades c WHERE c.nombreCiudad = :nombreCiudad")
-    , @NamedQuery(name = "Ciudades.findCiudadByDepartamento", query = "SELECT c FROM Ciudades c WHERE c.idDpto = :idDepartamento ORDER BY c.nombreCiudad")})  
-
+    , @NamedQuery(name = "Ciudades.findByNombreCiudad", query = "SELECT c FROM Ciudades c WHERE c.nombreCiudad = :nombreCiudad")})
 public class Ciudades implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,11 +51,11 @@ public class Ciudades implements Serializable {
     private String nombreCiudad;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCiudad")
     private List<Propietarios> propietariosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCiudad")
-    private List<Empleados> empleadosList;
     @JoinColumn(name = "id_dpto", referencedColumnName = "id_departamento")
     @ManyToOne(optional = false)
     private Departamentos idDpto;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCiudad")
+    private List<Empleados> empleadosList;
 
     public Ciudades() {
     }
@@ -97,6 +95,14 @@ public class Ciudades implements Serializable {
         this.propietariosList = propietariosList;
     }
 
+    public Departamentos getIdDpto() {
+        return idDpto;
+    }
+
+    public void setIdDpto(Departamentos idDpto) {
+        this.idDpto = idDpto;
+    }
+
     @XmlTransient
     @JsonIgnore
     public List<Empleados> getEmpleadosList() {
@@ -105,14 +111,6 @@ public class Ciudades implements Serializable {
 
     public void setEmpleadosList(List<Empleados> empleadosList) {
         this.empleadosList = empleadosList;
-    }
-
-    public Departamentos getIdDpto() {
-        return idDpto;
-    }
-
-    public void setIdDpto(Departamentos idDpto) {
-        this.idDpto = idDpto;
     }
 
     @Override

@@ -26,7 +26,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 @Entity
 @Table(name = "especies")
@@ -36,9 +36,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "Especies.findByIdEspecie", query = "SELECT e FROM Especies e WHERE e.idEspecie = :idEspecie")
     , @NamedQuery(name = "Especies.findByNombreEspecie", query = "SELECT e FROM Especies e WHERE e.nombreEspecie = :nombreEspecie")})
 public class Especies implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEspecie")
-    private List<Razas> razasList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -51,6 +48,8 @@ public class Especies implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "nombre_especie")
     private String nombreEspecie;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEspecie")
+    private List<Razas> razasList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEspecie")
     private List<Mascotas> mascotasList;
 
@@ -80,6 +79,16 @@ public class Especies implements Serializable {
 
     public void setNombreEspecie(String nombreEspecie) {
         this.nombreEspecie = nombreEspecie;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Razas> getRazasList() {
+        return razasList;
+    }
+
+    public void setRazasList(List<Razas> razasList) {
+        this.razasList = razasList;
     }
 
     @XmlTransient
@@ -115,16 +124,6 @@ public class Especies implements Serializable {
     @Override
     public String toString() {
         return "co.com.lindasmascotas.entities.Especies[ idEspecie=" + idEspecie + " ]";
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public List<Razas> getRazasList() {
-        return razasList;
-    }
-
-    public void setRazasList(List<Razas> razasList) {
-        this.razasList = razasList;
     }
     
 }

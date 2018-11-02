@@ -19,7 +19,7 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 public class ProductosJpaController implements Serializable {
 

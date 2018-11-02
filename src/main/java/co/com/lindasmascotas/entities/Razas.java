@@ -28,7 +28,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author Veronica
+ * @author ISABEL MEDINA
  */
 @Entity
 @Table(name = "razas")
@@ -36,13 +36,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "Razas.findAll", query = "SELECT r FROM Razas r")
     , @NamedQuery(name = "Razas.findByIdRaza", query = "SELECT r FROM Razas r WHERE r.idRaza = :idRaza")
-    , @NamedQuery(name = "Razas.findByNombreRaza", query = "SELECT r FROM Razas r WHERE r.nombreRaza = :nombreRaza")
-    , @NamedQuery(name = "Razas.findRazasByEspecies", query = "SELECT r FROM Razas r WHERE r.idEspecie = :idEspecie")})
+    , @NamedQuery(name = "Razas.findByNombreRaza", query = "SELECT r FROM Razas r WHERE r.nombreRaza = :nombreRaza")})
 public class Razas implements Serializable {
-
-    @JoinColumn(name = "id_especie", referencedColumnName = "id_especie")
-    @ManyToOne(optional = false)
-    private Especies idEspecie;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,6 +50,9 @@ public class Razas implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "nombre_raza")
     private String nombreRaza;
+    @JoinColumn(name = "id_especie", referencedColumnName = "id_especie")
+    @ManyToOne(optional = false)
+    private Especies idEspecie;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRaza")
     private List<Mascotas> mascotasList;
 
@@ -84,6 +82,14 @@ public class Razas implements Serializable {
 
     public void setNombreRaza(String nombreRaza) {
         this.nombreRaza = nombreRaza;
+    }
+
+    public Especies getIdEspecie() {
+        return idEspecie;
+    }
+
+    public void setIdEspecie(Especies idEspecie) {
+        this.idEspecie = idEspecie;
     }
 
     @XmlTransient
@@ -119,14 +125,6 @@ public class Razas implements Serializable {
     @Override
     public String toString() {
         return "co.com.lindasmascotas.entities.Razas[ idRaza=" + idRaza + " ]";
-    }
-
-    public Especies getIdEspecie() {
-        return idEspecie;
-    }
-
-    public void setIdEspecie(Especies idEspecie) {
-        this.idEspecie = idEspecie;
     }
     
 }
