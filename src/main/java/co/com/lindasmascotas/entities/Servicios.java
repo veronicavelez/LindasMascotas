@@ -13,7 +13,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -57,10 +56,10 @@ public class Servicios implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "descripcion_servicio")
     private String descripcionServicio;
-    @ManyToMany(mappedBy = "serviciosList")
-    private List<Empleados> empleadosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoServicio")
     private List<Citas> citasList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idServicio")
+    private List<ServicioPorEmpleado> servicioPorEmpleadoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoServicio")
     private List<Procedimientos> procedimientosList;
 
@@ -111,22 +110,22 @@ public class Servicios implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public List<Empleados> getEmpleadosList() {
-        return empleadosList;
-    }
-
-    public void setEmpleadosList(List<Empleados> empleadosList) {
-        this.empleadosList = empleadosList;
-    }
-
-    @XmlTransient
-    @JsonIgnore
     public List<Citas> getCitasList() {
         return citasList;
     }
 
     public void setCitasList(List<Citas> citasList) {
         this.citasList = citasList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<ServicioPorEmpleado> getServicioPorEmpleadoList() {
+        return servicioPorEmpleadoList;
+    }
+
+    public void setServicioPorEmpleadoList(List<ServicioPorEmpleado> servicioPorEmpleadoList) {
+        this.servicioPorEmpleadoList = servicioPorEmpleadoList;
     }
 
     @XmlTransient

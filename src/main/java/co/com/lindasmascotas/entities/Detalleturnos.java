@@ -56,11 +56,11 @@ public class Detalleturnos implements Serializable {
     @Column(name = "hora_inicial")
     @Temporal(TemporalType.TIMESTAMP)
     private Date horaInicial;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDetalleTurnos")
-    private List<TurnosPorEmpleados> turnosPorEmpleadosList;
     @JoinColumn(name = "id_turno", referencedColumnName = "id_turno")
     @ManyToOne
     private Turnos idTurno;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDetalleTurnos")
+    private List<TurnosPorEmpleados> turnosPorEmpleadosList;
 
     public Detalleturnos() {
     }
@@ -101,6 +101,14 @@ public class Detalleturnos implements Serializable {
         this.horaInicial = horaInicial;
     }
 
+    public Turnos getIdTurno() {
+        return idTurno;
+    }
+
+    public void setIdTurno(Turnos idTurno) {
+        this.idTurno = idTurno;
+    }
+
     @XmlTransient
     @JsonIgnore
     public List<TurnosPorEmpleados> getTurnosPorEmpleadosList() {
@@ -109,14 +117,6 @@ public class Detalleturnos implements Serializable {
 
     public void setTurnosPorEmpleadosList(List<TurnosPorEmpleados> turnosPorEmpleadosList) {
         this.turnosPorEmpleadosList = turnosPorEmpleadosList;
-    }
-
-    public Turnos getIdTurno() {
-        return idTurno;
-    }
-
-    public void setIdTurno(Turnos idTurno) {
-        this.idTurno = idTurno;
     }
 
     @Override

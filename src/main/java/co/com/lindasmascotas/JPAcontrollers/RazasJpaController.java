@@ -7,7 +7,6 @@ package co.com.lindasmascotas.JPAcontrollers;
 
 import co.com.lindasmascotas.JPAcontrollers.exceptions.IllegalOrphanException;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
-import co.com.lindasmascotas.entities.Especies;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;

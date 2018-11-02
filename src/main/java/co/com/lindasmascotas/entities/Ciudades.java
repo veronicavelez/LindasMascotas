@@ -51,11 +51,11 @@ public class Ciudades implements Serializable {
     private String nombreCiudad;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCiudad")
     private List<Propietarios> propietariosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCiudad")
-    private List<Empleados> empleadosList;
     @JoinColumn(name = "id_dpto", referencedColumnName = "id_departamento")
     @ManyToOne(optional = false)
     private Departamentos idDpto;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCiudad")
+    private List<Empleados> empleadosList;
 
     public Ciudades() {
     }
@@ -95,6 +95,14 @@ public class Ciudades implements Serializable {
         this.propietariosList = propietariosList;
     }
 
+    public Departamentos getIdDpto() {
+        return idDpto;
+    }
+
+    public void setIdDpto(Departamentos idDpto) {
+        this.idDpto = idDpto;
+    }
+
     @XmlTransient
     @JsonIgnore
     public List<Empleados> getEmpleadosList() {
@@ -103,14 +111,6 @@ public class Ciudades implements Serializable {
 
     public void setEmpleadosList(List<Empleados> empleadosList) {
         this.empleadosList = empleadosList;
-    }
-
-    public Departamentos getIdDpto() {
-        return idDpto;
-    }
-
-    public void setIdDpto(Departamentos idDpto) {
-        this.idDpto = idDpto;
     }
 
     @Override
