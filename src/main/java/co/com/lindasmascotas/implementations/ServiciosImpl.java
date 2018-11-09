@@ -118,7 +118,6 @@ public class ServiciosImpl implements ServiciosSvc {
         servicioActual.setDescripcionServicio(s.getDescripcionServicio());
         servicioActual.setPrecioServicio(s.getPrecioServicio());
        
-        
         try {
             
             s.setNombreServicio(s.getNombreServicio().toUpperCase());
