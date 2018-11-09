@@ -82,7 +82,6 @@ public class ServiciosImpl implements ServiciosSvc {
         ServiciosJpaController ctrl = new ServiciosJpaController(UPfactory.getFACTORY());
 
         try {
-            
             s.setNombreServicio(s.getNombreServicio().toUpperCase());
             s.setDescripcionServicio(s.getDescripcionServicio().toUpperCase());
             
@@ -168,6 +167,7 @@ public class ServiciosImpl implements ServiciosSvc {
         
         return res;
     }
+    
    /*
     @Override
     public Response servicioporempl() {
