@@ -22,7 +22,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author ISABEL MEDINA
+ * @author Isa
  */
 public class EspeciesJpaController implements Serializable {
 

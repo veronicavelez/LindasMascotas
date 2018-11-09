@@ -33,7 +33,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author ISABEL MEDINA
+ * @author Isa
  */
 public class EmpleadosJpaController implements Serializable {
 

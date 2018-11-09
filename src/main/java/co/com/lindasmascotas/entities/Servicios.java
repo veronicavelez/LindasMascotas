@@ -25,7 +25,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author ISABEL MEDINA
+ * @author Isa
  */
 @Entity
 @Table(name = "servicios")

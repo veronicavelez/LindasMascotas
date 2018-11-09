@@ -20,7 +20,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author ISABEL MEDINA
+ * @author Isa
  */
 public class TurnosJpaController implements Serializable {
 

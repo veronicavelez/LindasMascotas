@@ -24,7 +24,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author ISABEL MEDINA
+ * @author Isa
  */
 public class ProcedimientosJpaController implements Serializable {
 

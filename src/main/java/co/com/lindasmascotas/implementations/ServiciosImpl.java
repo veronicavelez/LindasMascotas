@@ -1,6 +1,7 @@
 
 package co.com.lindasmascotas.implementations;
 
+import co.com.lindasmascotas.JPAcontrollers.ServicioPorEmpleadoJpaController;
 import co.com.lindasmascotas.JPAcontrollers.ServiciosJpaController;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.IllegalOrphanException;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
@@ -168,4 +169,45 @@ public class ServiciosImpl implements ServiciosSvc {
         
         return res;
     }
+   /*
+    @Override
+    public Response servicioporempl() {
+        Response res = new Response();
+        ServicioPorEmpleadoJpaController ctrl = new ServicioPorEmpleadoJpaController(UPfactory.getFACTORY());
+        
+        try{
+            List<ServicioPorEmpleado> list = ctrl.findServicioPorEmpleadoEntities();
+            List<ServicioPorEmpleadoDTO> listDTO = new ArrayList<ServicioPorEmpleadoDTO>();
+            
+            for(ServicioPorEmpleado se:list){
+                Empleados e = se.getIdEmpleado();
+                EmpleadosDTO empl = new EmpleadosDTO(e.getIdEmpleado(), 
+                        e.getNombreEmpleado(), e.getApellidosEmpleado(), 
+                        e.getFechaNacimiento(), e.getCorreoElectronico(), 
+                        e.getDireccion(), e.getTelefonoFijo(), e.getTelefonoMovil(),
+                        e.getEstadoEmpleado(), e.getFechaContratoInicial(),
+                        e.getFechaContratoFinal(), e.getTipoRh());
+                
+                Servicios s = se.getIdServicio();
+                ServiciosDTO sDto = new ServiciosDTO(s.getIdServicio(), s.getNombreServicio(), 
+                        s.getPrecioServicio(), s.getDescripcionServicio());
+                
+                ServicioPorEmpleadoDTO dto = new ServicioPorEmpleadoDTO(se.getIdServEmpl(), 
+                        empl, sDto);
+                
+                listDTO.add(dto);
+            }
+            
+            res.setStatus(true);
+            res.setData(listDTO);
+            
+        } catch(Exception ex){
+            Logger.getLogger(ServiciosImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
+            res.setStatus(false);
+        }
+        
+        
+        return res;
+    }*/
 }

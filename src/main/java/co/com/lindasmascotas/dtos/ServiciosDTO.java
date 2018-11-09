@@ -22,8 +22,6 @@ public class ServiciosDTO {
         this.idServicio = idServicio;
     }
     
-    
-
     public ServiciosDTO(Integer idServicio, String nombreServicio, BigInteger precioServicio, String descripcionServicio, List<CitasDTO> citasList, List<ServicioPorEmpleadoDTO> servicioPorEmpleadoList) {
         this.idServicio = idServicio;
         this.nombreServicio = nombreServicio;
@@ -33,6 +31,13 @@ public class ServiciosDTO {
         this.servicioPorEmpleadoList = servicioPorEmpleadoList;
     }
 
+    public ServiciosDTO(Integer idServicio, String nombreServicio, BigInteger precioServicio, String descripcionServicio) {
+        this.idServicio = idServicio;
+        this.nombreServicio = nombreServicio;
+        this.precioServicio = precioServicio;
+        this.descripcionServicio = descripcionServicio;
+    }
+    
     public Integer getIdServicio() {
         return idServicio;
     }
