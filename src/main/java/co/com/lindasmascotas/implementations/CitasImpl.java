@@ -208,6 +208,17 @@ public class CitasImpl implements CitasSvc {
 
         return dateFrmt;
     }
+
+    @Override
+    public Response horarioEmple(Integer idEmpleado, Integer idServicio) {
+        Response res = new Response();
+        EmpleadosJpaController ctrl = new EmpleadosJpaController(UPfactory.getFACTORY());
+        ServiciosJpaController ctr = new ServiciosJpaController(UPfactory.getFACTORY());
+        
+        
+        return res;
+   }
     
+   
     
 }

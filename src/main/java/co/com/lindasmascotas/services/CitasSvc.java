@@ -17,9 +17,14 @@ import javax.ws.rs.core.MediaType;
 @Path("citas")
 public interface CitasSvc {
 
-     @GET
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     Response listarCitas();
+     
+    @GET
+    @Path("/horarioemple")
+    @Produces(MediaType.APPLICATION_JSON)
+    Response horarioEmple(@QueryParam("idEmpleado")Integer idEmpleado, @QueryParam("idServicio")Integer idServicio);
        
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
