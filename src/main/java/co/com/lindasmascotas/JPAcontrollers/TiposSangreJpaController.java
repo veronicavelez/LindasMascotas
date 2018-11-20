@@ -21,7 +21,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author ISABEL MEDINA
+ * @author Isa
  */
 public class TiposSangreJpaController implements Serializable {
 

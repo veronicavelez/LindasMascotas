@@ -19,7 +19,7 @@ public interface EmpleadosSvc {
  @GET
     @Produces(MediaType.APPLICATION_JSON)
     Response listarEmpleados();
-   
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

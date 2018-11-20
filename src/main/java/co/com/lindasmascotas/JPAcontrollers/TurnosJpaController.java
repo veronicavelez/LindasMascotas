@@ -5,6 +5,7 @@
  */
 package co.com.lindasmascotas.JPAcontrollers;
 
+import co.com.lindasmascotas.JPAcontrollers.exceptions.IllegalOrphanException;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -20,7 +21,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author ISABEL MEDINA
+ * @author Isa
  */
 public class TurnosJpaController implements Serializable {
 
@@ -65,7 +66,7 @@ public class TurnosJpaController implements Serializable {
         }
     }
 
-    public void edit(Turnos turnos) throws NonexistentEntityException, Exception {
+    public void edit(Turnos turnos) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -73,6 +74,18 @@ public class TurnosJpaController implements Serializable {
             Turnos persistentTurnos = em.find(Turnos.class, turnos.getIdTurno());
             List<Detalleturnos> detalleturnosListOld = persistentTurnos.getDetalleturnosList();
             List<Detalleturnos> detalleturnosListNew = turnos.getDetalleturnosList();
+            List<String> illegalOrphanMessages = null;
+            for (Detalleturnos detalleturnosListOldDetalleturnos : detalleturnosListOld) {
+                if (!detalleturnosListNew.contains(detalleturnosListOldDetalleturnos)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Detalleturnos " + detalleturnosListOldDetalleturnos + " since its idTurno field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             List<Detalleturnos> attachedDetalleturnosListNew = new ArrayList<Detalleturnos>();
             for (Detalleturnos detalleturnosListNewDetalleturnosToAttach : detalleturnosListNew) {
                 detalleturnosListNewDetalleturnosToAttach = em.getReference(detalleturnosListNewDetalleturnosToAttach.getClass(), detalleturnosListNewDetalleturnosToAttach.getIdDetalleTurno());
@@ -81,12 +94,6 @@ public class TurnosJpaController implements Serializable {
             detalleturnosListNew = attachedDetalleturnosListNew;
             turnos.setDetalleturnosList(detalleturnosListNew);
             turnos = em.merge(turnos);
-            for (Detalleturnos detalleturnosListOldDetalleturnos : detalleturnosListOld) {
-                if (!detalleturnosListNew.contains(detalleturnosListOldDetalleturnos)) {
-                    detalleturnosListOldDetalleturnos.setIdTurno(null);
-                    detalleturnosListOldDetalleturnos = em.merge(detalleturnosListOldDetalleturnos);
-                }
-            }
             for (Detalleturnos detalleturnosListNewDetalleturnos : detalleturnosListNew) {
                 if (!detalleturnosListOld.contains(detalleturnosListNewDetalleturnos)) {
                     Turnos oldIdTurnoOfDetalleturnosListNewDetalleturnos = detalleturnosListNewDetalleturnos.getIdTurno();
@@ -115,7 +122,7 @@ public class TurnosJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -127,10 +134,16 @@ public class TurnosJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The turnos with id " + id + " no longer exists.", enfe);
             }
-            List<Detalleturnos> detalleturnosList = turnos.getDetalleturnosList();
-            for (Detalleturnos detalleturnosListDetalleturnos : detalleturnosList) {
-                detalleturnosListDetalleturnos.setIdTurno(null);
-                detalleturnosListDetalleturnos = em.merge(detalleturnosListDetalleturnos);
+            List<String> illegalOrphanMessages = null;
+            List<Detalleturnos> detalleturnosListOrphanCheck = turnos.getDetalleturnosList();
+            for (Detalleturnos detalleturnosListOrphanCheckDetalleturnos : detalleturnosListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Turnos (" + turnos + ") cannot be destroyed since the Detalleturnos " + detalleturnosListOrphanCheckDetalleturnos + " in its detalleturnosList field has a non-nullable idTurno field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(turnos);
             em.getTransaction().commit();

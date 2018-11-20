@@ -21,6 +21,12 @@ public interface ServiciosSvc {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     Response listarServicios();
+    
+    /*
+    @GET
+    @Path("/servicioporempl")
+    @Produces(MediaType.APPLICATION_JSON)
+    Response servicioporempl();*/
        
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

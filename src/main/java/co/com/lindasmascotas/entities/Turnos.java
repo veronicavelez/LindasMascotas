@@ -8,6 +8,7 @@ package co.com.lindasmascotas.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author ISABEL MEDINA
+ * @author Isa
  */
 @Entity
 @Table(name = "turnos")
@@ -47,7 +48,7 @@ public class Turnos implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "nombre_turno")
     private String nombreTurno;
-    @OneToMany(mappedBy = "idTurno")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTurno")
     private List<Detalleturnos> detalleturnosList;
 
     public Turnos() {

@@ -28,7 +28,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author ISABEL MEDINA
+ * @author Isa
  */
 @Entity
 @Table(name = "detalleturnos")
@@ -37,8 +37,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Detalleturnos.findAll", query = "SELECT d FROM Detalleturnos d")
     , @NamedQuery(name = "Detalleturnos.findByIdDetalleTurno", query = "SELECT d FROM Detalleturnos d WHERE d.idDetalleTurno = :idDetalleTurno")
     , @NamedQuery(name = "Detalleturnos.findByDias", query = "SELECT d FROM Detalleturnos d WHERE d.dias = :dias")
-    , @NamedQuery(name = "Detalleturnos.findByHoraFinal", query = "SELECT d FROM Detalleturnos d WHERE d.horaFinal = :horaFinal")
-    , @NamedQuery(name = "Detalleturnos.findByHoraInicial", query = "SELECT d FROM Detalleturnos d WHERE d.horaInicial = :horaInicial")})
+    , @NamedQuery(name = "Detalleturnos.findByHoraInicial", query = "SELECT d FROM Detalleturnos d WHERE d.horaInicial = :horaInicial")
+    , @NamedQuery(name = "Detalleturnos.findByHoraFinal", query = "SELECT d FROM Detalleturnos d WHERE d.horaFinal = :horaFinal")})
 public class Detalleturnos implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,17 +47,22 @@ public class Detalleturnos implements Serializable {
     @NotNull
     @Column(name = "id_detalle_turno")
     private Integer idDetalleTurno;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "dias")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dias;
-    @Column(name = "hora_final")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date horaFinal;
+    private int dias;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "hora_inicial")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date horaInicial;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "hora_final")
+    @Temporal(TemporalType.TIME)
+    private Date horaFinal;
     @JoinColumn(name = "id_turno", referencedColumnName = "id_turno")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Turnos idTurno;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDetalleTurnos")
     private List<TurnosPorEmpleados> turnosPorEmpleadosList;
@@ -69,6 +74,13 @@ public class Detalleturnos implements Serializable {
         this.idDetalleTurno = idDetalleTurno;
     }
 
+    public Detalleturnos(Integer idDetalleTurno, int dias, Date horaInicial, Date horaFinal) {
+        this.idDetalleTurno = idDetalleTurno;
+        this.dias = dias;
+        this.horaInicial = horaInicial;
+        this.horaFinal = horaFinal;
+    }
+
     public Integer getIdDetalleTurno() {
         return idDetalleTurno;
     }
@@ -77,20 +89,12 @@ public class Detalleturnos implements Serializable {
         this.idDetalleTurno = idDetalleTurno;
     }
 
-    public Date getDias() {
+    public int getDias() {
         return dias;
     }
 
-    public void setDias(Date dias) {
+    public void setDias(int dias) {
         this.dias = dias;
-    }
-
-    public Date getHoraFinal() {
-        return horaFinal;
-    }
-
-    public void setHoraFinal(Date horaFinal) {
-        this.horaFinal = horaFinal;
     }
 
     public Date getHoraInicial() {
@@ -99,6 +103,14 @@ public class Detalleturnos implements Serializable {
 
     public void setHoraInicial(Date horaInicial) {
         this.horaInicial = horaInicial;
+    }
+
+    public Date getHoraFinal() {
+        return horaFinal;
+    }
+
+    public void setHoraFinal(Date horaFinal) {
+        this.horaFinal = horaFinal;
     }
 
     public Turnos getIdTurno() {
