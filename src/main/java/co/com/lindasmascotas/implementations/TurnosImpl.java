@@ -110,6 +110,8 @@ public class TurnosImpl implements TurnosSvc{
             res.setStatus(false);
             res.setMessage(MessageExceptions.messageException(ex.getMessage()));
             res.setData(ctrl.findTurnosEntities());
+        } catch (IllegalOrphanException ex) {
+            Logger.getLogger(TurnosImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return res;
 

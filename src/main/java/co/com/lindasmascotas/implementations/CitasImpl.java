@@ -216,6 +216,7 @@ public class CitasImpl implements CitasSvc {
         ServiciosJpaController ctr = new ServiciosJpaController(UPfactory.getFACTORY());
         
         
+        
         return res;
    }
     
