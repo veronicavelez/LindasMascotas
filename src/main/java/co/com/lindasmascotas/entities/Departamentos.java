@@ -34,7 +34,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "Departamentos.findAll", query = "SELECT d FROM Departamentos d")
     , @NamedQuery(name = "Departamentos.findByIdDepartamento", query = "SELECT d FROM Departamentos d WHERE d.idDepartamento = :idDepartamento")
-    , @NamedQuery(name = "Departamentos.findByNombreDepartamento", query = "SELECT d FROM Departamentos d WHERE d.nombreDepartamento = :nombreDepartamento")})
+    , @NamedQuery(name = "Departamentos.findByNombreDepartamento", query = "SELECT d FROM Departamentos d WHERE d.nombreDepartamento = :nombreDepartamento")
+    , @NamedQuery(name = "Departamentos.findDepartamentoByPais", query = "SELECT d FROM Departamentos d WHERE d.idPais = :idPais ORDER BY d.idDepartamento")})
 public class Departamentos implements Serializable {
 
     private static final long serialVersionUID = 1L;
