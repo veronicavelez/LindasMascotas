@@ -42,4 +42,9 @@ public interface CitasSvc {
     @Produces(MediaType.APPLICATION_JSON)
     Response Cancelar(CitasDTO c);  
     
+    @GET
+    @Path("/emplporserv") //empleados por servicio
+    @Produces(MediaType.APPLICATION_JSON)
+    Response empleadosPorServicio(@QueryParam("idServicio") Integer idServicio);
+    
 }

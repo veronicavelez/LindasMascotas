@@ -2,11 +2,13 @@ package co.com.lindasmascotas.implementations;
 
 import co.com.lindasmascotas.JPAcontrollers.CitasJpaController;
 import co.com.lindasmascotas.JPAcontrollers.EmpleadosJpaController;
+import co.com.lindasmascotas.JPAcontrollers.ServicioPorEmpleadoJpaController;
 import co.com.lindasmascotas.JPAcontrollers.ServiciosJpaController;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
 import co.com.lindasmascotas.dtos.CitasDTO;
 import co.com.lindasmascotas.entities.Citas;
 import co.com.lindasmascotas.entities.Empleados;
+import co.com.lindasmascotas.entities.ServicioPorEmpleado;
 import co.com.lindasmascotas.entities.Servicios;
 import co.com.lindasmascotas.services.CitasSvc;
 import co.com.lindasmascotas.util.Mail;
@@ -14,6 +16,7 @@ import co.com.lindasmascotas.util.MessageExceptions;
 import co.com.lindasmascotas.util.Response;
 import co.com.lindasmascotas.util.UPfactory;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -215,11 +218,31 @@ public class CitasImpl implements CitasSvc {
         EmpleadosJpaController ctrl = new EmpleadosJpaController(UPfactory.getFACTORY());
         ServiciosJpaController ctr = new ServiciosJpaController(UPfactory.getFACTORY());
         
-        
-        
         return res;
    }
-    
-   
-    
+
+    @Override
+    public Response empleadosPorServicio(Integer idServicio) {
+        Response res = new Response();
+        ServicioPorEmpleadoJpaController ctrl = new ServicioPorEmpleadoJpaController(UPfactory.getFACTORY());
+        
+        try {
+            List<ServicioPorEmpleado> serviciopempl = ctrl.findEmpleadosPorServicio(idServicio);
+            List<Empleados> empleadoserv = new ArrayList<Empleados>();
+            
+            for(ServicioPorEmpleado spe:serviciopempl){
+                
+                empleadoserv.add(spe.getIdEmpleado());
+            
+            }
+            
+            res.setStatus(true);
+            res.setData(empleadoserv);
+        } catch (Exception e) {
+            res.setStatus(false);
+            res.setMessage("Ha ocurrido un error, intente más tarde.");
+        }
+        
+        return res;
+    }    
 }

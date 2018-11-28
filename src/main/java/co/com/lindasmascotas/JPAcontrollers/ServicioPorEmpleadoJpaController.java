@@ -194,4 +194,23 @@ public class ServicioPorEmpleadoJpaController implements Serializable {
         }
     }
     
+    public List<ServicioPorEmpleado> findEmpleadosPorServicio(Integer idServicio) {
+        EntityManager em = getEntityManager();
+        
+        try {
+            Query q = em.createNamedQuery("ServicioPorEmpleado.findEmpleadosPorServicio");
+            q.setParameter("idServicio",idServicio);
+            
+            return q.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally{
+            em.close();
+        
+        }
+        
+        
+    }
+    
 }
