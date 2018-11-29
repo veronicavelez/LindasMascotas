@@ -45,12 +45,7 @@ public class ServiciosImpl implements ServiciosSvc {
                 
                 for(ServicioPorEmpleado spe: s.getServicioPorEmpleadoList()) {
                     Empleados e = spe.getIdEmpleado();
-                    EmpleadosDTO empl = new EmpleadosDTO(e.getIdEmpleado(), 
-                            e.getNombreEmpleado(), e.getApellidosEmpleado(), 
-                            e.getFechaNacimiento(), e.getCorreoElectronico(), 
-                            e.getDireccion(), e.getTelefonoFijo(), e.getTelefonoMovil(),
-                            e.getEstadoEmpleado(), e.getFechaContratoInicial(),
-                            e.getFechaContratoFinal(), e.getTipoRh());
+                    EmpleadosDTO empl = EmpleadosDTO.setData(e);
                     
                     
                     ServicioPorEmpleadoDTO setvpempl = new ServicioPorEmpleadoDTO(spe.getIdServEmpl(),
