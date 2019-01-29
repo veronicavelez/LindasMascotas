@@ -2,14 +2,18 @@ package co.com.lindasmascotas.implementations;
 
 import co.com.lindasmascotas.JPAcontrollers.CitasJpaController;
 import co.com.lindasmascotas.JPAcontrollers.EmpleadosJpaController;
+import co.com.lindasmascotas.JPAcontrollers.PropietariosJpaController;
 import co.com.lindasmascotas.JPAcontrollers.ServicioPorEmpleadoJpaController;
 import co.com.lindasmascotas.JPAcontrollers.ServiciosJpaController;
+import co.com.lindasmascotas.JPAcontrollers.TurnosPorEmpleadosJpaController;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
 import co.com.lindasmascotas.dtos.CitasDTO;
 import co.com.lindasmascotas.entities.Citas;
 import co.com.lindasmascotas.entities.Empleados;
+import co.com.lindasmascotas.entities.Propietarios;
 import co.com.lindasmascotas.entities.ServicioPorEmpleado;
 import co.com.lindasmascotas.entities.Servicios;
+import co.com.lindasmascotas.entities.TurnosPorEmpleados;
 import co.com.lindasmascotas.services.CitasSvc;
 import co.com.lindasmascotas.util.Mail;
 import co.com.lindasmascotas.util.MessageExceptions;
@@ -213,10 +217,27 @@ public class CitasImpl implements CitasSvc {
     }
 
     @Override
-    public Response horarioEmple(Integer idEmpleado, Integer idServicio) {
+    public Response horarioEmple(Integer idEmpleado, Date fechaCita) {
         Response res = new Response();
-        EmpleadosJpaController ctrl = new EmpleadosJpaController(UPfactory.getFACTORY());
-        ServiciosJpaController ctr = new ServiciosJpaController(UPfactory.getFACTORY());
+        
+        TurnosPorEmpleadosJpaController ctrl = new TurnosPorEmpleadosJpaController(UPfactory.getFACTORY());
+        EmpleadosJpaController ctr = new EmpleadosJpaController(UPfactory.getFACTORY());
+        CitasJpaController ct = new CitasJpaController(UPfactory.getFACTORY());
+        Calendar c = Calendar.getInstance();
+        int nD =-1;
+        
+        try {
+            c.setTime(fechaCita);
+            nD = c.get(Calendar.DAY_OF_WEEK);
+            TurnosPorEmpleados templ = ctrl.findTurnosPorEmpleados(idEmpleado);
+                            
+            res.setStatus(true);
+        } catch (Exception e) {
+            
+            res.setStatus(false);
+            res.setMessage("Ha ocurrido un error");
+        }
+        
         
         return res;
    }
@@ -245,4 +266,28 @@ public class CitasImpl implements CitasSvc {
         
         return res;
     }    
+
+    @Override
+    public Response propietario(Integer idPropietario) {
+        Response res = new Response();
+        PropietariosJpaController ctrl = new PropietariosJpaController(UPfactory.getFACTORY());
+        
+        try{
+            Propietarios prop = ctrl.findPropietarios(idPropietario);
+            
+            if(prop != null){
+                res.setStatus(true);
+                res.setData(prop);
+            }else{
+                res.setStatus(true);
+                res.setMessage("No existe un Propietario con ese número de cédula");
+            }
+            
+        }catch (Exception e){
+            res.setStatus(false);
+            res.setMessage("Ha ocurrido un error, intente mas tarde.");
+        }      
+       
+        return res;
+    }
 }
