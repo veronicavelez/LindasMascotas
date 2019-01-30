@@ -26,6 +26,12 @@ public interface CitasSvc {
     @Produces(MediaType.APPLICATION_JSON)
     Response horarioEmple(@QueryParam("idEmpleado")Integer idEmpleado, @QueryParam("idServicio")Integer idServicio);
        
+    @GET
+    @Path("/propietario")
+    @Produces(MediaType.APPLICATION_JSON)
+    Response propietario(@QueryParam("idPropietario")Integer idPropietario);
+    
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

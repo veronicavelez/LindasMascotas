@@ -234,23 +234,22 @@ public class DepartamentosJpaController implements Serializable {
             em.close();
         }
     }
-    
-    
-public List<Departamentos> findDepartamentoByPais(Paises pais){
+
+    public List<Departamentos> findDepartamentoByPais(Paises pais) {
         EntityManager em = getEntityManager();
-        
+
         try {
             Query q = em.createNamedQuery("Departamentos.findDepartamentoByPais");
             q.setParameter("idPais", pais);
-            
+
             return q.getResultList();
-            
+
         } catch (Exception e) {
-        }finally{
+        } finally {
             em.close();
-}
-        
+        }
+
         return null;
     }
-    
+
 }

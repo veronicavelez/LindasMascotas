@@ -5,11 +5,13 @@ package co.com.lindasmascotas.implementations;
 import co.com.lindasmascotas.JPAcontrollers.PropietariosJpaController;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.IllegalOrphanException;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
+import co.com.lindasmascotas.dtos.PropietariosDTO;
 import co.com.lindasmascotas.entities.Propietarios;
 import co.com.lindasmascotas.services.PropietariosSvc;
 import co.com.lindasmascotas.util.MessageExceptions;
 import co.com.lindasmascotas.util.Response;
 import co.com.lindasmascotas.util.UPfactory;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -25,9 +27,14 @@ public class PropietariosImpl implements PropietariosSvc{
     
         try {
             List<Propietarios> lis = ctrl.findPropietariosEntities();
-        
+            List<PropietariosDTO> dto = new ArrayList<PropietariosDTO>();
+            
+            for(Propietarios p: lis){
+                dto.add(PropietariosDTO.setData(p));
+            }
+            
             res.setStatus(true);
-            res.setData(lis);
+            res.setData(dto);
         } catch (Exception e){
             res.setStatus(false);
             res.setMessage("Ha ocurrido un error, intente más tarde.");
@@ -80,6 +87,8 @@ public class PropietariosImpl implements PropietariosSvc{
         propietarioActual.setDireccion(p.getDireccion());
         propietarioActual.setTelefonoFijo(p.getTelefonoFijo());
         propietarioActual.setTelefonoMovil(p.getTelefonoMovil());
+        propietarioActual.setEstado(p.getEstado());
+
         
         try {
             p.setNombrePropietario(p.getNombrePropietario().toUpperCase());

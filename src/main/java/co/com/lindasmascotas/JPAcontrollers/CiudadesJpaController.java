@@ -294,7 +294,7 @@ public class CiudadesJpaController implements Serializable {
         
         try {
             Query q = em.createNamedQuery("Ciudades.findCiudadByDepartamento");
-            q.setParameter("idDepartamento", departamento);
+            q.setParameter("idDpto", departamento);
             
             return q.getResultList();
             

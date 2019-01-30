@@ -3,11 +3,13 @@ package co.com.lindasmascotas.implementations;
 import co.com.lindasmascotas.JPAcontrollers.MascotasJpaController;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.IllegalOrphanException;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
+import co.com.lindasmascotas.dtos.MascotasDTO;
 import co.com.lindasmascotas.entities.Mascotas;
 import co.com.lindasmascotas.services.MascotasSvc;
 import co.com.lindasmascotas.util.MessageExceptions;
 import co.com.lindasmascotas.util.Response;
 import co.com.lindasmascotas.util.UPfactory;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,9 +23,14 @@ public class MascotasImpl implements MascotasSvc {
         
         try {
             List<Mascotas> list  = ctrl.findMascotasEntities();
+            List<MascotasDTO> dto = new ArrayList<MascotasDTO>();
+            
+            for(Mascotas m: list){
+                dto.add(MascotasDTO.setData(m));
+            }
             
             res.setStatus(true);
-            res.setData(list);
+            res.setData(dto);
         } catch (Exception e){
             res.setStatus(false);
             res.setMessage("Ha ocurrido un error, intente más tarde.");
@@ -69,6 +76,7 @@ public class MascotasImpl implements MascotasSvc {
         mascotaActual.setVive(m.getVive());
         mascotaActual.setEstado(m.getEstado());
         mascotaActual.setIdPropietario(m.getIdPropietario());
+        
      
         try {
             m.setNombreMascota(m.getNombreMascota().toUpperCase());

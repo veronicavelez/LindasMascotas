@@ -2,11 +2,14 @@ package co.com.lindasmascotas.implementations;
 
 import co.com.lindasmascotas.JPAcontrollers.CitasJpaController;
 import co.com.lindasmascotas.JPAcontrollers.EmpleadosJpaController;
+import co.com.lindasmascotas.JPAcontrollers.PropietariosJpaController;
 import co.com.lindasmascotas.JPAcontrollers.ServiciosJpaController;
 import co.com.lindasmascotas.JPAcontrollers.exceptions.NonexistentEntityException;
 import co.com.lindasmascotas.dtos.CitasDTO;
+import co.com.lindasmascotas.dtos.PropietariosDTO;
 import co.com.lindasmascotas.entities.Citas;
 import co.com.lindasmascotas.entities.Empleados;
+import co.com.lindasmascotas.entities.Propietarios;
 import co.com.lindasmascotas.entities.Servicios;
 import co.com.lindasmascotas.services.CitasSvc;
 import co.com.lindasmascotas.util.Mail;
@@ -219,7 +222,29 @@ public class CitasImpl implements CitasSvc {
         
         return res;
    }
-    
-   
+
+    @Override
+    public Response propietario(Integer idPropietario) {
+       Response res = new Response();
+        PropietariosJpaController ctrl = new PropietariosJpaController(UPfactory.getFACTORY());
+       
+       try{
+           Propietarios prop = ctrl.findPropietarios(idPropietario);
+           
+           if(prop != null){
+               res.setStatus(true);
+               res.setData(PropietariosDTO.setData(prop));
+           }else{
+               res.setStatus(true);
+               res.setMessage("No existe un Propietario con ese número de cédula");
+           }
+           
+       }catch (Exception e){
+           res.setStatus(false);
+           res.setMessage("Ha ocurrido un error, intente mas tarde.");
+       }      
+      
+       return res;
+   } 
     
 }

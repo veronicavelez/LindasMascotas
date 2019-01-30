@@ -237,8 +237,8 @@ public class Propietarios implements Serializable {
         this.citasList = citasList;
     }
 
-    @XmlTransient
-    @JsonIgnore
+   //@XmlTransient
+   // @JsonIgnore
     public List<Mascotas> getMascotasList() {
         return mascotasList;
     }
