@@ -3,7 +3,7 @@ package co.com.lindasmascotas.dtos;
 
 public class ServicioPorEmpleadoDTO {
     
-     private Integer idServEmpl;
+    private Integer idServEmpl;
     private EmpleadosDTO idEmpleado;
     private ServiciosDTO idServicio;
 
