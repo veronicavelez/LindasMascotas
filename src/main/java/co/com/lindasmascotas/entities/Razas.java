@@ -36,7 +36,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "Razas.findAll", query = "SELECT r FROM Razas r")
     , @NamedQuery(name = "Razas.findByIdRaza", query = "SELECT r FROM Razas r WHERE r.idRaza = :idRaza")
-    , @NamedQuery(name = "Razas.findByNombreRaza", query = "SELECT r FROM Razas r WHERE r.nombreRaza = :nombreRaza")})
+    , @NamedQuery(name = "Razas.findByNombreRaza", query = "SELECT r FROM Razas r WHERE r.nombreRaza = :nombreRaza")
+    , @NamedQuery(name = "Razas.findRazasByEspecies", query = "SELECT r FROM Razas r WHERE r.idEspecie = :idEspecie")})
 public class Razas implements Serializable {
 
     private static final long serialVersionUID = 1L;

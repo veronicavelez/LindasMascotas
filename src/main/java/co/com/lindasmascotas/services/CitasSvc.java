@@ -3,6 +3,7 @@ package co.com.lindasmascotas.services;
 import co.com.lindasmascotas.dtos.CitasDTO;
 import co.com.lindasmascotas.entities.Citas;
 import co.com.lindasmascotas.util.Response;
+import java.util.Date;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -24,7 +25,7 @@ public interface CitasSvc {
     @GET
     @Path("/horarioemple")
     @Produces(MediaType.APPLICATION_JSON)
-    Response horarioEmple(@QueryParam("idEmpleado")Integer idEmpleado, @QueryParam("idServicio")Integer idServicio);
+    Response horarioEmple(@QueryParam("idEmpleado")Integer idEmpleado, @QueryParam("fechaCita")Date fechaCita);
        
     @GET
     @Path("/propietario")
@@ -47,5 +48,11 @@ public interface CitasSvc {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     Response Cancelar(CitasDTO c);  
+    
+    @GET
+    @Path("/emplporserv") //empleados por servicio
+    @Produces(MediaType.APPLICATION_JSON)
+    Response empleadosPorServicio(@QueryParam("idServicio") Integer idServicio);
+    
     
 }

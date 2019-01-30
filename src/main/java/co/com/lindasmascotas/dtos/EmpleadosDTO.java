@@ -3,6 +3,7 @@ package co.com.lindasmascotas.dtos;
 
 import java.util.Date;
 import java.util.List;
+import co.com.lindasmascotas.entities.Empleados;
 
 public class EmpleadosDTO {
     
@@ -31,10 +32,7 @@ public class EmpleadosDTO {
 //    private TiposSangre idTipoSangre;
     private List<ProcedimientosDTO> procedimientosList;
 
-    public EmpleadosDTO() {
-    }
-
-    public EmpleadosDTO(Integer idEmpleado, String nombreEmpleado, String apellidosEmpleado, Date fechaNacimiento, String correoElectronico, String direccion, Integer telefonoFijo, long telefonoMovil, boolean estadoEmpleado, Date fechaContratoInicial, Date fechaContratoFinal, String tipoRh) {
+    private EmpleadosDTO(Integer idEmpleado, String nombreEmpleado, String apellidosEmpleado, Date fechaNacimiento, String correoElectronico, String direccion, Integer telefonoFijo, long telefonoMovil, boolean estadoEmpleado, Date fechaContratoInicial, Date fechaContratoFinal, String tipoRh) {
         this.idEmpleado = idEmpleado;
         this.nombreEmpleado = nombreEmpleado;
         this.apellidosEmpleado = apellidosEmpleado;
@@ -49,124 +47,72 @@ public class EmpleadosDTO {
         this.tipoRh = tipoRh;
     }
 
+   public static EmpleadosDTO setData(Empleados e){
+       return new EmpleadosDTO(e.getIdEmpleado(), e.getNombreEmpleado(), e.getApellidosEmpleado(),
+               e.getFechaNacimiento(), e.getCorreoElectronico(), e.getDireccion(),
+               e.getTelefonoFijo(), e.getTelefonoMovil(), e.getEstadoEmpleado(), e.getFechaContratoInicial(), 
+               e.getFechaContratoFinal(), e.getTipoRh());
+   }
+
     public Integer getIdEmpleado() {
         return idEmpleado;
-    }
-
-    public void setIdEmpleado(Integer idEmpleado) {
-        this.idEmpleado = idEmpleado;
     }
 
     public String getNombreEmpleado() {
         return nombreEmpleado;
     }
 
-    public void setNombreEmpleado(String nombreEmpleado) {
-        this.nombreEmpleado = nombreEmpleado;
-    }
-
     public String getApellidosEmpleado() {
         return apellidosEmpleado;
-    }
-
-    public void setApellidosEmpleado(String apellidosEmpleado) {
-        this.apellidosEmpleado = apellidosEmpleado;
     }
 
     public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
     public String getCorreoElectronico() {
         return correoElectronico;
-    }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
     }
 
     public String getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
     public Integer getTelefonoFijo() {
         return telefonoFijo;
-    }
-
-    public void setTelefonoFijo(Integer telefonoFijo) {
-        this.telefonoFijo = telefonoFijo;
     }
 
     public long getTelefonoMovil() {
         return telefonoMovil;
     }
 
-    public void setTelefonoMovil(long telefonoMovil) {
-        this.telefonoMovil = telefonoMovil;
-    }
-
     public boolean isEstadoEmpleado() {
         return estadoEmpleado;
-    }
-
-    public void setEstadoEmpleado(boolean estadoEmpleado) {
-        this.estadoEmpleado = estadoEmpleado;
     }
 
     public Date getFechaContratoInicial() {
         return fechaContratoInicial;
     }
 
-    public void setFechaContratoInicial(Date fechaContratoInicial) {
-        this.fechaContratoInicial = fechaContratoInicial;
-    }
-
     public Date getFechaContratoFinal() {
         return fechaContratoFinal;
-    }
-
-    public void setFechaContratoFinal(Date fechaContratoFinal) {
-        this.fechaContratoFinal = fechaContratoFinal;
     }
 
     public String getTipoRh() {
         return tipoRh;
     }
 
-    public void setTipoRh(String tipoRh) {
-        this.tipoRh = tipoRh;
-    }
-
     public List<CitasDTO> getCitasList() {
         return citasList;
-    }
-
-    public void setCitasList(List<CitasDTO> citasList) {
-        this.citasList = citasList;
     }
 
     public List<ServicioPorEmpleadoDTO> getServicioPorEmpleadoList() {
         return servicioPorEmpleadoList;
     }
 
-    public void setServicioPorEmpleadoList(List<ServicioPorEmpleadoDTO> servicioPorEmpleadoList) {
-        this.servicioPorEmpleadoList = servicioPorEmpleadoList;
-    }
-
     public List<ProcedimientosDTO> getProcedimientosList() {
         return procedimientosList;
     }
-
-    public void setProcedimientosList(List<ProcedimientosDTO> procedimientosList) {
-        this.procedimientosList = procedimientosList;
-    }
-    
+   
+   
 }
