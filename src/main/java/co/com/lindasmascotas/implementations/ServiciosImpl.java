@@ -82,7 +82,7 @@ public class ServiciosImpl implements ServiciosSvc {
             
             if(!s.getServicioPorEmpleadoList().isEmpty()){
                
-               // ctrl.create(s); 
+               //ctrl.create(s); 
                res = listarServicios();
             } else {
                 res = listarServicios();
@@ -163,7 +163,7 @@ public class ServiciosImpl implements ServiciosSvc {
         return res;
     }
     
-   /*
+    /*
     @Override
     public Response servicioporempl() {
         Response res = new Response();

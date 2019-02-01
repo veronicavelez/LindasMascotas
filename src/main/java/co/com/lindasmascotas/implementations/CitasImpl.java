@@ -59,9 +59,9 @@ public class CitasImpl implements CitasSvc {
         try {
             Citas crearcita = new Citas();
             
-            Propietarios propietario = new Propietarios();
-            Servicios servicio = new Servicios();
-            Empleados empleado = new Empleados();
+            Propietarios propietario = new Propietarios(c.getIdPropietario().getIdPropietario());
+            Servicios servicio = new Servicios(c.getIdTipoServicio().getIdServicio());
+            Empleados empleado = new Empleados(c.getIdEmpleado().getIdEmpleado());
                     
             crearcita.setIdCita(c.getIdCita());
             crearcita.setTelefonoMovil(c.getTelefonoMovil());
