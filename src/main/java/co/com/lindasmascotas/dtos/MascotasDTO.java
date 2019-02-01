@@ -6,9 +6,12 @@
 package co.com.lindasmascotas.dtos;
 
 import co.com.lindasmascotas.entities.Especies;
+import co.com.lindasmascotas.entities.Mascotas;
+import co.com.lindasmascotas.entities.Procedimientos;
 import co.com.lindasmascotas.entities.Razas;
 import co.com.lindasmascotas.entities.Sexos;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +49,18 @@ public class MascotasDTO {
         this.idSexo = idSexo;
         this.procedimientosList = procedimientosList;
     }
-
+    
+    public static MascotasDTO setData(Mascotas m){
+        List<ProcedimientosDTO> procedimientosList = new ArrayList<ProcedimientosDTO>();
+        
+        for(Procedimientos p: m.getProcedimientosList()){
+            procedimientosList.add(ProcedimientosDTO.setData(p));
+        }
+        
+        return new MascotasDTO(m.getIdMascota(), m.getNombreMascota(), m.getFechaNacimiento(),
+                m.getPeso(), m.getEstado(), m.getVive(), m.getIdEspecie(), PropietariosDTO.setData(m.getIdPropietario()), m.getIdRaza(), m.getIdSexo(), procedimientosList);
+    }
+    
     public Integer getIdMascota() {
         return idMascota;
     }

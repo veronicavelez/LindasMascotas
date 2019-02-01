@@ -1,6 +1,8 @@
 
 package co.com.lindasmascotas.dtos;
 
+import co.com.lindasmascotas.entities.ServicioPorEmpleado;
+
 public class ServicioPorEmpleadoDTO {
     
     private Integer idServEmpl;
@@ -15,30 +17,24 @@ public class ServicioPorEmpleadoDTO {
         this.idEmpleado = idEmpleado;
         this.idServicio = idServicio;
     }
+    
+    public static ServicioPorEmpleadoDTO setData(ServicioPorEmpleado spe){
+            return new ServicioPorEmpleadoDTO(spe.getIdServEmpl(), EmpleadosDTO.setData(spe.getIdEmpleado()), ServiciosDTO.setData(spe.getIdServicio()));
+                    
+    }                
 
     public Integer getIdServEmpl() {
         return idServEmpl;
-    }
-
-    public void setIdServEmpl(Integer idServEmpl) {
-        this.idServEmpl = idServEmpl;
     }
 
     public EmpleadosDTO getIdEmpleado() {
         return idEmpleado;
     }
 
-    public void setIdEmpleado(EmpleadosDTO idEmpleado) {
-        this.idEmpleado = idEmpleado;
-    }
-
     public ServiciosDTO getIdServicio() {
         return idServicio;
     }
 
-    public void setIdServicio(ServiciosDTO idServicio) {
-        this.idServicio = idServicio;
-    }
     
     
 }

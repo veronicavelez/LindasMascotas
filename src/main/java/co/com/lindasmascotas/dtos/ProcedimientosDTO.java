@@ -1,6 +1,7 @@
 
 package co.com.lindasmascotas.dtos;
 
+import co.com.lindasmascotas.entities.Procedimientos;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -30,61 +31,40 @@ public class ProcedimientosDTO {
         this.idEmpleado = idEmpleado;
         this.idTipoServicio = idTipoServicio;
     }
+    
+    public static ProcedimientosDTO setData(Procedimientos p){
+        return new ProcedimientosDTO(p.getIdProcedimiento(), p.getNombreProcedimiento(),
+                p.getDescripcion(), p.getPeso(), p.getFecha(), EmpleadosDTO.setData(p.getIdEmpleado()), ServiciosDTO.setData(p.getIdTipoServicio()));
+    }
 
     public Integer getIdProcedimiento() {
         return idProcedimiento;
-    }
-
-    public void setIdProcedimiento(Integer idProcedimiento) {
-        this.idProcedimiento = idProcedimiento;
     }
 
     public String getNombreProcedimiento() {
         return nombreProcedimiento;
     }
 
-    public void setNombreProcedimiento(String nombreProcedimiento) {
-        this.nombreProcedimiento = nombreProcedimiento;
-    }
-
     public String getDescripcion() {
         return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     public BigDecimal getPeso() {
         return peso;
     }
 
-    public void setPeso(BigDecimal peso) {
-        this.peso = peso;
-    }
-
     public Date getFecha() {
         return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
     }
 
     public EmpleadosDTO getIdEmpleado() {
         return idEmpleado;
     }
 
-    public void setIdEmpleado(EmpleadosDTO idEmpleado) {
-        this.idEmpleado = idEmpleado;
-    }
-
     public ServiciosDTO getIdTipoServicio() {
         return idTipoServicio;
     }
 
-    public void setIdTipoServicio(ServiciosDTO idTipoServicio) {
-        this.idTipoServicio = idTipoServicio;
-    }
+    
     
 }

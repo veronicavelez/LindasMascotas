@@ -8,7 +8,9 @@ package co.com.lindasmascotas.dtos;
 import co.com.lindasmascotas.entities.Barrios;
 import co.com.lindasmascotas.entities.Ciudades;
 import co.com.lindasmascotas.entities.Generos;
+import co.com.lindasmascotas.entities.Propietarios;
 import co.com.lindasmascotas.entities.TiposDocumento;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -33,8 +35,8 @@ public class PropietariosDTO {
 
     public PropietariosDTO() {
     }
-    
-    public PropietariosDTO(Integer idPropietario, String nombrePropietario, String apellidosPropietario, Date fechaNacimiento, String correoElectronico, String direccion, Integer telefonoFijo, long telefonoMovil, boolean estado, Barrios idBarrio, Ciudades idCiudad, Generos idGenero, TiposDocumento idTipoDocumento, List<CitasDTO> citasList) {
+
+    public PropietariosDTO(Integer idPropietario, String nombrePropietario, String apellidosPropietario, Date fechaNacimiento, String correoElectronico, String direccion, Integer telefonoFijo, long telefonoMovil, boolean estado, Barrios idBarrio, Ciudades idCiudad, Generos idGenero, TiposDocumento idTipoDocumento) {
         this.idPropietario = idPropietario;
         this.nombrePropietario = nombrePropietario;
         this.apellidosPropietario = apellidosPropietario;
@@ -48,7 +50,13 @@ public class PropietariosDTO {
         this.idCiudad = idCiudad;
         this.idGenero = idGenero;
         this.idTipoDocumento = idTipoDocumento;
-        //this.citasList = citasList;
+    }
+    
+    public static PropietariosDTO setData(Propietarios p){
+        return new PropietariosDTO(p.getIdPropietario(), p.getNombrePropietario(),p.getApellidosPropietario(),
+                p.getFechaNacimiento(), p.getCorreoElectronico(), p.getDireccion(), p.getTelefonoFijo(),
+                p.getTelefonoMovil(), p.getEstado(), p.getIdBarrio(), p.getIdCiudad(), p.getIdGenero(),
+                p.getIdTipoDocumento());
     }
 
     public Integer getIdPropietario() {
@@ -102,5 +110,5 @@ public class PropietariosDTO {
     public TiposDocumento getIdTipoDocumento() {
         return idTipoDocumento;
     }
-    
+   
 }
