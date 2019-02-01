@@ -280,7 +280,7 @@ public class CitasImpl implements CitasSvc {
            
            if(prop != null){
                res.setStatus(true);
-               res.setData(PropietariosDTO.setData(prop));
+               res.setData(prop);
            }else{
                res.setStatus(true);
                res.setMessage("No existe un Propietario con ese número de cédula");

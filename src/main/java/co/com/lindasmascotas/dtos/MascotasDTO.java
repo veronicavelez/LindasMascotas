@@ -6,17 +6,18 @@
 package co.com.lindasmascotas.dtos;
 
 import co.com.lindasmascotas.entities.Especies;
-import co.com.lindasmascotas.entities.Mascotas;
 import co.com.lindasmascotas.entities.Razas;
 import co.com.lindasmascotas.entities.Sexos;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
- * @author Veronica
+ * @author Isabel Medina
  */
 public class MascotasDTO {
+    
     private Integer idMascota;
     private String nombreMascota;
     private Date fechaNacimiento;
@@ -24,10 +25,15 @@ public class MascotasDTO {
     private boolean estado;
     private boolean vive;
     private Especies idEspecie;
+    private PropietariosDTO idPropietario;
     private Razas idRaza;
     private Sexos idSexo;
+    private List<ProcedimientosDTO> procedimientosList;
 
-    private MascotasDTO(Integer idMascota, String nombreMascota, Date fechaNacimiento, BigDecimal peso, boolean estado, boolean vive, Especies idEspecie, Razas idRaza, Sexos idSexo) {
+    public MascotasDTO() {
+    }
+
+    public MascotasDTO(Integer idMascota, String nombreMascota, Date fechaNacimiento, BigDecimal peso, boolean estado, boolean vive, Especies idEspecie, PropietariosDTO idPropietario, Razas idRaza, Sexos idSexo, List<ProcedimientosDTO> procedimientosList) {
         this.idMascota = idMascota;
         this.nombreMascota = nombreMascota;
         this.fechaNacimiento = fechaNacimiento;
@@ -35,14 +41,12 @@ public class MascotasDTO {
         this.estado = estado;
         this.vive = vive;
         this.idEspecie = idEspecie;
+        this.idPropietario = idPropietario;
         this.idRaza = idRaza;
         this.idSexo = idSexo;
+        this.procedimientosList = procedimientosList;
     }
 
-    public static MascotasDTO setData(Mascotas m){
-        return new MascotasDTO(m.getIdMascota(), m.getNombreMascota(), m.getFechaNacimiento(), m.getPeso(), m.getEstado(), m.getVive(), m.getIdEspecie(), m.getIdRaza(), m.getIdSexo());
-    }
-    
     public Integer getIdMascota() {
         return idMascota;
     }
@@ -71,6 +75,10 @@ public class MascotasDTO {
         return idEspecie;
     }
 
+    public PropietariosDTO getIdPropietario() {
+        return idPropietario;
+    }
+
     public Razas getIdRaza() {
         return idRaza;
     }
@@ -78,6 +86,12 @@ public class MascotasDTO {
     public Sexos getIdSexo() {
         return idSexo;
     }
+
+    public List<ProcedimientosDTO> getProcedimientosList() {
+        return procedimientosList;
+    }
+    
+
     
     
 }

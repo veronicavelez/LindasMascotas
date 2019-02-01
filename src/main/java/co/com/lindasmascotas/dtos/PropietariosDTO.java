@@ -6,21 +6,15 @@
 package co.com.lindasmascotas.dtos;
 
 import co.com.lindasmascotas.entities.Barrios;
-import co.com.lindasmascotas.entities.Citas;
 import co.com.lindasmascotas.entities.Ciudades;
 import co.com.lindasmascotas.entities.Generos;
-import co.com.lindasmascotas.entities.Mascotas;
-import co.com.lindasmascotas.entities.Propietarios;
 import co.com.lindasmascotas.entities.TiposDocumento;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- *
- * @author Veronica
- */
+
 public class PropietariosDTO {
+    
     private Integer idPropietario;
     private String nombrePropietario;
     private String apellidosPropietario;
@@ -34,10 +28,13 @@ public class PropietariosDTO {
     private Ciudades idCiudad;
     private Generos idGenero;
     private TiposDocumento idTipoDocumento;
-   // private List<CitasDTO> citasList;
-    private List<MascotasDTO> mascotasList;
+    //private List<CitasDTO> citasList;
+    //private List<Mascotas> mascotasList;
 
-    private PropietariosDTO(Integer idPropietario, String nombrePropietario, String apellidosPropietario, Date fechaNacimiento, String correoElectronico, String direccion, Integer telefonoFijo, long telefonoMovil, boolean estado, Barrios idBarrio, Ciudades idCiudad, Generos idGenero, TiposDocumento idTipoDocumento, List<MascotasDTO> mascotasList) {
+    public PropietariosDTO() {
+    }
+    
+    public PropietariosDTO(Integer idPropietario, String nombrePropietario, String apellidosPropietario, Date fechaNacimiento, String correoElectronico, String direccion, Integer telefonoFijo, long telefonoMovil, boolean estado, Barrios idBarrio, Ciudades idCiudad, Generos idGenero, TiposDocumento idTipoDocumento, List<CitasDTO> citasList) {
         this.idPropietario = idPropietario;
         this.nombrePropietario = nombrePropietario;
         this.apellidosPropietario = apellidosPropietario;
@@ -51,19 +48,9 @@ public class PropietariosDTO {
         this.idCiudad = idCiudad;
         this.idGenero = idGenero;
         this.idTipoDocumento = idTipoDocumento;
-        this.mascotasList = mascotasList;
+        //this.citasList = citasList;
     }
-    
-    public static PropietariosDTO setData(Propietarios p){
-        List<MascotasDTO> mascotas = new ArrayList<MascotasDTO>();
-        
-        for(Mascotas m: p.getMascotasList()){
-            mascotas.add(MascotasDTO.setData(m));
-        }
-        
-        return new PropietariosDTO(p.getIdPropietario(), p.getNombrePropietario(), p.getApellidosPropietario(), p.getFechaNacimiento(), p.getCorreoElectronico(), p.getDireccion(), p.getTelefonoFijo(), p.getTelefonoMovil(), p.getEstado(), p.getIdBarrio(), p.getIdCiudad(), p.getIdGenero(), p.getIdTipoDocumento(), mascotas);
-    }
-    
+
     public Integer getIdPropietario() {
         return idPropietario;
     }
@@ -115,10 +102,5 @@ public class PropietariosDTO {
     public TiposDocumento getIdTipoDocumento() {
         return idTipoDocumento;
     }
-
-    public List<MascotasDTO> getMascotasList() {
-        return mascotasList;
-    }
-    
-    
+       
 }

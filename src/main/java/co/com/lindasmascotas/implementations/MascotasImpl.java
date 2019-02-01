@@ -23,14 +23,10 @@ public class MascotasImpl implements MascotasSvc {
         
         try {
             List<Mascotas> list  = ctrl.findMascotasEntities();
-            List<MascotasDTO> dto = new ArrayList<MascotasDTO>();
             
-            for(Mascotas m: list){
-                dto.add(MascotasDTO.setData(m));
-            }
             
             res.setStatus(true);
-            res.setData(dto);
+            res.setData(list);
         } catch (Exception e){
             res.setStatus(false);
             res.setMessage("Ha ocurrido un error, intente más tarde.");
