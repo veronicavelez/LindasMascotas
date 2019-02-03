@@ -60,9 +60,9 @@ public class CitasImpl implements CitasSvc {
         try {
             Citas crearcita = new Citas();
             
-            Propietarios propietario = new Propietarios();
-            Servicios servicio = new Servicios();
-            Empleados empleado = new Empleados();
+            Propietarios propietario = new Propietarios(c.getIdPropietario().getIdPropietario());
+            Servicios servicio = new Servicios(c.getIdTipoServicio().getIdServicio());
+            Empleados empleado = new Empleados(c.getIdEmpleado().getIdEmpleado());
                     
             crearcita.setIdCita(c.getIdCita());
             crearcita.setTelefonoMovil(c.getTelefonoMovil());
@@ -237,8 +237,33 @@ public class CitasImpl implements CitasSvc {
         try {
             c.setTime(fechaCita);
             nD = c.get(Calendar.DAY_OF_WEEK);
-            TurnosPorEmpleados templ = ctrl.findTurnosPorEmpleados(idEmpleado);
-                            
+            Integer horaIni = 0;
+            Integer horaFin = 0;
+            Date horaIniEmp = null;
+            Date horaFinEmp = null;
+            List<String> horario = new ArrayList<String>();
+            List<TurnosPorEmpleados> templ = ctrl.findIdTurnosPorEmplByEmpleado(idEmpleado);
+            
+            for(TurnosPorEmpleados tpe : templ) {
+                if (tpe.getIdDetalleTurnos().getDias() == nD) {
+                   horaIniEmp = tpe.getIdDetalleTurnos().getHoraInicial();
+                   horaFinEmp = tpe.getIdDetalleTurnos().getHoraFinal();
+                   break;
+                }
+            }
+            
+            c.setTime(horaIniEmp);
+            horaIni = c.get(Calendar.HOUR_OF_DAY);
+            c.setTime(horaFinEmp);
+            horaFin = c.get(Calendar.HOUR_OF_DAY);
+            
+            for (int i = horaIni; i < horaFin; i++) {
+                
+                horario.add(i + ":00");
+                horario.add(i + ":30");
+            }
+            
+            res.setData(horario);
             res.setStatus(true);
         } catch (Exception e) {
             
