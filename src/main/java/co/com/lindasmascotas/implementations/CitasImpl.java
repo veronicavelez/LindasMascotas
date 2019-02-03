@@ -51,7 +51,7 @@ public class CitasImpl implements CitasSvc {
     }
 
     @Override
-    public Response crear(CitasDTO c) {
+    public Response crear(Citas c) {
         Response res = new Response();
         CitasJpaController ctrl = new CitasJpaController(UPfactory.getFACTORY());
         
@@ -244,7 +244,6 @@ public class CitasImpl implements CitasSvc {
             res.setStatus(false);
             res.setMessage("Ha ocurrido un error");
         }
-        
         
         return res;
    }

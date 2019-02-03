@@ -19,6 +19,7 @@ import java.util.List;
 import co.com.lindasmascotas.entities.ServicioPorEmpleado;
 import co.com.lindasmascotas.entities.Procedimientos;
 import co.com.lindasmascotas.entities.Servicios;
+import java.math.BigInteger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -108,6 +109,46 @@ public class ServiciosJpaController implements Serializable {
                 em.close();
             }
         }
+    }
+    
+    public boolean transactionCreate(Servicios servicio) throws PreexistingEntityException, Exception{
+        EntityManager em = null;
+        
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            
+            Servicios s = new Servicios();
+            s.setNombreServicio(servicio.getNombreServicio());
+            s.setPrecioServicio(servicio.getPrecioServicio());
+            s.setDescripcionServicio(servicio.getDescripcionServicio());
+            
+            em.persist(s);
+            //em.getTransaction().commit();
+            
+            for(ServicioPorEmpleado spe: servicio.getServicioPorEmpleadoList()){
+                ServicioPorEmpleado se = new ServicioPorEmpleado();
+                se.setIdEmpleado(spe.getIdEmpleado());
+                se.setIdServicio(s);
+                em.persist(se);
+            }
+            em.getTransaction().commit();
+            
+            return true;
+    
+        } catch (Exception e) {
+            if(em.getTransaction().isActive()){
+                em.getTransaction().rollback();
+            }
+            
+            throw new Exception("No fue posible guardar el registro.");
+        }finally{
+            if(em != null){
+                em.clear();
+                em.close();
+            }
+        }
+        
     }
 
     public void edit(Servicios servicios) throws IllegalOrphanException, NonexistentEntityException, Exception {

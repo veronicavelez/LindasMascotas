@@ -18,6 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -67,7 +69,9 @@ public class ServicioPorEmpleado implements Serializable {
     public void setIdEmpleado(Empleados idEmpleado) {
         this.idEmpleado = idEmpleado;
     }
-
+    
+    @JsonIgnore
+    @XmlTransient
     public Servicios getIdServicio() {
         return idServicio;
     }

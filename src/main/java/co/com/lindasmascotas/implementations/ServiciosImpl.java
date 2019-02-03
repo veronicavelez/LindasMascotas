@@ -82,7 +82,7 @@ public class ServiciosImpl implements ServiciosSvc {
             
             if(!s.getServicioPorEmpleadoList().isEmpty()){
                
-               //ctrl.create(s); 
+              ctrl.transactionCreate(s);
                res = listarServicios();
             } else {
                 res = listarServicios();
