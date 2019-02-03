@@ -36,7 +36,7 @@ public interface CitasSvc {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Response crear(CitasDTO c);
+    Response crear(Citas c);
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)

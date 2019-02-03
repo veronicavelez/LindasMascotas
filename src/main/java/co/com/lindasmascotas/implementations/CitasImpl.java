@@ -21,6 +21,7 @@ import co.com.lindasmascotas.util.Mail;
 import co.com.lindasmascotas.util.MessageExceptions;
 import co.com.lindasmascotas.util.Response;
 import co.com.lindasmascotas.util.UPfactory;
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,20 +53,22 @@ public class CitasImpl implements CitasSvc {
     }
 
     @Override
-    public Response crear(CitasDTO c) {
+    public Response crear(Citas c) {
         Response res = new Response();
         CitasJpaController ctrl = new CitasJpaController(UPfactory.getFACTORY());
-        
+        PropietariosJpaController ctrlProp = new PropietariosJpaController(UPfactory.getFACTORY());
 
         try {
-            Citas crearcita = new Citas();
+            Citas crearcita = new Citas(0);
             
-            Propietarios propietario = new Propietarios(c.getIdPropietario().getIdPropietario());
+            Propietarios propietario = ctrlProp.findPropietarios(c.getIdPropietario().getIdPropietario());
             Servicios servicio = new Servicios(c.getIdTipoServicio().getIdServicio());
             Empleados empleado = new Empleados(c.getIdEmpleado().getIdEmpleado());
                     
+            Long telMov = propietario.getTelefonoMovil();
+            
             crearcita.setIdCita(c.getIdCita());
-            crearcita.setTelefonoMovil(c.getTelefonoMovil());
+            crearcita.setTelefonoMovil(new BigInteger(telMov.toString()));
             crearcita.setFechaCita(c.getFechaCita());
             crearcita.setIdPropietario(propietario);
             crearcita.setIdTipoServicio(servicio);
