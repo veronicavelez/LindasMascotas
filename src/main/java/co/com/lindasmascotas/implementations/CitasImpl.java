@@ -12,6 +12,7 @@ import co.com.lindasmascotas.dtos.PropietariosDTO;
 import co.com.lindasmascotas.entities.Citas;
 import co.com.lindasmascotas.entities.Empleados;
 import co.com.lindasmascotas.entities.Propietarios;
+import co.com.lindasmascotas.entities.Propietarios_;
 import co.com.lindasmascotas.entities.ServicioPorEmpleado;
 import co.com.lindasmascotas.entities.Servicios;
 import co.com.lindasmascotas.entities.TurnosPorEmpleados;
@@ -54,16 +55,22 @@ public class CitasImpl implements CitasSvc {
     public Response crear(CitasDTO c) {
         Response res = new Response();
         CitasJpaController ctrl = new CitasJpaController(UPfactory.getFACTORY());
+        
 
         try {
             Citas crearcita = new Citas();
+            
+            Propietarios propietario = new Propietarios();
+            Servicios servicio = new Servicios();
+            Empleados empleado = new Empleados();
+                    
             crearcita.setIdCita(c.getIdCita());
             crearcita.setTelefonoMovil(c.getTelefonoMovil());
             crearcita.setFechaCita(c.getFechaCita());
-            crearcita.setIdPropietario(c.getIdPropietario());
-            crearcita.setIdTipoServicio(c.getIdTipoServicio());
+            crearcita.setIdPropietario(propietario);
+            crearcita.setIdTipoServicio(servicio);
             crearcita.setNombreMascota(c.getNombreMascota().toUpperCase());
-            crearcita.setIdEmpleado(c.getIdEmpleado());
+            crearcita.setIdEmpleado(empleado);
             /*
             if (c != null) {
                 System.out.println("co.com.lindasmascotas.implementations.CitasImpl.crear()");
@@ -107,7 +114,7 @@ public class CitasImpl implements CitasSvc {
 
         try {
 
-            c.setNombreMascota(c.getNombreMascota().toUpperCase());
+            citaActual.setNombreMascota(c.getNombreMascota().toUpperCase());
 
             ctrl.edit(citaActual);
 

@@ -1,7 +1,11 @@
 
 package co.com.lindasmascotas.dtos;
 
+import co.com.lindasmascotas.entities.Citas;
+import co.com.lindasmascotas.entities.ServicioPorEmpleado;
+import co.com.lindasmascotas.entities.Servicios;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,52 +42,46 @@ public class ServiciosDTO {
         this.descripcionServicio = descripcionServicio;
     }
     
-    public Integer getIdServicio() {
-        return idServicio;
+    public static ServiciosDTO setData(Servicios s){
+        List<CitasDTO> citasList = new ArrayList<CitasDTO>();
+        List<ServicioPorEmpleadoDTO> servicioPorEmpleadoList = new ArrayList<ServicioPorEmpleadoDTO>();
+                
+        for(Citas c: s.getCitasList()){
+            citasList.add(CitasDTO.setData(c));
+        }
+        
+        for(ServicioPorEmpleado spe: s.getServicioPorEmpleadoList()){
+            servicioPorEmpleadoList.add(ServicioPorEmpleadoDTO.setData(spe));
+        }
+        
+        return new ServiciosDTO(s.getIdServicio(), s.getNombreServicio(), s.getPrecioServicio(), 
+                s.getDescripcionServicio(), citasList, servicioPorEmpleadoList);
     }
 
-    public void setIdServicio(Integer idServicio) {
-        this.idServicio = idServicio;
+    public Integer getIdServicio() {
+        return idServicio;
     }
 
     public String getNombreServicio() {
         return nombreServicio;
     }
 
-    public void setNombreServicio(String nombreServicio) {
-        this.nombreServicio = nombreServicio;
-    }
-
     public BigInteger getPrecioServicio() {
         return precioServicio;
-    }
-
-    public void setPrecioServicio(BigInteger precioServicio) {
-        this.precioServicio = precioServicio;
     }
 
     public String getDescripcionServicio() {
         return descripcionServicio;
     }
 
-    public void setDescripcionServicio(String descripcionServicio) {
-        this.descripcionServicio = descripcionServicio;
-    }
-
     public List<CitasDTO> getCitasList() {
         return citasList;
-    }
-
-    public void setCitasList(List<CitasDTO> citasList) {
-        this.citasList = citasList;
     }
 
     public List<ServicioPorEmpleadoDTO> getServicioPorEmpleadoList() {
         return servicioPorEmpleadoList;
     }
-
-    public void setServicioPorEmpleadoList(List<ServicioPorEmpleadoDTO> servicioPorEmpleadoList) {
-        this.servicioPorEmpleadoList = servicioPorEmpleadoList;
-    }
+    
+    
 }
     

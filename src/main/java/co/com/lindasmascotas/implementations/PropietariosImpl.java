@@ -29,9 +29,9 @@ public class PropietariosImpl implements PropietariosSvc{
             List<Propietarios> lis = ctrl.findPropietariosEntities();
             List<PropietariosDTO> dto = new ArrayList<PropietariosDTO>();
             
-            /*for(Propietarios p: lis){
+            for(Propietarios p: lis){
                 dto.add(PropietariosDTO.setData(p));
-            }*/
+            }
             
             res.setStatus(true);
             res.setData(dto);

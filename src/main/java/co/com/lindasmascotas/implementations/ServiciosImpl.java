@@ -82,7 +82,7 @@ public class ServiciosImpl implements ServiciosSvc {
             
             if(!s.getServicioPorEmpleadoList().isEmpty()){
                
-               // ctrl.create(s); 
+               //ctrl.create(s); 
                res = listarServicios();
             } else {
                 res = listarServicios();
@@ -111,6 +111,7 @@ public class ServiciosImpl implements ServiciosSvc {
         servicioActual.setNombreServicio(s.getNombreServicio());
         servicioActual.setDescripcionServicio(s.getDescripcionServicio());
         servicioActual.setPrecioServicio(s.getPrecioServicio());
+        
        
         try {
             

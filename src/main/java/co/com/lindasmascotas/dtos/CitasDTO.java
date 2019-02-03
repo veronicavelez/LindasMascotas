@@ -1,6 +1,7 @@
 
 package co.com.lindasmascotas.dtos;
 
+import co.com.lindasmascotas.entities.Citas;
 import co.com.lindasmascotas.entities.Empleados;
 import co.com.lindasmascotas.entities.Propietarios;
 import co.com.lindasmascotas.entities.Servicios;
@@ -18,9 +19,9 @@ public class CitasDTO {
     private String nombreMascota;
     private BigInteger telefonoMovil;
     private Date fechaCita;
-    private Propietarios idPropietario;
-    private Servicios idTipoServicio;
-    private Empleados idEmpleado;
+    private PropietariosDTO idPropietario;
+    private ServiciosDTO idTipoServicio;
+    private EmpleadosDTO idEmpleado;
 
     public CitasDTO() {
     }
@@ -29,7 +30,7 @@ public class CitasDTO {
         this.idCita = idCita;
     }
 
-    public CitasDTO(Integer idCita, String nombreMascota, BigInteger telefonoMovil, Date fechaCita, Propietarios idPropietario, Servicios idTipoServicio, Empleados idEmpleado) {
+    public CitasDTO(Integer idCita, String nombreMascota, BigInteger telefonoMovil, Date fechaCita, PropietariosDTO idPropietario, ServiciosDTO idTipoServicio, EmpleadosDTO idEmpleado) {
         this.idCita = idCita;
         this.nombreMascota = nombreMascota;
         this.telefonoMovil = telefonoMovil;
@@ -37,62 +38,40 @@ public class CitasDTO {
         this.idPropietario = idPropietario;
         this.idTipoServicio = idTipoServicio;
         this.idEmpleado = idEmpleado;
+    }
+    
+    public static CitasDTO setData(Citas c){
+        return new CitasDTO(c.getIdCita(), c.getNombreMascota(), c.getTelefonoMovil(), c.getFechaCita(),
+                PropietariosDTO.setData(c.getIdPropietario()), ServiciosDTO.setData(c.getIdTipoServicio()), EmpleadosDTO.setData(c.getIdEmpleado()));
     }
 
     public Integer getIdCita() {
         return idCita;
     }
 
-    public void setIdCita(Integer idCita) {
-        this.idCita = idCita;
-    }
-
     public String getNombreMascota() {
         return nombreMascota;
-    }
-
-    public void setNombreMascota(String nombreMascota) {
-        this.nombreMascota = nombreMascota;
     }
 
     public BigInteger getTelefonoMovil() {
         return telefonoMovil;
     }
 
-    public void setTelefonoMovil(BigInteger telefonoMovil) {
-        this.telefonoMovil = telefonoMovil;
-    }
-
     public Date getFechaCita() {
         return fechaCita;
     }
 
-    public void setFechaCita(Date fechaCita) {
-        this.fechaCita = fechaCita;
-    }
-
-    public Propietarios getIdPropietario() {
+    public PropietariosDTO getIdPropietario() {
         return idPropietario;
     }
 
-    public void setIdPropietario(Propietarios idPropietario) {
-        this.idPropietario = idPropietario;
-    }
-
-    public Servicios getIdTipoServicio() {
+    public ServiciosDTO getIdTipoServicio() {
         return idTipoServicio;
     }
 
-    public void setIdTipoServicio(Servicios idTipoServicio) {
-        this.idTipoServicio = idTipoServicio;
-    }
-
-    public Empleados getIdEmpleado() {
+    public EmpleadosDTO getIdEmpleado() {
         return idEmpleado;
     }
-
-    public void setIdEmpleado(Empleados idEmpleado) {
-        this.idEmpleado = idEmpleado;
-    }
+    
     
 }

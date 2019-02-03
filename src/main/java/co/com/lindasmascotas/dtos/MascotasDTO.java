@@ -6,9 +6,12 @@
 package co.com.lindasmascotas.dtos;
 
 import co.com.lindasmascotas.entities.Especies;
+import co.com.lindasmascotas.entities.Mascotas;
+import co.com.lindasmascotas.entities.Procedimientos;
 import co.com.lindasmascotas.entities.Razas;
 import co.com.lindasmascotas.entities.Sexos;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,12 +31,12 @@ public class MascotasDTO {
     private PropietariosDTO idPropietario;
     private Razas idRaza;
     private Sexos idSexo;
-    private List<ProcedimientosDTO> procedimientosList;
+//    private List<ProcedimientosDTO> procedimientosList;
 
     public MascotasDTO() {
     }
 
-    public MascotasDTO(Integer idMascota, String nombreMascota, Date fechaNacimiento, BigDecimal peso, boolean estado, boolean vive, Especies idEspecie, PropietariosDTO idPropietario, Razas idRaza, Sexos idSexo, List<ProcedimientosDTO> procedimientosList) {
+    public MascotasDTO(Integer idMascota, String nombreMascota, Date fechaNacimiento, BigDecimal peso, boolean estado, boolean vive, Especies idEspecie, PropietariosDTO idPropietario, Razas idRaza, Sexos idSexo/*, List<ProcedimientosDTO> procedimientosList*/) {
         this.idMascota = idMascota;
         this.nombreMascota = nombreMascota;
         this.fechaNacimiento = fechaNacimiento;
@@ -44,9 +47,20 @@ public class MascotasDTO {
         this.idPropietario = idPropietario;
         this.idRaza = idRaza;
         this.idSexo = idSexo;
-        this.procedimientosList = procedimientosList;
+//        this.procedimientosList = procedimientosList;
     }
-
+    
+    public static MascotasDTO setData(Mascotas m){
+//        List<ProcedimientosDTO> procedimientosList = new ArrayList<ProcedimientosDTO>();
+//        
+//        for(Procedimientos p: m.getProcedimientosList()){
+//            procedimientosList.add(ProcedimientosDTO.setData(p));
+//        }
+        
+        return new MascotasDTO(m.getIdMascota(), m.getNombreMascota(), m.getFechaNacimiento(),
+                m.getPeso(), m.getEstado(), m.getVive(), m.getIdEspecie(), PropietariosDTO.setData(m.getIdPropietario()), m.getIdRaza(), m.getIdSexo()/*, procedimientosList*/);
+    }
+    
     public Integer getIdMascota() {
         return idMascota;
     }
@@ -63,11 +77,11 @@ public class MascotasDTO {
         return peso;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
-    public boolean isVive() {
+    public boolean getVive() {
         return vive;
     }
 
@@ -87,11 +101,8 @@ public class MascotasDTO {
         return idSexo;
     }
 
-    public List<ProcedimientosDTO> getProcedimientosList() {
-        return procedimientosList;
-    }
-    
-
-    
-    
+//    public List<ProcedimientosDTO> getProcedimientosList() {
+//        return procedimientosList;
+//    }
+   
 }
