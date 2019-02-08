@@ -105,19 +105,26 @@ public class ServiciosImpl implements ServiciosSvc {
     public Response editar(Servicios s) {
         Response res = new Response();
         ServiciosJpaController ctrl = new ServiciosJpaController(UPfactory.getFACTORY());
+        ServicioPorEmpleadoJpaController ctrls = new ServicioPorEmpleadoJpaController(UPfactory.getFACTORY());
         
         Servicios servicioActual = ctrl.findServicios(s.getIdServicio());
         
-        servicioActual.setNombreServicio(s.getNombreServicio());
-        servicioActual.setDescripcionServicio(s.getDescripcionServicio());
-        servicioActual.setPrecioServicio(s.getPrecioServicio());
-       
         try {
+            servicioActual.setNombreServicio(s.getNombreServicio().toUpperCase());
+            servicioActual.setDescripcionServicio(s.getDescripcionServicio().toUpperCase());
+            servicioActual.setPrecioServicio(s.getPrecioServicio());
+        
+            servicioActual.setServicioPorEmpleadoList(new ArrayList<ServicioPorEmpleado>());
             
-            s.setNombreServicio(s.getNombreServicio().toUpperCase());
-            s.setDescripcionServicio(s.getDescripcionServicio().toUpperCase());
+            for(ServicioPorEmpleado spe: s.getServicioPorEmpleadoList()){
+                if(spe.getIdEmpleado().getIdEmpleado() == 0 && spe.getIdServicio().getIdServicio() == 0){
+                    ctrls.destroy(spe.getIdServEmpl());
+                }else {
+                    servicioActual.getServicioPorEmpleadoList().add(spe);
+                }
+            }
             
-            ctrl.edit(servicioActual);
+            ctrl.transactionEdit(servicioActual);
             
             res = listarServicios();
         } catch (NonexistentEntityException ex) {

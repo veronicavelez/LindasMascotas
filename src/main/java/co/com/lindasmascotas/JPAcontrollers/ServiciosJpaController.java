@@ -14,12 +14,12 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import co.com.lindasmascotas.entities.Citas;
+import co.com.lindasmascotas.entities.Empleados;
 import java.util.ArrayList;
 import java.util.List;
 import co.com.lindasmascotas.entities.ServicioPorEmpleado;
 import co.com.lindasmascotas.entities.Procedimientos;
 import co.com.lindasmascotas.entities.Servicios;
-import java.math.BigInteger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -261,6 +261,59 @@ public class ServiciosJpaController implements Serializable {
                 em.close();
             }
         }
+     
+    }
+    
+    public boolean transactionEdit(Servicios servicio) throws IllegalOrphanException, NonexistentEntityException, Exception{
+        EntityManager em = null;
+        
+        try{
+            em = getEntityManager();
+            em.getTransaction().begin();
+            
+            Servicios s = new Servicios();
+            s.setIdServicio(servicio.getIdServicio());
+            s.setNombreServicio(servicio.getNombreServicio());
+            s.setDescripcionServicio(servicio.getDescripcionServicio());
+            s.setPrecioServicio(servicio.getPrecioServicio());
+            
+            for(ServicioPorEmpleado spe: servicio.getServicioPorEmpleadoList()){
+                spe.setIdServicio(new Servicios(servicio.getIdServicio()));
+                spe.setIdEmpleado(new Empleados(spe.getIdEmpleado().getIdEmpleado()));
+                
+                if(spe.getIdServEmpl() == null){
+                    ServicioPorEmpleado serv = new ServicioPorEmpleado();
+                    serv.setIdEmpleado(spe.getIdEmpleado());
+                    serv.setIdServicio(spe.getIdServicio());
+                    
+                    em.persist(serv);
+                }else{
+                    em.merge(spe);
+                }
+            }
+            
+            em.merge(s);
+            em.getTransaction().commit();
+            
+            return true;
+            
+        }catch (Exception ex) { 
+            em.getTransaction().rollback();
+            
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = servicio.getIdServicio();
+                if (findServicios(id) == null) {
+                    throw new NonexistentEntityException("The servicios with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        
     }
 
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
