@@ -184,8 +184,8 @@ public class Mascotas implements Serializable {
         this.idSexo = idSexo;
     }
 
-    @XmlTransient
-    @JsonIgnore
+    //@XmlTransient
+    //@JsonIgnore
     public List<Procedimientos> getProcedimientosList() {
         return procedimientosList;
     }

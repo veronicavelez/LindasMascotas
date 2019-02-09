@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TurnosPorEmpleados.findAll", query = "SELECT t FROM TurnosPorEmpleados t")
-    , @NamedQuery(name = "TurnosPorEmpleados.findByIdTurnosPorEmpl", query = "SELECT t FROM TurnosPorEmpleados t WHERE t.idTurnosPorEmpl = :idTurnosPorEmpl")})
+    , @NamedQuery(name = "TurnosPorEmpleados.findByIdTurnosPorEmpl", query = "SELECT t FROM TurnosPorEmpleados t WHERE t.idTurnosPorEmpl = :idTurnosPorEmpl")
+    , @NamedQuery(name = "TurnosPorEmpleados.findIdTurnosPorEmplByEmpleado", query = "SELECT t FROM TurnosPorEmpleados t WHERE t.idEmpleado.idEmpleado = :idEmpleado ORDER BY t.idDetalleTurnos.dias")})
 public class TurnosPorEmpleados implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -200,4 +200,21 @@ public class TurnosPorEmpleadosJpaController implements Serializable {
         }
     }
     
+    public List<TurnosPorEmpleados> findIdTurnosPorEmplByEmpleado(Integer empleado){
+        EntityManager em = getEntityManager();
+        
+        try{
+            Query q = em.createNamedQuery("TurnosPorEmpleados.findIdTurnosPorEmplByEmpleado");
+            q.setParameter("idEmpleado", empleado);
+            
+            return q.getResultList();
+            
+        } catch(Exception e){
+            
+        }finally{
+            em.close();
+        }
+        return null;
+    }
+    
 }
