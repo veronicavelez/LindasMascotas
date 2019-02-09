@@ -61,12 +61,11 @@ public class ProcedimientosImpl implements ProcedimientosSvc {
 
         Procedimientos procedActual = ctrl.findProcedimientos(pr.getIdProcedimiento());
         
-        procedActual.setNombreProcedimiento(pr.getNombreProcedimiento());
-        procedActual.setPeso(pr.getPeso());
-        
         try {
-            pr.setNombreProcedimiento(pr.getNombreProcedimiento().toUpperCase());
-            pr.setDescripcion(pr.getDescripcion().toUpperCase());
+            procedActual.setNombreProcedimiento(pr.getNombreProcedimiento().toUpperCase());
+            procedActual.setDescripcion(pr.getDescripcion().toUpperCase());
+            procedActual.setPeso(pr.getPeso());
+            
             ctrl.edit(procedActual);
             
             res = listarProcedimientos();
@@ -89,6 +88,3 @@ public class ProcedimientosImpl implements ProcedimientosSvc {
 
    
 }
-    
-    
-
