@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import co.com.lindasmascotas.entities.ServicioPorEmpleado;
 import co.com.lindasmascotas.entities.Procedimientos;
+import co.com.lindasmascotas.entities.ServicioPorEmpleado_;
 import co.com.lindasmascotas.entities.Servicios;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -361,7 +362,42 @@ public class ServiciosJpaController implements Serializable {
             }
         }
     }
-
+    
+    public boolean transactionDestroy(Integer id) throws IllegalOrphanException, NonexistentEntityException, Exception{
+        EntityManager em = null;
+        
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+           
+            Servicios s = em.find(Servicios.class, id);
+            
+            for(ServicioPorEmpleado spe: s.getServicioPorEmpleadoList()){
+                em.remove(spe.getIdServEmpl());
+            }
+             em.remove(id);
+             em.getTransaction().commit();
+           
+             return true;
+             
+        }catch (Exception ex){
+            em.getTransaction().rollback();
+            
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                if (findServicios(id) == null) {
+                    throw new NonexistentEntityException("The servicios with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null){
+                em.close();
+            }
+        } 
+    
+    }
+        
     public List<Servicios> findServiciosEntities() {
         return findServiciosEntities(true, -1, -1);
     }

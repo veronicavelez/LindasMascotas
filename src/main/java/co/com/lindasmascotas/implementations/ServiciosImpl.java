@@ -150,7 +150,7 @@ public class ServiciosImpl implements ServiciosSvc {
         ServiciosJpaController ctrl = new ServiciosJpaController(UPfactory.getFACTORY());
         
         try {
-            ctrl.destroy(id);
+            ctrl.transactionDestroy(id);
             
             res = listarServicios();
         } catch (IllegalOrphanException ex) {
@@ -165,6 +165,8 @@ public class ServiciosImpl implements ServiciosSvc {
             res.setStatus(false);
             res.setMessage(MessageExceptions.messageException(ex.getMessage()));
             res.setData(ctrl.findServiciosEntities());
+        } catch (Exception ex) {
+            Logger.getLogger(ServiciosImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return res;
